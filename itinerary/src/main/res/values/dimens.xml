@@ -2,4 +2,29 @@
     <!-- Default screen margins, per the Android Design guidelines. -->
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
+
+    <!--
+        使用權重 長度改為０
+    -->
+    <dimen name="useWeight">0dp</dimen>
+
+    <!--
+        字體大小四種等級
+    -->
+    <dimen name="textSizeLargeTitle">40sp</dimen>
+    <dimen name="textSizeTitle">30sp</dimen>
+    <dimen name="textSizeDetail">25sp</dimen>
+    <dimen name="textSizeExplain">20sp</dimen>
+    <dimen name="textSizeExtraFineExplain">15sp</dimen>
+
+    <!--
+        欄位標題上方留空白
+    -->
+    <dimen name="labelPaddingTop">10dp</dimen>
+    <dimen name="labelPaddingTopLines2">30dp</dimen>
+
+    <!--
+        浮動式按鈕專用
+    -->
+    <dimen name="fab_margin">16dp</dimen>
 </resources>
