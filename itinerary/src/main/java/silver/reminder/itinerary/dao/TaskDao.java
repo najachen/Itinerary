@@ -1,37 +1,29 @@
 package silver.reminder.itinerary.dao;
 
-import android.content.Context;
-import android.database.sqlite.SQLiteDatabase;
-import android.database.sqlite.SQLiteOpenHelper;
+import android.database.Cursor;
+
+import java.util.List;
+
+import silver.reminder.itinerary.javabean.Task;
 
 /**
- * Created by Administrator on 2016/8/25.
+ * Created by StanleyCheng on 2016/8/27.
  */
-public class TaskDao {
+public interface TaskDao {
 
-    /**
-     * 獨體模式
-     */
-    private static TaskDao taskDao;
+    long insertTask(Task task);
 
-    private TaskDao(Context context){
-        SQLiteOpenHelper dbHelper = ItineraryDatabaseHelper.getInstance(context);
-        readableDB = dbHelper.getReadableDatabase();
-        writableDB = dbHelper.getWritableDatabase();
-    }
+    void insertTaskList(List<Task> taskList);
 
-    public static TaskDao getInstance(Context context){
-        if(taskDao == null){
-            taskDao = new TaskDao(context);
-        }
-        return taskDao;
-    }
+    int updateTask(Task task);
 
-    private SQLiteDatabase readableDB;
-    private SQLiteDatabase writableDB;
+    void updateTaskList(List<Task> taskList);
 
-    /*
-        方法寫在下面 ======================================================
-     */
+    void deleteTask(Integer id);
 
+    void deleteTaskList(List<Integer> taskIdList);
+
+    Task selectTaskById(Integer id);
+
+    Cursor selectTaskList(Task task);
 }

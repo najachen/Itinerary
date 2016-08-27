@@ -8,7 +8,6 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.ListView;
-import android.widget.TextView;
 
 public class HomeActivity extends AppCompatActivity {
 
@@ -17,7 +16,7 @@ public class HomeActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.list_task_item_activity);
+//        setContentView(R.layout.list_task_item_activity);
         findViews();
 
         setContentView(R.layout.choice_home);
@@ -33,7 +32,7 @@ public class HomeActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        noteOrShoppingList = (ListView) findViewById(R.id.noteOrShoppingList);
+//        noteOrShoppingList = (ListView) findViewById(R.id.noteOrShoppingList);
         noteOrShoppingList.setAdapter(new MyBaseAdapter());
     }
 
@@ -59,12 +58,14 @@ public class HomeActivity extends AppCompatActivity {
 
             View returnView = convertView;
             if(returnView == null){
+                /*
                 returnView = getLayoutInflater().inflate(R.layout.embedding_task_detail_list_item_note, null, false);
 
                 TextView noteTitle = (TextView) returnView.findViewById(R.id.noteTitle);
                 noteTitle.setText(getResources().getStringArray(R.array.noteTitle)[position]);
                 TextView noteDetail = (TextView) returnView.findViewById(R.id.noteDetail);
                 noteDetail.setText(getResources().getStringArray(R.array.noteDetail)[position]);
+                */
             }
             return returnView;
         }

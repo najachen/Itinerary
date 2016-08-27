@@ -1,35 +1,29 @@
 package silver.reminder.itinerary.bo;
 
-import android.content.Context;
+import android.database.Cursor;
 
-import silver.reminder.itinerary.dao.TaskDao;
+import java.util.List;
+
+import silver.reminder.itinerary.javabean.Task;
 
 /**
- * Created by Administrator on 2016/8/25.
+ * Created by StanleyCheng on 2016/8/27.
  */
-public class ItineraryBO {
+public interface ItineraryBO {
 
-    /**
-     * 獨體模式
-     */
-    private static ItineraryBO itineraryBO;
+    long createTask(Task task);
 
-    private ItineraryBO(Context context){
-        taskDao = TaskDao.getInstance(context);
-    }
+    void createTaskList(List<Task> taskList);
 
-    public static ItineraryBO getInstance(Context context){
-        if(itineraryBO == null){
-            itineraryBO = new ItineraryBO(context);
-        }
-        return itineraryBO;
-    }
+    int modifyTask(Task task);
 
-    private TaskDao taskDao;
+    void modifyTaskList(List<Task> taskList);
 
-    /*
-        方法寫在下面 ======================================================
-     */
+    void removeTask(Integer id);
 
+    void removeTaskList(List<Integer> taskIdList);
 
+    Task findTaskById(Integer id);
+
+    Cursor findTaskList(Task task);
 }

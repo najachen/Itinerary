@@ -37,7 +37,7 @@ public class CreateDingDong extends AppCompatActivity {
         btnok.setOnClickListener(new Button.OnClickListener() { //味帶入選好的音笑檔回傳值)
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateDingDong.this, CeateOrEditTask.class);
+                Intent intent = new Intent(CreateDingDong.this, CreateOrEditTask.class);
                 startActivity (intent);
             }
         });
