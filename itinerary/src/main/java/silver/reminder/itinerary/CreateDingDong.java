@@ -14,7 +14,7 @@ public class CreateDingDong extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_ding_dong);
+        setContentView (R.layout.create_ding_dong);
 
         Button btnnewsound = (Button) findViewById(R.id.Btn_NewSound);
         Button btnback = (Button) findViewById(R.id.Btn_Back);
