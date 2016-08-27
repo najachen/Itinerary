@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context=".HomeActivity">
+
+    <LinearLayout
+        android:id="@+id/header_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="新增音效"
+            android:id="@+id/Btn_NewSound" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="取消"
+            android:id="@+id/Btn_Back" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="確定"
+            android:id="@+id/Btn_OK" />
+    </LinearLayout>
+
+    <TextView
+        android:id="@+id/remind_set_title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/header_button"
+        android:gravity="center_horizontal"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:text="提醒設置"
+        android:textSize="@dimen/textSizeLargeTitle"/>
+
+    <TextView
+        android:id="@+id/date_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/remind_set_title"
+        android:paddingTop="@dimen/labelPaddingTop"
+        android:text="日期 : "
+        android:textSize="@dimen/textSizeTitle"/>
+
+    <EditText
+        android:id="@+id/date_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/remind_set_title"
+        android:layout_toRightOf="@id/date_label"
+        android:text="2016-08-18"
+        android:textSize="@dimen/textSizeTitle"/>
+
+    <TextView
+        android:id="@+id/time_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date_label"
+        android:paddingTop="@dimen/labelPaddingTop"
+        android:text="時間 : "
+        android:textSize="@dimen/textSizeTitle"/>
+
+    <EditText
+        android:id="@+id/time_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/date_label"
+        android:layout_span="2"
+        android:layout_toRightOf="@id/time_label"
+        android:text="12:00"
+        android:textSize="@dimen/textSizeTitle"/>
+
+    <TextView
+        android:id="@+id/site_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time_label"
+        android:paddingTop="@dimen/labelPaddingTop"
+        android:text="地點 : "
+        android:textSize="@dimen/textSizeTitle"/>
+
+    <TextView
+        android:id="@+id/site_value"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/time_label"
+        android:layout_span="2"
+        android:layout_toRightOf="@id/site_label"
+        android:paddingTop="@dimen/labelPaddingTop"
+        android:lines="3"
+        android:text="台北市大安區北歐寵物旅館"
+        android:textSize="@dimen/textSizeTitle"/>
+
+    <LinearLayout
+        android:id="@+id/sound_file"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/site_value"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/sound_file_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="音效檔 : "
+            android:textSize="@dimen/textSizeTitle"/>
+
+        <EditText
+            android:id="@+id/sound_file_path"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="/data/freeMind.mp3"
+            android:textSize="@dimen/textSizeDetail"/>
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/Btn_Browse_SoundFile"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/sound_file"
+        android:text="瀏覽"/>
+
+</RelativeLayout>
