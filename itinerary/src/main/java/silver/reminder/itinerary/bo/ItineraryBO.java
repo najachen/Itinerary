@@ -3,17 +3,19 @@ package silver.reminder.itinerary.bo;
 import android.content.Context;
 
 import silver.reminder.itinerary.dao.TaskDao;
-import silver.reminder.itinerary.dao.TaskDaoImpl;
 
 /**
  * Created by Administrator on 2016/8/25.
  */
 public class ItineraryBO {
 
+    /**
+     * 獨體模式
+     */
     private static ItineraryBO itineraryBO;
 
     private ItineraryBO(Context context){
-        taskDao = TaskDaoImpl.getInstance(context);
+        taskDao = TaskDao.getInstance(context);
     }
 
     public static ItineraryBO getInstance(Context context){
@@ -26,7 +28,7 @@ public class ItineraryBO {
     private TaskDao taskDao;
 
     /*
-        方法寫在下面======================================================
+        方法寫在下面 ======================================================
      */
 
 

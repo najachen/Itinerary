@@ -2,7 +2,7 @@ package silver.reminder.itinerary.util;
 
 import java.util.Map;
 
-public interface GenTableSpec {
+public interface TableSchemaGenSpec {
 
 	Map getFieldMetaData();
 

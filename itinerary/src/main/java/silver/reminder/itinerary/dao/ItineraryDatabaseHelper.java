@@ -9,17 +9,21 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import silver.reminder.itinerary.util.GenTableTools;
+import silver.reminder.itinerary.util.TableSchemaSet;
 import silver.reminder.itinerary.util.GenTables;
 
 
 public class ItineraryDatabaseHelper extends SQLiteOpenHelper {
 
+    /**
+     * 獨體模式
+     */
     private static ItineraryDatabaseHelper dbHelper;
 
     private ItineraryDatabaseHelper(Context context, String name, CursorFactory factory, int version) {
         super(context, name, factory, version);
 
+        // 資料表規格
         GenTables genTables = new GenTables();
         genTables.prepareTable();
         tables = genTables.getTables();
@@ -32,13 +36,13 @@ public class ItineraryDatabaseHelper extends SQLiteOpenHelper {
         return dbHelper;
     }
 
-    private Map<String, GenTableTools> tables;
+    private Map<String, TableSchemaSet> tables;
 
     @Override
     public void onCreate(SQLiteDatabase db) {
 
-        Set<Entry<String, GenTableTools>> entrySet = this.tables.entrySet();
-        for(Entry<String, GenTableTools> entry:entrySet){
+        Set<Entry<String, TableSchemaSet>> entrySet = this.tables.entrySet();
+        for(Entry<String, TableSchemaSet> entry:entrySet){
             db.execSQL(entry.getValue().getCreateSql());
         }
     }

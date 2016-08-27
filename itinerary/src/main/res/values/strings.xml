@@ -1,5 +1,7 @@
 <resources>
 
+    <string name="app_name">銀級小管家</string>
+
     <!--
         音樂清單測試用
     -->

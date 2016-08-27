@@ -36,14 +36,14 @@ public class ChoiceOutdoorAllOperation extends AppCompatActivity {
         btn_newoper.setOnClickListener(new Button.OnClickListener() {   //新增行程按鈕
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(ChoiceOutdoorAllOperation.this, CeateOrEditTask.class);
+            Intent intent = new Intent(ChoiceOutdoorAllOperation.this, CreateOrEditTask.class);
             startActivity(intent);
         }
     });
     btn_newsound.setOnClickListener(new Button.OnClickListener() {  //新增音訊提醒按鈕
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(ChoiceOutdoorAllOperation.this, CeateSoundFile.class);
+            Intent intent = new Intent(ChoiceOutdoorAllOperation.this, CreateSoundFile.class);
             startActivity(intent);
         }
     });

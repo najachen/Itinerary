@@ -16,7 +16,7 @@ import java.io.IOException;
 /**
  * Created by Administrator on 2016/8/22.
  */
-public class CeateSoundFile extends AppCompatActivity {
+public class CreateSoundFile extends AppCompatActivity {
 
     private Button savesound;
     private Button soundList;
@@ -47,7 +47,7 @@ public class CeateSoundFile extends AppCompatActivity {
         soundList.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CeateSoundFile.this, ListSoundFileActivity.class);
+                Intent intent = new Intent(CreateSoundFile.this, ListSoundFileActivity.class);
                 startActivity(intent);
             }
         });
@@ -57,7 +57,7 @@ public class CeateSoundFile extends AppCompatActivity {
                 finish();
             }
         });
-//            Toast.makeText(CeateSoundFile.this, "儲存成功", Toast.LENGTH_SHORT).show();
+//            Toast.makeText(CreateSoundFile.this, "儲存成功", Toast.LENGTH_SHORT).show();
 //            finish();
 //            以下參考
 //        if (uid.equals("jack") && pw.equals("1234")) {   //登入成功

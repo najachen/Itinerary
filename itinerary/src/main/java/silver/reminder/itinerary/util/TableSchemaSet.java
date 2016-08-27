@@ -5,7 +5,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public abstract class GenTableTools implements GenTableSpec {
+public abstract class TableSchemaSet implements TableSchemaGenSpec {
 
 	private String tableName;
 
@@ -14,11 +14,11 @@ public abstract class GenTableTools implements GenTableSpec {
 	}
 
 	/*
-         * 欄位描述
-         */
+	 * 欄位描述
+	 */
 	private Map<String, String> fieldDescMap = new HashMap<String, String>();
 
-	public GenTableTools(String tableName) {
+	public TableSchemaSet(String tableName) {
 		this.tableName = tableName;
 
 		Set<Entry<String, Integer>> entrySet = getFieldMetaData().entrySet();

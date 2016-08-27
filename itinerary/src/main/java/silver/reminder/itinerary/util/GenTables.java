@@ -1,13 +1,13 @@
-﻿package silver.reminder.itinerary.util;
+package silver.reminder.itinerary.util;
 
 import java.util.HashMap;
 import java.util.Map;
 
 public class GenTables {
 
-	private Map<String, GenTableTools> tables = new HashMap<>();
+	private Map<String, TableSchemaSet> tables = new HashMap<>();
 
-	public Map<String, GenTableTools> getTables() {
+	public Map<String, TableSchemaSet> getTables() {
 		return tables;
 	}
 
@@ -16,16 +16,16 @@ public class GenTables {
 		/*
 		 * table - task
 		 */
-		GenTableTools taskTableConfigSet = new GenTableTools("task") {
+		TableSchemaSet taskTableConfigSet = new TableSchemaSet("task") {
 
 			@Override
 			public Map getFieldMetaData() {
 				return new HashMap() {
 					{
-						put("id", GenTableSpec.INTEGER | GenTableSpec.PRIMARY_KEY_AUTOINCREMENT);
-						put("name", GenTableSpec.TEXT);
-						put("tm", GenTableSpec.TEXT | GenTableSpec.NOT_NULL);
-						put("site", GenTableSpec.TEXT);
+						put("id", TableSchemaGenSpec.INTEGER | TableSchemaGenSpec.PRIMARY_KEY_AUTOINCREMENT);
+						put("name", TableSchemaGenSpec.TEXT);
+						put("tm", TableSchemaGenSpec.TEXT | TableSchemaGenSpec.NOT_NULL);
+						put("site", TableSchemaGenSpec.TEXT);
 					}
 				};
 			}
@@ -35,16 +35,16 @@ public class GenTables {
 		/*
 		 * table - schedule
 		 */
-		GenTableTools scheduleTableConfigSet = new GenTableTools("schedule") {
+		TableSchemaSet scheduleTableConfigSet = new TableSchemaSet("schedule") {
 
 			@Override
 			public Map getFieldMetaData() {
 				return new HashMap() {
 					{
-						put("id", GenTableSpec.INTEGER | GenTableSpec.PRIMARY_KEY_AUTOINCREMENT);
-						put("tm", GenTableSpec.TEXT | GenTableSpec.NOT_NULL);
-						put("taskId", GenTableSpec.INTEGER | GenTableSpec.NOT_NULL);
-						put("soundFileId", GenTableSpec.INTEGER | GenTableSpec.NOT_NULL);
+						put("id", TableSchemaGenSpec.INTEGER | TableSchemaGenSpec.PRIMARY_KEY_AUTOINCREMENT);
+						put("tm", TableSchemaGenSpec.TEXT | TableSchemaGenSpec.NOT_NULL);
+						put("taskId", TableSchemaGenSpec.INTEGER | TableSchemaGenSpec.NOT_NULL);
+						put("soundFileId", TableSchemaGenSpec.INTEGER | TableSchemaGenSpec.NOT_NULL);
 					}
 				};
 			}
@@ -54,14 +54,14 @@ public class GenTables {
 		/*
 		 * table - soundFile
 		 */
-		GenTableTools soundFileTableConfigSet = new GenTableTools("soundFile") {
+		TableSchemaSet soundFileTableConfigSet = new TableSchemaSet("soundFile") {
 
 			@Override
 			public Map getFieldMetaData() {
 				return new HashMap() {
 					{
-						put("id", GenTableSpec.INTEGER | GenTableSpec.PRIMARY_KEY_AUTOINCREMENT);
-						put("fileName", GenTableSpec.TEXT | GenTableSpec.NOT_NULL);
+						put("id", TableSchemaGenSpec.INTEGER | TableSchemaGenSpec.PRIMARY_KEY_AUTOINCREMENT);
+						put("fileName", TableSchemaGenSpec.TEXT | TableSchemaGenSpec.NOT_NULL);
 					}
 				};
 			}
@@ -71,17 +71,17 @@ public class GenTables {
 		/*
 		 * table - shopping
 		 */
-		GenTableTools shoppingTableConfigSet = new GenTableTools("shopping") {
+		TableSchemaSet shoppingTableConfigSet = new TableSchemaSet("shopping") {
 
 			@Override
 			public Map getFieldMetaData() {
 				return new HashMap() {
 					{
-						put("id", GenTableSpec.INTEGER | GenTableSpec.PRIMARY_KEY_AUTOINCREMENT);
-						put("taskId", GenTableSpec.INTEGER | GenTableSpec.NOT_NULL);
-						put("name", GenTableSpec.TEXT | GenTableSpec.NOT_NULL);
-						put("quantity", GenTableSpec.INTEGER);
-						put("unitPrice", GenTableSpec.REAL);
+						put("id", TableSchemaGenSpec.INTEGER | TableSchemaGenSpec.PRIMARY_KEY_AUTOINCREMENT);
+						put("taskId", TableSchemaGenSpec.INTEGER | TableSchemaGenSpec.NOT_NULL);
+						put("name", TableSchemaGenSpec.TEXT | TableSchemaGenSpec.NOT_NULL);
+						put("quantity", TableSchemaGenSpec.INTEGER);
+						put("unitPrice", TableSchemaGenSpec.REAL);
 					}
 				};
 			}
@@ -91,16 +91,16 @@ public class GenTables {
 		/*
 		 * table - note
 		 */
-		GenTableTools noteTableConfigSet = new GenTableTools("note") {
+		TableSchemaSet noteTableConfigSet = new TableSchemaSet("note") {
 
 			@Override
 			public Map getFieldMetaData() {
 				return new HashMap() {
 					{
-						put("id", GenTableSpec.INTEGER | GenTableSpec.PRIMARY_KEY_AUTOINCREMENT);
-						put("taskId", GenTableSpec.INTEGER | GenTableSpec.NOT_NULL);
-						put("noteContent", GenTableSpec.TEXT | GenTableSpec.NOT_NULL);
-						put("noteExplain", GenTableSpec.TEXT);
+						put("id", TableSchemaGenSpec.INTEGER | TableSchemaGenSpec.PRIMARY_KEY_AUTOINCREMENT);
+						put("taskId", TableSchemaGenSpec.INTEGER | TableSchemaGenSpec.NOT_NULL);
+						put("noteContent", TableSchemaGenSpec.TEXT | TableSchemaGenSpec.NOT_NULL);
+						put("noteExplain", TableSchemaGenSpec.TEXT);
 					}
 				};
 			}

@@ -56,7 +56,7 @@ public class ListTaskActivity extends AppCompatActivity {
         fabaddtask.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick (View view) {
-                Intent intent = new Intent(ListTaskActivity.this, CeateOrEditTask.class);
+                Intent intent = new Intent(ListTaskActivity.this, CreateOrEditTask.class);
                 startActivity(intent);
             }
         });
