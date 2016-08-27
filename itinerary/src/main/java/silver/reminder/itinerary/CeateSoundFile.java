@@ -82,7 +82,7 @@ public class CeateSoundFile extends AppCompatActivity {
                         File SDCardpath = Environment.getExternalStorageDirectory();
                         File myDataPath = new File(SDCardpath.getAbsolutePath() + "/download");
                         if (!myDataPath.exists()) myDataPath.mkdirs();
-                        File recodFile = new File(SDCardpath.getAbsolutePath() + "/download/" + fileName);
+                        File recodFile = new File ( SDCardpath.getAbsolutePath() + "/download/" + fileName);
 
                         MR = new MediaRecorder();
                         MR.setAudioSource(MediaRecorder.AudioSource.MIC);   //設定音源，MIC
@@ -101,7 +101,9 @@ public class CeateSoundFile extends AppCompatActivity {
                         MR.stop();  //停止錄音
                         MR.release();   //釋放手機資源
                         MR = null;
+                        count = 0 ;//計數清0
                     }
+
             }
         });
         // 停止錄音
