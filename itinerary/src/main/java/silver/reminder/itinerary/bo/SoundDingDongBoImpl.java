@@ -10,7 +10,7 @@ import silver.reminder.itinerary.dao.SoundDingDongDaoImpl;
 import silver.reminder.itinerary.javabean.Schedule;
 import silver.reminder.itinerary.javabean.SoundFile;
 /**
- * Sun Aug 28 21:57:45 CST 2016 by freemarker template
+ * Sun Aug 28 22:11:47 CST 2016 by freemarker template
  */
 public class SoundDingDongBoImpl implements SoundDingDongBo {
 

@@ -13,7 +13,7 @@ import silver.reminder.itinerary.util.TableSchemaSet;
 import silver.reminder.itinerary.util.GenJavaCodeAndSqliteCreateTables_Itinerary;
 
 /**
-  * Sun Aug 28 21:57:45 CST 2016 by freemarker template
+  * Sun Aug 28 22:11:47 CST 2016 by freemarker template
   */
 public class ItineraryDatabaseHelper extends SQLiteOpenHelper {
 
