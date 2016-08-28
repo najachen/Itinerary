@@ -10,9 +10,11 @@ import java.util.Map.Entry;
 import java.util.Set;
 
 import silver.reminder.itinerary.util.TableSchemaSet;
-import silver.reminder.itinerary.util.GenTables;
+import silver.reminder.itinerary.util.GenJavaCodeAndSqliteCreateTables_Itinerary;
 
-
+/**
+  * Sun Aug 28 21:57:45 CST 2016 by freemarker template
+  */
 public class ItineraryDatabaseHelper extends SQLiteOpenHelper {
 
     /**
@@ -24,9 +26,8 @@ public class ItineraryDatabaseHelper extends SQLiteOpenHelper {
         super(context, name, factory, version);
 
         // 資料表規格
-        GenTables genTables = new GenTables();
-        genTables.prepareTable();
-        tables = genTables.getTables();
+        GenJavaCodeAndSqliteCreateTables_Itinerary genTables = new GenJavaCodeAndSqliteCreateTables_Itinerary();
+        tables = genTables.prepareTable().getFunctionTableMap();
     }
 
     public static ItineraryDatabaseHelper getInstance(Context context){
@@ -36,14 +37,18 @@ public class ItineraryDatabaseHelper extends SQLiteOpenHelper {
         return dbHelper;
     }
 
-    private Map<String, TableSchemaSet> tables;
+    private Map<String, Map<String, TableSchemaSet>> tables;
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+        Set<Entry<String, Map<String, TableSchemaSet>>> entrySet = this.tables.entrySet();
 
-        Set<Entry<String, TableSchemaSet>> entrySet = this.tables.entrySet();
-        for(Entry<String, TableSchemaSet> entry:entrySet){
-            db.execSQL(entry.getValue().getCreateSql());
+        for(Entry<String, Map<String, TableSchemaSet>> entry : entrySet){
+        	Map<String, TableSchemaSet> tableSchemaSets = entry.getValue();
+
+        	for(Entry<String, TableSchemaSet> e : tableSchemaSets.entrySet()){
+        		db.execSQL(e.getValue().getCreateSql());
+        	}
         }
     }
 

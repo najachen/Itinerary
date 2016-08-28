@@ -1,14 +1,17 @@
 package silver.reminder.itinerary.javabean;
-
 /**
- *  @author 阿鬼
+ * Sun Aug 28 21:57:45 CST 2016 by freemarker template
  */
 public class Shopping {
 
     private Float unitPrice;
+    
     private Integer quantity;
+    
     private String name;
+    
     private Integer id;
+    
     private Integer taskId;
     
     public void setUnitPrice(Float unitPrice){
@@ -45,4 +48,5 @@ public class Shopping {
     public Integer getTaskId(){
         return this.taskId;
     }
+    
 }

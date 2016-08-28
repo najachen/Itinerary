@@ -1,4 +1,4 @@
-package silver.reminder.itinerary.dao;
+package silver.reminder.itinerary;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -10,6 +10,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
+import silver.reminder.itinerary.dao.ItineraryDatabaseHelper;
+import silver.reminder.itinerary.dao.TaskDao;
 import silver.reminder.itinerary.javabean.Task;
 
 /**
@@ -20,7 +22,7 @@ public class TaskDaoImpl implements TaskDao {
     /**
      * 獨體模式
      */
-    private static TaskDao taskDao;
+    private static TaskDaoImpl taskDao;
 
     private TaskDaoImpl(Context context) {
         SQLiteOpenHelper dbHelper = ItineraryDatabaseHelper.getInstance(context);
@@ -28,7 +30,7 @@ public class TaskDaoImpl implements TaskDao {
         writableDB = dbHelper.getWritableDatabase();
     }
 
-    public static TaskDao getInstance(Context context) {
+    public static TaskDaoImpl getInstance(Context context) {
         if (taskDao == null) {
             taskDao = new TaskDaoImpl(context);
         }
@@ -55,11 +57,6 @@ public class TaskDaoImpl implements TaskDao {
     }
 
     @Override
-    public void insertTaskList(List taskList) {
-
-    }
-
-    @Override
     public int updateTask(Task task) {
 
         //這裡是要修改的資料
@@ -73,22 +70,12 @@ public class TaskDaoImpl implements TaskDao {
     }
 
     @Override
-    public void updateTaskList(List taskList) {
-
-    }
-
-    @Override
     public void deleteTask(Integer id) {
 
         int deleteDataAmount = this.writableDB.delete("task", "id = ?", new String[]{id.toString()});
         if (deleteDataAmount > 1) {
             Log.d("用 id 移除 task 異常!! 移除了 ", deleteDataAmount + " 筆");
         }
-    }
-
-    @Override
-    public void deleteTaskList(List<Integer> taskIdList) {
-
     }
 
     @Override

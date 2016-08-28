@@ -1,13 +1,15 @@
 package silver.reminder.itinerary.javabean;
-
 /**
- *  @author 阿鬼
+ * Sun Aug 28 21:57:45 CST 2016 by freemarker template
  */
 public class Task {
 
     private String site;
+    
     private String name;
+    
     private String tm;
+    
     private Integer id;
     
     public void setSite(String site){
@@ -37,4 +39,5 @@ public class Task {
     public Integer getId(){
         return this.id;
     }
+    
 }

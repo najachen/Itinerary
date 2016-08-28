@@ -1,13 +1,15 @@
 package silver.reminder.itinerary.javabean;
-
 /**
- *  @author 阿鬼
+ * Sun Aug 28 21:57:45 CST 2016 by freemarker template
  */
 public class Schedule {
 
     private String tm;
+    
     private Integer id;
+    
     private Integer taskId;
+    
     private Integer soundFileId;
     
     public void setTm(String tm){
@@ -37,4 +39,5 @@ public class Schedule {
     public Integer getSoundFileId(){
         return this.soundFileId;
     }
+    
 }

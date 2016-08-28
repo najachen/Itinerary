@@ -1,11 +1,11 @@
 package silver.reminder.itinerary.javabean;
-
 /**
- *  @author 阿鬼
+ * Sun Aug 28 21:57:45 CST 2016 by freemarker template
  */
 public class SoundFile {
 
     private String fileName;
+    
     private Integer id;
     
     public void setFileName(String fileName){
@@ -21,4 +21,5 @@ public class SoundFile {
     public Integer getId(){
         return this.id;
     }
+    
 }
