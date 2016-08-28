@@ -1,36 +1,56 @@
-package silver.reminder.itinerary.util;
+package silver.reminder.itinerary;
 
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-public abstract class TableSchemaSet implements TableSchemaGenSpec {
+public abstract class TableSchemaSet implements TableSchemaSetSpec {
 
 	private String tableName;
 
-	public String getTableName() {
-		return tableName;
-	}
-
 	/*
-	 * 欄位描述
+	 * 建立資料表的欄位描述
 	 */
 	private Map<String, String> fieldDescMap = new HashMap<String, String>();
+	
+	/*
+	 * 欄位與資料型態對映
+	 */
+	private Map<String, String> fieldDataTypeMap = new HashMap<String, String>();
 
+	/*
+	 * 建構子 建立sql描述與資料型態的map
+	 */
 	public TableSchemaSet(String tableName) {
 		this.tableName = tableName;
 
 		Set<Entry<String, Integer>> entrySet = getFieldMetaData().entrySet();
 		for (Entry<String, Integer> entry : entrySet) {
 			this.fieldDescMap.put(entry.getKey(), parseDescMaskCodeToSql(entry.getValue()));
+			this.fieldDataTypeMap.put(entry.getKey(), parseFieldDataType(entry.getValue()));
 		}
 	}
 
 	/*
+	 * 資料型別對映
+	 */
+	private static String parseFieldDataType(Integer descMaskCode) {
+
+		if ((descMaskCode & INTEGER) == INTEGER) {
+			return "Integer";
+		} else if ((descMaskCode & REAL) == REAL) {
+			return "Float";
+		} else if ((descMaskCode & TEXT) == TEXT) {
+			return "String";
+		}
+		return "Object";
+	}
+	
+	/*
 	 * 解析描述遮罩碼 轉成欄位描述sql
 	 */
-	private String parseDescMaskCodeToSql(Integer descMaskCode) {
+	private static String parseDescMaskCodeToSql(Integer descMaskCode) {
 
 		StringBuffer fieldDesc = new StringBuffer();
 
@@ -73,5 +93,20 @@ public abstract class TableSchemaSet implements TableSchemaGenSpec {
 		createSql.append(")");
 
 		return createSql.toString();
+	}
+	
+	/*
+	 * getter
+	 */
+	public String getTableName() {
+		return tableName;
+	}
+
+	public Map<String, String> getFieldDescMap() {
+		return fieldDescMap;
+	}
+
+	public Map<String, String> getFieldDataTypeMap() {
+		return fieldDataTypeMap;
 	}
 }
