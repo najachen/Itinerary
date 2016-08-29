@@ -9,8 +9,8 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import silver.reminder.itinerary.util.TableSchemaSet;
 import silver.reminder.itinerary.util.GenJavaCodeAndSqliteCreateTables_Itinerary;
+import silver.reminder.itinerary.util.TableSchemaSet;
 
 /**
   * Sun Aug 28 22:11:47 CST 2016 by freemarker template

@@ -1,4 +1,4 @@
-package silver.reminder.itinerary;
+package silver.reminder.itinerary.util;
 
 import java.util.HashMap;
 import java.util.Map;
