@@ -4,43 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ChoiceHomeActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/highlighted_text_material_dark">
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_shape_index_1"
+        android:textColor="#445566"
         android:text="本週行程表"
         android:textSize="@dimen/textSizeLargeTitle"
         android:layout_weight="1"
-        android:id="@+id/Btn_Week" />
+        android:id="@+id/Btn_Week"
+        android:layout_margin="16dp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_shape_index_1"
+        android:textColor="#445566"
         android:text="本月行程表"
         android:textSize="@dimen/textSizeLargeTitle"
         android:layout_weight="1"
-        android:id="@+id/Btn_Month" />
+        android:id="@+id/Btn_Month"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_shape_index_1"
+        android:textColor="#445566"
         android:text="當季行程表"
         android:textSize="@dimen/textSizeLargeTitle"
         android:layout_weight="1"
-        android:id="@+id/Btn_Season" />
+        android:id="@+id/Btn_Season"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp" />
 
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@drawable/btn_shape_index_1"
+        android:textColor="#445566"
         android:text="年度行程表"
         android:textSize="@dimen/textSizeLargeTitle"
         android:layout_weight="1"
-        android:id="@+id/Btn_Year" />
+        android:id="@+id/Btn_Year"
+        android:layout_margin="16dp" />
 
 </LinearLayout>
