@@ -9,6 +9,9 @@ import android.widget.ListView;
 public class ChoiceHomeActivity extends AppCompatActivity {
 
     private ListView noteOrShoppingList;
+    /*
+
+     */
 
     private Button intinBulletin;
     private Button intinOption;
