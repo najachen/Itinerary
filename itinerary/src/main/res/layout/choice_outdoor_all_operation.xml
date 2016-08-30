@@ -4,43 +4,116 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".HomeActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
 
-    <Button
+    tools:context=".HomeActivity">
+    <!--style="@style/AppStyle2"-->
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="@dimen/textSizeLargeTitle"
-        android:text="當日行程表"
-        android:id="@+id/Btn_Day" />
+        android:background="@drawable/pic_girl_outside_2"
+        android:orientation="vertical"
+        android:padding="-10dp"
+        android:layout_weight="100">
 
-    <Button
+    </LinearLayout>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="@dimen/textSizeLargeTitle"
-        android:text="全部行程表"
-        android:id="@+id/Btn_All" />
+        android:orientation="horizontal"
+        android:weightSum="10">
 
-    <Button
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_shape_search"
+            android:paddingLeft="10dp"
+            android:shadowColor="#BABABA"
+            android:shadowDx="0"
+            android:shadowDy="0"
+            android:shadowRadius="5"
+            android:text="回首頁"
+            android:textColor="#ffffff"
+            android:textSize="20dp"
+            android:id="@+id/Btn_BackHome" />
+    </LinearLayout>
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="10"
         android:layout_weight="1"
-        android:textSize="@dimen/textSizeLargeTitle"
-        android:text="新增行程表"
-        android:id="@+id/Btn_NewOper" />
+        android:layout_margin="5dp">
 
-    <Button
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:textSize="@dimen/textSizeLargeTitle"
-        android:text="新增提醒音訊"
-        android:id="@+id/Btn_NewSound" />
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:focusableInTouchMode="true">
+            <!--android:layout_margin="dp"-->
+            <Button
+                android:id="@+id/Btn_Day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_shape_index_1"
+                android:drawableTop="@drawable/btn_test_2"
+                android:textColor="#445566"
+                android:text="當日行程"
+                android:textSize="25dp"
+                android:focusableInTouchMode="false"
+                android:focusable="false"
+                android:layout_weight="1"
+                android:layout_margin="5dp" />
+
+            <Button
+                android:id="@+id/Btn_All"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_shape_index_1"
+                android:drawableTop="@drawable/btn_notebook"
+                android:text="全部行程"
+                android:textColor="#445566"
+                android:textSize="25dp"
+                android:layout_weight="1"
+                android:layout_margin="5dp" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+
+            android:drawableTop="@drawable/btn_pencil_2"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_weight="1">
+            <!--android:layout_margin="10dp"-->
+        <Button
+            android:id="@+id/Btn_NewOper"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_shape_index_1"
+            android:drawableTop="@drawable/btn_pencil_2"
+            android:text="新增行程"
+            android:textColor="#445566"
+            android:textSize="25dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp" />
+
+        <Button
+            android:id="@+id/Btn_NewSound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/btn_shape_index_1"
+            android:drawableTop="@drawable/btn_star_1"
+            android:text="新增音訊"
+            android:textColor="#445566"
+            android:textSize="25dp"
+            android:layout_weight="1"
+            android:layout_margin="5dp" />
+        </TableRow>
+    </LinearLayout>
 </LinearLayout>

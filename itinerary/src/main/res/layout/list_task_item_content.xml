@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    這裡是單一行程的明細頁面
+    底下的清單是備忘的事項 分兩種類型
+    第一種是單純的記事
+    第二種是購物的項目
+    這一頁 list_task_item.xml 有可能與 list_task.xml 合併為 fragment 結構
+
+    id -> remindSetUp
+    若無設定提醒則顯示"新增提醒" 若有設定 則顯示"修改或取消提醒"
+    使用alertDialog 可選編輯 刪除 或取消
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    app:layout_behavior="@string/appbar_scrolling_view_behavior"
+    tools:context=".HomeActivity"
+    tools:showIn="@layout/list_task_item_activity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/backList"
+            android:layout_width="@dimen/useWeight"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="返回"/>
+
+        <Button
+            android:id="@+id/deleteTask"
+            android:layout_width="@dimen/useWeight"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="編輯或刪除"/>
+
+        <Button
+            android:id="@+id/remindSetUp"
+            android:layout_width="@dimen/useWeight"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="修改提醒"/>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <TextView
+            android:id="@+id/taskLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="行程 : "
+            android:textSize="@dimen/textSizeDetail"/>
+
+        <TextView
+            android:id="@+id/taskName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="辦理申請老人年金手續"
+            android:textSize="@dimen/textSizeDetail"
+            android:layout_toRightOf="@id/taskLabel"
+            android:lines="2"/>
+
+        <TextView
+            android:id="@+id/dateAndTimeLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="時間 : "
+            android:textSize="@dimen/textSizeDetail"
+            android:layout_below="@id/taskName"/>
+
+        <TextView
+            android:id="@+id/dateAndTimeValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="2016/08/12 13:30"
+            android:textSize="@dimen/textSizeDetail"
+            android:layout_toRightOf="@id/dateAndTimeLabel"
+            android:layout_below="@id/taskName"/>
+
+        <TextView
+            android:id="@+id/siteLabel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="地點 : "
+            android:textSize="@dimen/textSizeDetail"
+            android:layout_below="@id/dateAndTimeLabel"/>
+
+        <TextView
+            android:id="@+id/siteValue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="國父紀念館"
+            android:textSize="@dimen/textSizeDetail"
+            android:lines="2"
+            android:layout_toRightOf="@id/siteLabel"
+            android:layout_below="@id/dateAndTimeValue"/>
+    </RelativeLayout>
+
+    <ListView
+        android:id="@+id/noteOrShoppingList"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:divider="@drawable/selector"
+        android:dividerHeight="2sp"/>
+
+</LinearLayout>
