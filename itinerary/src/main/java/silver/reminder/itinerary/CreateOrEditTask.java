@@ -11,6 +11,10 @@ import android.widget.EditText;
  * Created by Administrator on 2016/8/22.
  */
 public class CreateOrEditTask extends AppCompatActivity {
+    private EditText timevalue;
+    private EditText datevalue;
+    private EditText sitevalue;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -19,9 +23,14 @@ public class CreateOrEditTask extends AppCompatActivity {
         Button btnclearn = (Button) findViewById(R.id.Btn_Clearn);
         Button btnback = (Button) findViewById(R.id.Btn_Back);
         Button create_ding_dongfind = (Button) findViewById(R.id.create_ding_dong); //設定音效
-        EditText datevalue = (EditText) findViewById(R.id.date_value);  //日期設定
-        EditText timevalue = (EditText) findViewById(R.id.time_value);  //時間設定
-        EditText sitevalue = (EditText) findViewById(R.id.site_value);  //地點設定
+        datevalue = (EditText) findViewById(R.id.date_value);   //日期設定
+        timevalue = (EditText) findViewById(R.id.time_value);  //時間設定
+        sitevalue = (EditText) findViewById(R.id.site_value);   //地點設定
+
+        String date = datevalue.getText().toString();
+        String time = timevalue.getText().toString();
+        String site = sitevalue.getText().toString();
+
         btnenter.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -32,6 +41,9 @@ public class CreateOrEditTask extends AppCompatActivity {
         btnclearn.setOnClickListener(new Button.OnClickListener() {  //清空日期時間地點edit Text
             @Override
             public void onClick(View view) {
+                datevalue.setText(" ");
+                timevalue.setText(" ");
+                sitevalue.setText(" ");
 
             }
         });

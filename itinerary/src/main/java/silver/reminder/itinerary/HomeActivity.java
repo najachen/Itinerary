@@ -17,10 +17,14 @@ public class HomeActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 //        setContentView(R.layout.list_task_item_activity);
+        setContentView(R.layout.choice_home);
+
         findViews();
 
-        setContentView(R.layout.choice_home);
         Button btn_outoption = (Button) findViewById(R.id.Btn_outoption);
+        Button btnout = (Button) findViewById(R.id.Btn_Out);
+        Button btnsos = (Button) findViewById(R.id.Btn_SOS);
+
         btn_outoption.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -28,12 +32,25 @@ public class HomeActivity extends AppCompatActivity {
                 startActivity (intent );
             }
         });
-
+        btnout.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(HomeActivity.this, ChoiceAllActivity.class);
+//                startActivity (intent );
+            }
+        });
+        btnsos.setOnClickListener(new Button.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(HomeActivity.this, ChoiceAllActivity.class);
+//                startActivity (intent );
+            }
+        });
     }
 
     private void findViews() {
 //        noteOrShoppingList = (ListView) findViewById(R.id.noteOrShoppingList);
-        noteOrShoppingList.setAdapter(new MyBaseAdapter());
+//        noteOrShoppingList.setAdapter(new MyBaseAdapter());
     }
 
     class MyBaseAdapter extends BaseAdapter {

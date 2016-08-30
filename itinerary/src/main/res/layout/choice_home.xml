@@ -59,7 +59,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="通報外出"
-            android:textSize="30sp"/>
+            android:textSize="30sp"
+            android:id="@+id/Btn_Out"/>
 
         <Button
             android:layout_width="match_parent"
@@ -81,7 +82,9 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="SOS"
-            android:textSize="30sp"/>
+            android:textSize="30sp"
+            android:id="@+id/Btn_SOS"/>
+
 
         <Button
             android:layout_width="match_parent"

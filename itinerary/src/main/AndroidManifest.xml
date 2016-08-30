@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="silver.reminder.itinerary">
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>  //錄音權限
+
+    <!--  開啟錄音權限  -->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".ItineraryMainActivity"/>
+        <activity android:name=".HomeActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
+        </activity>
+        <activity android:name=".ChoiceOutdoorAllOperation"/>
+        <activity android:name=".ChoiceTaskListPeriod"/>
+        <activity android:name=".CreateOrEditTask"/>
+        <activity android:name=".CreateSoundFile"/>
+        <activity android:name=".CreateDingDong"/>
+        <activity android:name=".ListSoundFileActivity"/>
+        <activity android:name=".ListTaskActivity"/>
+        <activity android:name=".TaskListActivity"/>
+
+
+
+
     </application>
 
 </manifest>

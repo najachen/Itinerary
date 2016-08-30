@@ -76,7 +76,7 @@ public class CreateSoundFile extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 count++;
-                if (count != 1) {
+                if (count == 1) {
                     String fileName = "record.amr"; //設定錄音檔名
                     try {
                         File SDCardpath = Environment.getExternalStorageDirectory();

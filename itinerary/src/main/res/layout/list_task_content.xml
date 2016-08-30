@@ -35,6 +35,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:divider="@drawable/selector"
-        android:dividerHeight="2dp"/>
+        android:dividerHeight="2dp"
+        android:background="@android:color/holo_green_dark" /><!--  因字顏色預設白，所以底色暫用綠色  -->
 
 </LinearLayout>
