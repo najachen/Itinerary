@@ -9,7 +9,7 @@ import android.widget.Button;
 /**
  * Created by hsuan on 2016/8/27.
  */
-public class CreateDingDong extends AppCompatActivity {
+public class CreateDingDongActivity extends AppCompatActivity {
 //    public static  final int FUNC_SOUNDLIST = 1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -24,7 +24,7 @@ public class CreateDingDong extends AppCompatActivity {
         btnnewsound.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateDingDong.this, ListSoundFileActivity.class);
+                Intent intent = new Intent(CreateDingDongActivity.this, ListSoundFileActivity.class);
                 startActivity(intent);
             }
         });
@@ -37,14 +37,14 @@ public class CreateDingDong extends AppCompatActivity {
         btnok.setOnClickListener(new Button.OnClickListener() { //味帶入選好的音笑檔回傳值)
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateDingDong.this, CreateOrEditTask.class);
+                Intent intent = new Intent(CreateDingDongActivity.this, CreateOrEditTaskActivity.class);
                 startActivity (intent);
             }
         });
         btnbrowse.setOnClickListener (new Button.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(CreateDingDong.this, ListSoundFileActivity.class);
+                Intent intent = new Intent(CreateDingDongActivity.this, ListSoundFileActivity.class);
             }
         });
 

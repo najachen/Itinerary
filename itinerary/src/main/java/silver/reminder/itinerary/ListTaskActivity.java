@@ -59,7 +59,7 @@ public class ListTaskActivity extends AppCompatActivity {
 //                String se1 = tasklist.getItemAtPosition(i).toString();
         public void onItemClick(AdapterView<?> arg0, View arg1, int arg2, long arg3) {
                 String se1 = tasklist.getItemAtPosition(arg2).toString();
-                Intent intent = new Intent(ListTaskActivity.this, CreateOrEditTask.class);
+                Intent intent = new Intent(ListTaskActivity.this, CreateOrEditTaskActivity.class);
                 startActivity(intent);
 //                new AlertDialog.Builder(ListTaskActivity.this);
             }
@@ -74,7 +74,7 @@ public class ListTaskActivity extends AppCompatActivity {
         fabaddtask.setOnClickListener(new FloatingActionButton.OnClickListener() {
             @Override
             public void onClick (View view) {
-                Intent intent = new Intent(ListTaskActivity.this, CreateOrEditTask.class);
+                Intent intent = new Intent(ListTaskActivity.this, CreateOrEditTaskActivity.class);
                 startActivity(intent);
             }
         });

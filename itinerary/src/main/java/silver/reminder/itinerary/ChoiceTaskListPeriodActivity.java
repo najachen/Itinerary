@@ -9,7 +9,7 @@ import android.widget.Button;
 /**
  * Created by Administrator on 2016/8/22.
  */
-public class ChoiceTaskListPeriod extends AppCompatActivity {
+public class ChoiceTaskListPeriodActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -23,28 +23,28 @@ public class ChoiceTaskListPeriod extends AppCompatActivity {
         btnweek.setOnClickListener(new Button.OnClickListener() {   //未帶入週行程，只是跳回行程表, startActivity需再帶回周行程的值
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChoiceTaskListPeriod.this, ListTaskActivity.class);
+                Intent intent = new Intent(ChoiceTaskListPeriodActivity.this, ListTaskActivity.class);
                 startActivity(intent);
             }
         });
         btnmonth.setOnClickListener(new Button.OnClickListener() {  //未帶入月行程，只是跳回行程表, 需再帶回月行程的值
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChoiceTaskListPeriod.this, ListTaskActivity.class);
+                Intent intent = new Intent(ChoiceTaskListPeriodActivity.this, ListTaskActivity.class);
                 startActivity(intent);
             }
         });
         btnseason.setOnClickListener(new Button.OnClickListener() { //未帶入季行程，只是跳回行程表, 需再帶回季行程的值
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChoiceTaskListPeriod.this, ListTaskActivity.class);
+                Intent intent = new Intent(ChoiceTaskListPeriodActivity.this, ListTaskActivity.class);
                 startActivity(intent);
             }
         });
         btnyear.setOnClickListener(new Button.OnClickListener() {   //帶入年度行程，只是跳回行程表, 需再帶回年行程的值
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(ChoiceTaskListPeriod.this, ListTaskActivity.class);
+                Intent intent = new Intent(ChoiceTaskListPeriodActivity.this, ListTaskActivity.class);
                 startActivity(intent);
             }
         });

@@ -2,10 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="silver.reminder.itinerary">
 
-    <!--  開啟錄音權限  -->
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"></uses-permission>
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"></uses-permission>
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"></uses-permission>
+    <!-- 精確定位 -->
+    <!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>-->
+
+    <!-- 讀取與寫入外部記憶卡 -->
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
 
     <application
         android:allowBackup="true"
@@ -13,24 +15,24 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".HomeActivity">
+        <activity android:name=".ChoiceHomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
+
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".ChoiceOutdoorAllOperation"/>
-        <activity android:name=".ChoiceTaskListPeriod"/>
-        <activity android:name=".CreateOrEditTask"/>
-        <activity android:name=".CreateSoundFile"/>
-        <activity android:name=".CreateDingDong"/>
+        <activity android:name=".ChoiceOutdoorAllOperationActivity"/>
+        <activity android:name=".ChoiceTaskListPeriodActivity"/>
+        <activity android:name=".CreateOrEditTaskActivity"/>
+        <activity android:name=".CreateSoundFileActivity"/>
+        <activity android:name=".CreateDingDongActivity"/>
         <activity android:name=".ListSoundFileActivity"/>
         <activity android:name=".ListTaskActivity"/>
-        <activity android:name=".TaskListActivity"/>
-
-
-
-
+        <activity android:name=".CreateOrEditTaskDetailListItemActivity"/>
+        <activity android:name=".ListTaskItemActivity"/>
+        <activity android:name=".MapOptimizePathActivity"/>
+        <activity android:name=".MapSosActivity"/>
     </application>
 
 </manifest>

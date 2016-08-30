@@ -3,19 +3,14 @@ package silver.reminder.itinerary;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class ItineraryMainActivity extends AppCompatActivity {
+public class CreateOrEditTaskDetailListItemActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_itinerary_main);
+        setContentView(R.layout.create_or_edit_task_detail_list_item);
+
 
 
     }
-    /**
-     *  modify test
-     */
-    /**
-     * fgsdgsgs
-     */
 }

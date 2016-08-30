@@ -1,13 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    這一頁先不要理會
-    因為還不知道GoogleMap可以提供什麼服務
-    所以畫面不算完成
-    後續依服務內容可能新增些許欄位
-    到時再做藝術美化的處理
-
-    甚至 這裡有可能因為時間不夠而取消......
--->
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -17,15 +8,15 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".HomeActivity"
+    tools:context=".MapSosActivity"
     android:orientation="vertical">
 
 
-    <ImageView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/google_map"
-        android:id="@+id/imageView2"/>
+    <!--<ImageView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/google_map"-->
+        <!--android:id="@+id/imageView2"/>-->
 
     <Button
         android:layout_width="match_parent"

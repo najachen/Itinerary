@@ -1,7 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-    這是首頁的八個按鍵
--->
 <TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
@@ -11,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".HomeActivity">
+    tools:context=".ChoiceHomeActivity">
 
     <TableRow
         android:layout_width="match_parent"
@@ -60,7 +57,7 @@
             android:layout_weight="1"
             android:text="通報外出"
             android:textSize="30sp"
-            android:id="@+id/Btn_Out"/>
+            android:id="@+id/intinBulletin"/>
 
         <Button
             android:layout_width="match_parent"
@@ -68,7 +65,7 @@
             android:layout_weight="1"
             android:text="外出規劃"
             android:textSize="30sp"
-            android:id="@+id/Btn_outoption"
+            android:id="@+id/intinOption"
             android:nestedScrollingEnabled="false" />
     </TableRow>
 
@@ -83,7 +80,7 @@
             android:layout_weight="1"
             android:text="SOS"
             android:textSize="30sp"
-            android:id="@+id/Btn_SOS"/>
+            android:id="@+id/intinSos"/>
 
 
         <Button

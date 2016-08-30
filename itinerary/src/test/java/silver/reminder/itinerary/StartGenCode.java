@@ -1,4 +1,4 @@
-package gen.java.code.tools;
+package silver.reminder.itinerary;
 
 import org.junit.Test;
 
@@ -21,9 +21,6 @@ import freemarker.template.Template;
 import freemarker.template.TemplateException;
 import freemarker.template.TemplateExceptionHandler;
 import freemarker.template.TemplateNotFoundException;
-import silver.reminder.itinerary.GenJavaCodeAndSqliteCreateTables_Itinerary;
-import silver.reminder.itinerary.TableSchemaSet;
-import silver.reminder.itinerary.TableSchemaSetSpec;
 
 public class StartGenCode {
 
@@ -65,7 +62,10 @@ public class StartGenCode {
     // eclipse
 //    private static final String thisFilePath = "D:\\AndroidProjects\\EclipseWorkSpace\\LambdaTest\\src\\gen\\java\\code\\tools\\";
     //android studio
-	private static final String thisFilePath = "D:\\PccuAndroidProj\\Itinerary\\itinerary\\src\\test\\java\\silver\\reminder\\itinerary\\";
+//	private static final String thisFilePath = "D:\\PccuAndroidProj\\Itinerary\\itinerary\\src\\test\\java\\silver\\reminder\\itinerary\\";
+	//文化大學電腦路徑
+    private static final String thisFilePath = "E:\\android\\projects\\Itinerary\\itinerary\\src\\test\\java\\silver\\reminder\\itinerary";
+
 
     /**
      * 產生時間

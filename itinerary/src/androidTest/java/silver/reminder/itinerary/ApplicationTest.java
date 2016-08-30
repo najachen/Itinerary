@@ -18,7 +18,7 @@ public class ApplicationTest extends ApplicationTestCase<Application> {
     }
 
 //    @Rule
-//    public ActivityTestRule<HomeActivity> activityTestRule = new ActivityTestRule<HomeActivity>(HomeActivity.class);
+//    public ActivityTestRule<ChoiceHomeActivity> activityTestRule = new ActivityTestRule<ChoiceHomeActivity>(ChoiceHomeActivity.class);
 //
 //    @Test
 //    public void startTest() {

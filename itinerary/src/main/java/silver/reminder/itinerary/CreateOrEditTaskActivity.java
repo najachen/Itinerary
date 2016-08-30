@@ -10,7 +10,7 @@ import android.widget.EditText;
 /**
  * Created by Administrator on 2016/8/22.
  */
-public class CreateOrEditTask extends AppCompatActivity {
+public class CreateOrEditTaskActivity extends AppCompatActivity {
     private EditText timevalue;
     private EditText datevalue;
     private EditText sitevalue;
@@ -34,7 +34,7 @@ public class CreateOrEditTask extends AppCompatActivity {
         btnenter.setOnClickListener(new Button.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CreateOrEditTask.this, ListTaskActivity.class);   //確認帶回修改的值
+                Intent intent = new Intent(CreateOrEditTaskActivity.this, ListTaskActivity.class);   //確認帶回修改的值
                 startActivity(intent);
             }
         });
@@ -50,14 +50,14 @@ public class CreateOrEditTask extends AppCompatActivity {
         btnback.setOnClickListener(new Button.OnClickListener() {   //返回上一頁
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CreateOrEditTask.this, ListTaskActivity.class);
+                Intent intent = new Intent(CreateOrEditTaskActivity.this, ListTaskActivity.class);
                 startActivity(intent);
             }
         });
         create_ding_dongfind.setOnClickListener(new Button.OnClickListener() {  //設定音效，跳到音效list
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(CreateOrEditTask.this, ListSoundFileActivity.class);
+                Intent intent = new Intent(CreateOrEditTaskActivity.this, ListSoundFileActivity.class);
                 startActivity(intent);
             }
         });
