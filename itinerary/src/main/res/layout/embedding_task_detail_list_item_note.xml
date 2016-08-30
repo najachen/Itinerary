@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+    這是清單listview的內嵌layout
+    備忘用的
+-->
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center_vertical"
+    tools:context=".HomeActivity">
+
+    <TextView
+        android:id="@+id/noteTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="進行健康檢查"
+        android:textSize="@dimen/textSizeExplain"/>
+
+    <TextView
+        android:id="@+id/noteDetail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="攜帶個人身分證與健保卡"
+        android:textSize="@dimen/textSizeExtraFineExplain"/>
+
+</LinearLayout>
