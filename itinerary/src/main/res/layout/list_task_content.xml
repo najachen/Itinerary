@@ -14,7 +14,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context="com.ghost.outdoor.remind.TaskListActivity"
+    android:background="@color/highlighted_text_material_dark"
+    tools:context=".ListTaskActivity"
     tools:showIn="@layout/list_task_activity">
 
     <LinearLayout
@@ -23,10 +24,12 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/Btn_Back"
+            android:id="@+id/backChoiceOutdoorAllOperation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="返回"/>
+            android:text="返回"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"/>
 
     </LinearLayout>
 
@@ -35,7 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:divider="@drawable/selector"
-        android:dividerHeight="2dp"
-        android:background="@android:color/holo_green_dark" /><!--  因字顏色預設白，所以底色暫用綠色  -->
+        android:dividerHeight="2dp"/>
+        <!--android:background="@android:color/holo_green_dark" />&lt;!&ndash;  因字顏色預設白，所以底色暫用綠色  &ndash;&gt;-->
 
 </LinearLayout>

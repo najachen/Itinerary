@@ -16,7 +16,7 @@
         android:text="本週行程表"
         android:textSize="@dimen/textSizeLargeTitle"
         android:layout_weight="1"
-        android:id="@+id/Btn_Week"
+        android:id="@+id/thisWeek"
         android:layout_margin="16dp" />
 
     <Button
@@ -27,7 +27,7 @@
         android:text="本月行程表"
         android:textSize="@dimen/textSizeLargeTitle"
         android:layout_weight="1"
-        android:id="@+id/Btn_Month"
+        android:id="@+id/thisMonth"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:layout_marginBottom="16dp" />
@@ -40,7 +40,7 @@
         android:text="當季行程表"
         android:textSize="@dimen/textSizeLargeTitle"
         android:layout_weight="1"
-        android:id="@+id/Btn_Season"
+        android:id="@+id/thisSeason"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp" />
 
@@ -52,7 +52,7 @@
         android:text="年度行程表"
         android:textSize="@dimen/textSizeLargeTitle"
         android:layout_weight="1"
-        android:id="@+id/Btn_Year"
+        android:id="@+id/thisYear"
         android:layout_margin="16dp" />
 
 </LinearLayout>

@@ -10,43 +10,71 @@ import android.widget.Button;
  * Created by Administrator on 2016/8/22.
  */
 public class ChoiceTaskListPeriodActivity extends AppCompatActivity {
+
+    private Button thisWeek;
+    private Button thisYear;
+    private Button thisSeason;
+    private Button thisMonth;
+
+    /**
+     * 回傳選擇的範圍
+     */
+    private Intent intent;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.choice_task_list_period);
 
-        Button btnweek =  (Button) findViewById(R.id.Btn_Week);
-        Button btnmonth = (Button) findViewById(R.id.Btn_Month);
-        Button btnseason = (Button) findViewById(R.id.Btn_Season);
-        Button btnyear = (Button) findViewById(R.id.Btn_Year);
+        findViews();
 
-        btnweek.setOnClickListener(new Button.OnClickListener() {   //未帶入週行程，只是跳回行程表, startActivity需再帶回周行程的值
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChoiceTaskListPeriodActivity.this, ListTaskActivity.class);
-                startActivity(intent);
-            }
-        });
-        btnmonth.setOnClickListener(new Button.OnClickListener() {  //未帶入月行程，只是跳回行程表, 需再帶回月行程的值
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChoiceTaskListPeriodActivity.this, ListTaskActivity.class);
-                startActivity(intent);
-            }
-        });
-        btnseason.setOnClickListener(new Button.OnClickListener() { //未帶入季行程，只是跳回行程表, 需再帶回季行程的值
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChoiceTaskListPeriodActivity.this, ListTaskActivity.class);
-                startActivity(intent);
-            }
-        });
-        btnyear.setOnClickListener(new Button.OnClickListener() {   //帶入年度行程，只是跳回行程表, 需再帶回年行程的值
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(ChoiceTaskListPeriodActivity.this, ListTaskActivity.class);
-                startActivity(intent);
-            }
-        });
+        intent = getIntent();
+    }
+
+    private void findViews() {
+        thisWeek = (Button) findViewById(R.id.thisWeek);
+        thisWeek.setOnClickListener(this::thisWeek);
+        thisMonth = (Button) findViewById(R.id.thisMonth);
+        thisMonth.setOnClickListener(this::thisMonth);
+        thisSeason = (Button) findViewById(R.id.thisSeason);
+        thisSeason.setOnClickListener(this::thisSeason);
+        thisYear = (Button) findViewById(R.id.thisYear);
+        thisYear.setOnClickListener(this::thisYear);
+    }
+
+    /**
+     * 找全年行程
+     * @param view
+     */
+    private void thisYear(View view) {
+        intent.putExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.TASK_SEARCH_MODE_THIS_YEAR);
+        setResult(RESULT_OK, intent);
+    }
+
+    /**
+     * 找當季行程
+     * @param view
+     */
+    private void thisSeason(View view) {
+        intent.putExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.TASK_SEARCH_MODE_THIS_SEASON);
+        setResult(RESULT_OK, intent);
+    }
+
+    /**
+     * 找當月行程
+     * @param view
+     */
+    private void thisMonth(View view) {
+        intent.putExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.TASK_SEARCH_MODE_THIS_MONTH);
+        setResult(RESULT_OK, intent);
+    }
+
+    /**
+     * 找當周行程
+     * @param view
+     */
+    private void thisWeek(View view) {
+        intent.putExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.TASK_SEARCH_MODE_THIS_WEEK);
+        setResult(RESULT_OK, intent);
     }
 }
