@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ChoiceHomeActivity">
+    tools:context=".ChoiceHomeActivity"
+    android:background="@color/highlighted_text_material_dark">
 
     <LinearLayout
         android:id="@+id/header_button"
@@ -21,6 +22,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="取消"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
             android:id="@+id/Btn_Back" />
 
         <Button
@@ -28,6 +31,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="清空設定"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
             android:id="@+id/Btn_Clearn" />
 
         <Button
@@ -35,6 +40,8 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="確定"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
             android:id="@+id/Btn_Enter" />
     </LinearLayout>
 
@@ -46,26 +53,48 @@
         android:gravity="center_horizontal"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="編輯行程"
+        android:textColor="#445566"
         android:textSize="@dimen/textSizeLargeTitle"/>
+    <TextView
+        android:id="@+id/name_label"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingTop="@dimen/labelPaddingTop"
+        android:text="名稱："
+        android:textColor="#445566"
+        android:textSize="@dimen/textSizeTitle"
+        android:layout_below="@+id/create_task_title"
+        android:layout_alignParentLeft="true" />
+
+    <EditText
+        android:id="@+id/name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/create_task_title"
+        android:layout_toRightOf="@id/date_label"
+        android:text="行程名稱"
+        android:textSize="@dimen/textSizeTitle"/>
 
     <TextView
         android:id="@+id/date_label"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/create_task_title"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="日期："
-        android:textSize="@dimen/textSizeTitle"/>
+        android:textColor="#445566"
+        android:textSize="@dimen/textSizeTitle"
+        android:layout_below="@+id/name_label"
+        android:layout_alignParentLeft="true" />
 
     <EditText
         android:id="@+id/date_value"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/create_task_title"
-        android:layout_toRightOf="@id/date_label"
         android:inputType="date"
         android:text="2016-09-01"
-        android:textSize="@dimen/textSizeTitle"/>
+        android:textSize="@dimen/textSizeTitle"
+        android:layout_alignTop="@+id/date_label"
+        android:layout_toRightOf="@+id/date_label" />
 
     <TextView
         android:id="@+id/time_label"
@@ -74,11 +103,12 @@
         android:layout_below="@id/date_label"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="時間："
+        android:textColor="#445566"
         android:textSize="@dimen/textSizeTitle"/>
 
     <EditText
         android:id="@+id/time_value"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/date_label"
         android:layout_toRightOf="@id/time_label"
@@ -93,11 +123,12 @@
         android:layout_below="@id/time_label"
         android:paddingTop="@dimen/labelPaddingTopLines2"
         android:text="地點："
+        android:textColor="#445566"
         android:textSize="@dimen/textSizeTitle"/>
 
     <EditText
         android:id="@+id/site_value"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/time_label"
         android:layout_toRightOf="@id/site_label"
@@ -135,6 +166,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/site_value"
-        android:text="設定音效"/>
+        android:text="設定音效"
+    android:background="@drawable/btn_shape_index_1"
+    android:textColor="#445566"/>
 
 </RelativeLayout>
