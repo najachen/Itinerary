@@ -15,7 +15,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".HomeActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@color/highlighted_text_material_dark">
 
     <LinearLayout
         android:orientation="horizontal"
@@ -26,20 +27,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="取消"/>
+            android:text="取消"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:layout_marginRight="5dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="確定"/>
+            android:text="確定"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:layout_marginLeft="5dp" />
     </LinearLayout>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/textSizeTitle"
-        android:text="待辦事項:"/>
+        android:text="待辦事項:"
+        android:textColor="#445566"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -51,13 +59,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="30sp"
-        android:text="= 購物項目 ="/>
+        android:text="= 購物項目 ="
+        android:textColor="#445566"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/textSizeDetail"
-        android:text="品名:"/>
+        android:text="品名:"
+        android:textColor="#445566"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -67,7 +77,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/textSizeDetail"
-        android:text="數量:"/>
+        android:text="數量:"
+        android:textColor="#445566"/>
 
     <EditText
         android:layout_width="match_parent"
@@ -83,13 +94,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="這是待辦事項"/>
+            android:text="這是待辦事項"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:layout_marginRight="5dp" />
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="這是購物清單"/>
+            android:text="這是購物清單"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:layout_marginLeft="5dp" />
     </LinearLayout>
 
 </LinearLayout>
