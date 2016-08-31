@@ -8,7 +8,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ChoiceHomeActivity">
+    tools:context=".ChoiceHomeActivity"
+    android:background="@color/highlighted_text_material_dark">
 
     <LinearLayout
         android:id="@+id/header_button"
@@ -17,25 +18,33 @@
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="新增音效"
-            android:id="@+id/Btn_NewSound" />
+            android:text="新增"
+            android:id="@+id/Btn_NewSound"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:layout_weight="1" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="取消"
-            android:id="@+id/Btn_Back" />
+            android:id="@+id/Btn_Back"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:layout_weight="1"
+            android:layout_marginLeft="5sp"
+            android:layout_marginRight="5sp" />
 
         <Button
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
             android:text="確定"
-            android:id="@+id/Btn_OK" />
+            android:id="@+id/Btn_OK"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:layout_weight="1" />
     </LinearLayout>
 
     <TextView
@@ -43,10 +52,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/header_button"
-        android:gravity="center_horizontal"
-        android:paddingTop="@dimen/activity_vertical_margin"
         android:text="提醒設置"
-        android:textSize="@dimen/textSizeLargeTitle"/>
+        android:textColor="#445566"
+        android:textSize="@dimen/textSizeLargeTitle"
+        android:gravity="center"
+        android:layout_margin="10dp" />
 
     <TextView
         android:id="@+id/date_label"
@@ -55,11 +65,12 @@
         android:layout_below="@id/remind_set_title"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="日期 : "
+        android:textColor="#445566"
         android:textSize="@dimen/textSizeTitle"/>
 
     <EditText
         android:id="@+id/date_value"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/remind_set_title"
         android:layout_toRightOf="@id/date_label"
@@ -73,11 +84,12 @@
         android:layout_below="@id/date_label"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="時間 : "
+        android:textColor="#445566"
         android:textSize="@dimen/textSizeTitle"/>
 
     <EditText
         android:id="@+id/time_value"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/date_label"
         android:layout_span="2"
@@ -92,11 +104,12 @@
         android:layout_below="@id/time_label"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="地點 : "
-        android:textSize="@dimen/textSizeTitle"/>
+        android:textSize="@dimen/textSizeTitle"
+        android:textColor="#445566"/>
 
     <TextView
         android:id="@+id/site_value"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/time_label"
         android:layout_span="2"
@@ -118,11 +131,12 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="音效檔 : "
-            android:textSize="@dimen/textSizeTitle"/>
+            android:textSize="@dimen/textSizeTitle"
+            android:textColor="#445566"/>
 
         <EditText
             android:id="@+id/sound_file_path"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="/data/freeMind.mp3"
             android:textSize="@dimen/textSizeDetail"/>
@@ -133,6 +147,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/sound_file"
+        android:background="@drawable/btn_shape_index_1"
+        android:textColor="#445566"
         android:text="瀏覽"/>
 
 </RelativeLayout>
