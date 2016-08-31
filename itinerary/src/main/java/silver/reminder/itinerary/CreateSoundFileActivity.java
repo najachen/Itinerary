@@ -30,6 +30,7 @@ public class CreateSoundFileActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_sound_file);
+
         savesound = (Button) findViewById(R.id.saveSound);
         soundList = (Button) findViewById(R.id.soundList);
         cancelRecord = (Button) findViewById(R.id.cancelRecord);

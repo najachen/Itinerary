@@ -15,7 +15,7 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     android:background="@color/highlighted_text_material_dark"
-    tools:context="com.ghost.outdoor.remind.TaskListActivity"
+    tools:context=".ListTaskActivity"
     tools:showIn="@layout/list_task_activity">
 
     <LinearLayout
@@ -24,7 +24,7 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/Btn_Back"
+            android:id="@+id/backChoiceOutdoorAllOperation"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="返回"

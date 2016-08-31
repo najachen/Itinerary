@@ -1,17 +1,12 @@
 package silver.reminder.itinerary;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.ListView;
 
 public class ChoiceHomeActivity extends AppCompatActivity {
-
-    private ListView noteOrShoppingList;
-    /*
-
-     */
 
     private Button intinBulletin;
     private Button intinOption;
@@ -34,52 +29,35 @@ public class ChoiceHomeActivity extends AppCompatActivity {
 
         intinSos = (Button) findViewById(R.id.intinSos);
         intinSos.setOnClickListener(this::sos);
-
-//        btn_outoption.setOnClickListener(new Button.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Intent intent = new Intent(ChoiceHomeActivity.this, ChoiceOutdoorAllOperationActivity.class);
-//                startActivity (intent );
-//            }
-//        });
-//        btnout.setOnClickListener(new Button.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Intent intent = new Intent(ChoiceHomeActivity.this, ChoiceAllActivity.class);
-////                startActivity (intent );
-//            }
-//        });
-//        btnsos.setOnClickListener(new Button.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-////                Intent intent = new Intent(ChoiceHomeActivity.this, ChoiceAllActivity.class);
-////                startActivity (intent );
-//            }
-//        });
-
     }
 
     /**
-     * 通報外出
+     * 通報外出(最佳化外出路徑)
+     *
      * @param view
      */
-    private void bulletin(View view){
-
+    private void bulletin(View view) {
+        Intent intent = new Intent(this, MapOptimizePathActivity.class);
+        startActivity(intent);
     }
 
     /**
      * 外出選項
+     *
      * @param view
      */
-    private void option(View view){
-
+    private void option(View view) {
+        Intent intent = new Intent(this, ChoiceOutdoorAllOperationActivity.class);
+        startActivity(intent);
     }
 
     /**
      * 求救(先暫時不做)
+     *
      * @param view
      */
-    private void sos(View view){
-
+    private void sos(View view) {
+        Intent intent = new Intent(this, MapSosActivity.class);
+        startActivity(intent);
     }
 }
