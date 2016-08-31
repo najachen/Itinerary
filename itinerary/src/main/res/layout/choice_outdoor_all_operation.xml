@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
 
-    tools:context=".HomeActivity">
+    tools:context=".ChoiceOutdoorAllOperationActivity">
     <!--style="@style/AppStyle2"-->
 
     <LinearLayout
@@ -37,7 +37,7 @@
             android:text="回首頁"
             android:textColor="#ffffff"
             android:textSize="20dp"
-            android:id="@+id/Btn_BackHome" />
+            android:id="@+id/backChoiceHome" />
     </LinearLayout>
     <LinearLayout
         android:layout_width="match_parent"
@@ -56,7 +56,7 @@
             android:focusableInTouchMode="true">
             <!--android:layout_margin="dp"-->
             <Button
-                android:id="@+id/Btn_Day"
+                android:id="@+id/todayTask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_shape_index_1"
@@ -70,7 +70,7 @@
                 android:layout_margin="5dp" />
 
             <Button
-                android:id="@+id/Btn_All"
+                android:id="@+id/allTask"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@drawable/btn_shape_index_1"
@@ -92,7 +92,7 @@
             android:layout_weight="1">
             <!--android:layout_margin="10dp"-->
         <Button
-            android:id="@+id/Btn_NewOper"
+            android:id="@+id/createTask"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_shape_index_1"
@@ -104,7 +104,7 @@
             android:layout_margin="5dp" />
 
         <Button
-            android:id="@+id/Btn_NewSound"
+            android:id="@+id/createSoucdFile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/btn_shape_index_1"

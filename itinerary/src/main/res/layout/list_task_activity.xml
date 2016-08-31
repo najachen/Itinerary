@@ -8,24 +8,10 @@
     android:fitsSystemWindows="true"
     tools:context=".ListTaskActivity">
 
-    <!--<android.support.design.widget.AppBarLayout-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:theme="@style/AppTheme.NoActionBar.AppBarOverlay">-->
-
-    <!--<android.support.v7.widget.Toolbar-->
-    <!--android:id="@+id/toolbar"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="?attr/actionBarSize"-->
-    <!--android:background="?attr/colorPrimary"-->
-    <!--app:popupTheme="@style/AppTheme.NoActionBar.PopupOverlay"/>-->
-
-    <!--</android.support.design.widget.AppBarLayout>-->
-
     <include layout="@layout/list_task_content" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabPrePage"
+        android:id="@+id/prePage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
@@ -33,7 +19,7 @@
         android:src="@drawable/arrow_left"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabAddTask"
+        android:id="@+id/addTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|center_horizontal"
@@ -41,7 +27,7 @@
         android:src="@drawable/button_add"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabNextPage"
+        android:id="@+id/nextPage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
