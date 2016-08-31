@@ -9,7 +9,8 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".ChoiceHomeActivity">
+    tools:context=".ChoiceHomeActivity"
+    android:background="@color/highlighted_text_material_dark">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -21,21 +22,32 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="回上頁"/>
+            android:text="回上頁"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/soundList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="查看音效清單"/>
+            android:text="查看音效清單"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:textSize="20sp" />
 
         <Button
             android:id="@+id/saveSound"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="存檔"/>
+            android:text="存檔"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -44,14 +56,15 @@
         android:layout_width="200sp"
         android:layout_height="200sp"
         android:layout_gravity="center_horizontal"
-        android:layout_marginBottom="@dimen/labelPaddingTopLines2"
-        android:layout_marginTop="@dimen/labelPaddingTopLines2"
+        android:layout_marginBottom="15dp"
+        android:layout_marginTop="15dp"
         android:background="@drawable/button_record_sound"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="儲存檔名 : "
+        android:textColor="#445566"
         android:textSize="@dimen/textSizeTitle"/>
 
     <EditText
@@ -66,7 +79,6 @@
         android:layout_height="wrap_content"
         android:text="已完成錄音(00分45秒)"
         android:textSize="@dimen/textSizeDetail"/>
-
 
 
 </LinearLayout>
