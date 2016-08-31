@@ -49,6 +49,7 @@ public class ChoiceTaskListPeriodActivity extends AppCompatActivity {
     private void thisYear(View view) {
         intent.putExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.TASK_SEARCH_MODE_THIS_YEAR);
         setResult(RESULT_OK, intent);
+        finish();
     }
 
     /**
@@ -58,6 +59,7 @@ public class ChoiceTaskListPeriodActivity extends AppCompatActivity {
     private void thisSeason(View view) {
         intent.putExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.TASK_SEARCH_MODE_THIS_SEASON);
         setResult(RESULT_OK, intent);
+        finish();
     }
 
     /**
@@ -67,6 +69,7 @@ public class ChoiceTaskListPeriodActivity extends AppCompatActivity {
     private void thisMonth(View view) {
         intent.putExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.TASK_SEARCH_MODE_THIS_MONTH);
         setResult(RESULT_OK, intent);
+        finish();
     }
 
     /**
@@ -76,5 +79,6 @@ public class ChoiceTaskListPeriodActivity extends AppCompatActivity {
     private void thisWeek(View view) {
         intent.putExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.TASK_SEARCH_MODE_THIS_WEEK);
         setResult(RESULT_OK, intent);
+        finish();
     }
 }

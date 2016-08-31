@@ -64,13 +64,14 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
     /**
      * 存檔
+     *
      * @param view
      */
     private void saveTask(View view) {
 
         Task task = new Task();
         task.setName(taskName.getText().toString());
-        task.setTm(taskDate.getText().toString()+taskTime.getText().toString());
+        task.setTm(taskDate.getText().toString() + taskTime.getText().toString());
         task.setSite(taskSite.getText().toString());
 
         ItineraryBo itineraryBo = ItineraryBoImpl.getInstance(this);
@@ -80,7 +81,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
         Log.d("新增行程id", String.valueOf(taskRowId));
 
         //如果有設定音效 要加入關係檔
-        if(scheduleSetupFeedback!=null){
+        if (scheduleSetupFeedback != null) {
 
             //內容已經有音效檔的id跟發射時間的設定
             scheduleSetupFeedback.setTaskId((int) taskRowId);
@@ -102,6 +103,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
     /**
      * 清空欄位
+     *
      * @param view
      */
     private void resetFields(View view) {
@@ -113,6 +115,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
     /**
      * 新增行程與音效關聯檔
+     *
      * @param view
      */
     private void createDingDong(View view) {
@@ -122,6 +125,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
     /**
      * 回上一頁
+     *
      * @param view
      */
     private void backChoiceOutdoorAllOperation(View view) {
@@ -130,10 +134,10 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
 
             case REQUEST_CODE_CREATE_DING_DONG:
-                if(resultCode == RESULT_OK){
+                if (resultCode == RESULT_OK) {
                     Bundle bundle = data.getExtras();
                     scheduleSetupFeedback = (Schedule) bundle.get(GlobalNaming.SCHEDULE_SETUP_FEEDBACK);
                 }

@@ -29,7 +29,6 @@ public class StartGenCode {
      */
     private static final String packageNamePrefix = "silver.reminder.";
 
-    // private static final String moduleNameInventory = "inventory";
     private static final String moduleName = "itinerary";
 
     private static final String packageNamePostfixBo = ".bo";
@@ -62,9 +61,9 @@ public class StartGenCode {
     // eclipse
 //    private static final String thisFilePath = "D:\\AndroidProjects\\EclipseWorkSpace\\LambdaTest\\src\\gen\\java\\code\\tools\\";
     //android studio
-//	private static final String thisFilePath = "D:\\PccuAndroidProj\\Itinerary\\itinerary\\src\\test\\java\\silver\\reminder\\itinerary\\";
+	private static final String thisFilePath = "C:\\AndroidWorkSpace\\PccuAndroidProj\\Itinerary\\itinerary\\src\\test\\java\\silver\\reminder\\itinerary\\";
 	//文化大學電腦路徑
-    private static final String thisFilePath = "E:\\android\\projects\\Itinerary\\itinerary\\src\\test\\java\\silver\\reminder\\itinerary\\";
+//    private static final String thisFilePath = "E:\\android\\projects\\Itinerary\\itinerary\\src\\test\\java\\silver\\reminder\\itinerary\\";
 
     /**
      * 產生時間
@@ -96,9 +95,9 @@ public class StartGenCode {
         // eclipse 適用
 //        cfg.setClassForTemplateLoading(StartGenCode.class, "");
         // Android Studio 適用
-//		cfg.setDirectoryForTemplateLoading(new File("D:\\PccuAndroidProj\\Itinerary\\itinerary\\src\\test\\java\\silver\\reminder\\itinerary\\"));
+		cfg.setDirectoryForTemplateLoading(new File("C:\\AndroidWorkSpace\\PccuAndroidProj\\Itinerary\\itinerary\\src\\test\\java\\silver\\reminder\\itinerary\\"));
 		//文化大學電腦路徑
-        cfg.setDirectoryForTemplateLoading(new File("E:\\android\\projects\\Itinerary\\itinerary\\src\\test\\java\\silver\\reminder\\itinerary\\"));
+//        cfg.setDirectoryForTemplateLoading(new File("E:\\android\\projects\\Itinerary\\itinerary\\src\\test\\java\\silver\\reminder\\itinerary\\"));
 
         cfg.setDefaultEncoding("UTF-8");
         cfg.setTemplateExceptionHandler(TemplateExceptionHandler.DEBUG_HANDLER);
