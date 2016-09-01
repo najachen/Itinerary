@@ -3,8 +3,6 @@ package silver.reminder.itinerary;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.database.DatabaseUtils;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -18,8 +16,6 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
 import java.util.Calendar;
-
-import silver.reminder.itinerary.dao.ItineraryDatabaseHelper;
 
 /**
  * Created by Administrator on 2016/8/22.
@@ -40,11 +36,11 @@ public class ListTaskActivity extends AppCompatActivity {
     private static final int PAGE_SIZE = 5;
     private int currentPage = 1;
     private int searchMode;
-    private Calendar todayCalendar;
 
     /*
        task 欄位名稱
      */
+    private static final String TASK_TABLE_NAME = "task";
     private static final String TASK_FIELD_ID = "id";
     private static final String TASK_FIELD_NAME = "name";
     private static final String TASK_FIELD_SITE = "site";
@@ -57,14 +53,10 @@ public class ListTaskActivity extends AppCompatActivity {
 
         findViews();
 
-        searchMode = getIntent().getIntExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.ERROR_CODE);
-    }
+        this.searchMode = getIntent().getIntExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.ERROR_CODE);
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-
-        this.todayCalendar = Calendar.getInstance();
+        //顯示第一頁清單
+        showListView(null);
     }
 
     private void findViews() {
@@ -86,33 +78,16 @@ public class ListTaskActivity extends AppCompatActivity {
      * @param view
      */
     private void prePage(View view) {
-        if (currentPage > 1) {
-            currentPage--;
-        }
-        SimpleCursorAdapter simpleCursorAdapter = getPagedAdapter();
-        tasklist.setAdapter(simpleCursorAdapter);
+        showListView(Pager.GO_BACKWARD);
     }
 
     /**
-     * 下一頁 xxx 這裡需要重構
+     * 下一頁
      *
      * @param view
      */
     private void nextPage(View view) {
-        SQLiteDatabase db = ItineraryDatabaseHelper.getInstance(this).getReadableDatabase();
-
-        //判斷是否為最後一頁
-        String todayString = GlobalNaming.getTmString(this.todayCalendar);
-        String searchEndDateString = this.getSearchEndDateString();
-
-        long count = DatabaseUtils.queryNumEntries(db, "task", "where tm >= ? and tm <= ?", new String[]{todayString, searchEndDateString});
-        int totalPageNum = (int) count / PAGE_SIZE + 1;
-
-        if (currentPage < totalPageNum) {
-            currentPage++;
-        }
-        SimpleCursorAdapter simpleCursorAdapter = getPagedAdapter();
-        tasklist.setAdapter(simpleCursorAdapter);
+        showListView(Pager.GO_FORWARD);
     }
 
     /**
@@ -127,6 +102,10 @@ public class ListTaskActivity extends AppCompatActivity {
 
     /**
      * 進入單一行程明細頁面
+     * <p>
+     * 這裡的寫法看似很工程導向(就是很屌的意思)
+     * 但是不切實際 過度複雜化問題
+     * 僅學術練習用 下次不再這樣做
      *
      * @param adapterView
      * @param view
@@ -134,20 +113,19 @@ public class ListTaskActivity extends AppCompatActivity {
      * @param l
      */
     private void onTaskClick(AdapterView<?> adapterView, View view, int position, long l) {
-        //取得被點選的item id傳給下一個Activity
+
         SimpleCursorAdapter adapter = (SimpleCursorAdapter) adapterView.getAdapter();
         Cursor cursor = adapter.getCursor();
 
-        boolean isMoveToFirstSuccess = cursor.moveToFirst();
         boolean isMoveToPositionSuccess = cursor.moveToPosition(position);
-        if(isMoveToFirstSuccess && isMoveToPositionSuccess){
+        if (isMoveToPositionSuccess) {
             int taskId = cursor.getInt(cursor.getColumnIndexOrThrow(TASK_FIELD_ID));
 
             Intent intent = new Intent(this, ListTaskItemActivity.class);
             intent.putExtra(GlobalNaming.TASK_ID_CLICKED, taskId);
             startActivity(intent);
-        }else{
-            Log.d("選取cursor其中一筆資料的id有誤!!", "目前cursor位置 = "+cursor.getPosition());
+        } else {
+            Log.d("選取cursor其中一筆資料的id有誤!!", "目前cursor位置 = " + cursor.getPosition());
         }
     }
 
@@ -161,62 +139,26 @@ public class ListTaskActivity extends AppCompatActivity {
     }
 
     /**
-     * 提供第Ｎ頁的內容 xxx 這裡需要重構
+     * 以分頁機制顯示清單
      *
-     * @return list 需要的 SimpleCursorAdapter
+     * @param isGoForward 是否前進或後退或原地不動
      */
-    private SimpleCursorAdapter getPagedAdapter() {
-        SQLiteDatabase db = ItineraryDatabaseHelper.getInstance(this).getReadableDatabase();
+    private void showListView(Boolean isGoForward) {
 
-        /*
-            xxx 這裡算bo
-         */
-        //當頁開始與結束是第幾筆資料
-        int intPageNumStart = ((currentPage - 1) * PAGE_SIZE) + 1;
-        String strPageNumStart = String.valueOf(intPageNumStart);
-        int intDataOffset = PAGE_SIZE - 1;
-        String strDataOffset = String.valueOf(intDataOffset);
+        Calendar calendarToday = Calendar.getInstance();
+        String startTm = GlobalNaming.getTmString(calendarToday);
+        String endTm = this.getSearchEndDateString((Calendar) calendarToday.clone());
 
-        //依搜尋模式決定搜尋條件
-        String todayString = GlobalNaming.getTmString(this.todayCalendar);
-        String searchEndDateString = getSearchEndDateString();
+        Pager pager = new Pager(this, TASK_TABLE_NAME, TASK_FIELD_TIME, PAGE_SIZE);
+        Cursor cursor = pager.getPagedCursor(startTm, endTm, this.currentPage, isGoForward);
 
-        /*
-            xxx 這裡算dao
-         */
-        //開始搜尋資料
-        Cursor cursor = db.rawQuery("select * from task where tm >= ? and tm <= ? limit ? offset ?", new String[]{todayString, searchEndDateString, strPageNumStart, strDataOffset});
-
-        /*
-            xxx 這裡回到bo
-         */
-        SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(this
+        MyCursorAdapter myCursorAdapter = new MyCursorAdapter(this
                 , R.layout.embedding_task_list
                 , cursor
                 , new String[]{TASK_FIELD_NAME, TASK_FIELD_SITE, TASK_FIELD_TIME}
                 , new int[]{R.id.taskName, R.id.taskSite, R.id.taskTime}
-                , 0) {
-            @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-
-                if (view == null) {
-                    view = LayoutInflater.from(context).inflate(R.layout.embedding_task_list, null, false);
-
-                    TextView taskName = (TextView) view.findViewById(R.id.taskName);
-                    String name = cursor.getString(cursor.getColumnIndex(TASK_FIELD_NAME));
-                    taskName.setText(name);
-
-                    TextView taskSite = (TextView) view.findViewById(R.id.taskSite);
-                    String site = cursor.getString(cursor.getColumnIndex(TASK_FIELD_SITE));
-                    taskSite.setText(site);
-
-                    TextView taskTime = (TextView) view.findViewById(R.id.taskTime);
-                    String tm = cursor.getString(cursor.getColumnIndex(TASK_FIELD_TIME));
-                    taskTime.setText(GlobalNaming.transDateFormat(tm));
-                }
-            }
-        };
-        return simpleCursorAdapter;
+                , 0);
+        this.tasklist.setAdapter(myCursorAdapter);
     }
 
     /**
@@ -224,9 +166,8 @@ public class ListTaskActivity extends AppCompatActivity {
      *
      * @return 20160528121542
      */
-    private String getSearchEndDateString() {
+    private String getSearchEndDateString(Calendar searchEndCalendar) {
 
-        Calendar searchEndCalendar = Calendar.getInstance();
         switch (searchMode) {
             case GlobalNaming.TASK_SEARCH_MODE_TODAY:
                 //無動作
@@ -247,5 +188,35 @@ public class ListTaskActivity extends AppCompatActivity {
                 Log.d("searchMode 傳輸有誤", "其值為 " + searchMode);
         }
         return GlobalNaming.getTmString(searchEndCalendar);
+    }
+
+    /**
+     *
+     */
+    class MyCursorAdapter extends SimpleCursorAdapter {
+
+        public MyCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
+            super(context, layout, c, from, to, flags);
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+
+            if (view == null) {
+                view = LayoutInflater.from(context).inflate(R.layout.embedding_task_list, null, false);
+
+                TextView taskName = (TextView) view.findViewById(R.id.taskName);
+                String name = cursor.getString(cursor.getColumnIndex(TASK_FIELD_NAME));
+                taskName.setText(name);
+
+                TextView taskSite = (TextView) view.findViewById(R.id.taskSite);
+                String site = cursor.getString(cursor.getColumnIndex(TASK_FIELD_SITE));
+                taskSite.setText(site);
+
+                TextView taskTime = (TextView) view.findViewById(R.id.taskTime);
+                String tm = cursor.getString(cursor.getColumnIndex(TASK_FIELD_TIME));
+                taskTime.setText(GlobalNaming.getDateFormat(tm));
+            }
+        }
     }
 }

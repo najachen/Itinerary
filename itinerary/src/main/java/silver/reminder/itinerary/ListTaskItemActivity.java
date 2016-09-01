@@ -14,8 +14,11 @@ import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 import silver.reminder.itinerary.bo.ItineraryBo;
 import silver.reminder.itinerary.bo.ItineraryBoImpl;
+import silver.reminder.itinerary.javabean.Task;
 
 public class ListTaskItemActivity extends AppCompatActivity {
 
@@ -31,9 +34,9 @@ public class ListTaskItemActivity extends AppCompatActivity {
     private TextView taskSite;
 
     /**
-     * 被點擊的taskItemId
+     * 上一頁被點擊的 taskId
      */
-    private int clickedTaskItemId;
+    private int taskId;
 
     /*
         請求碼
@@ -62,7 +65,20 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
         findViews();
 
-        //xxx 依照傳來的taskId 撈出資料 顯示在清單上
+        this.taskId = getIntent().getIntExtra(GlobalNaming.TASK_ID_CLICKED, GlobalNaming.ERROR_CODE);
+
+        /*
+            顯示明細與清單
+         */
+        ItineraryBo itineraryBo = ItineraryBoImpl.getInstance(this);
+        //顯示明細
+        Task task = itineraryBo.findTaskById(this.taskId);
+        this.taskName.setText(task.getName());
+        this.taskTime.setText(GlobalNaming.getDateFormat(task.getTm()));
+        this.taskSite.setText(task.getSite());
+
+        //xxx 清單
+        showListView(null);
     }
 
     private void findViews() {
@@ -218,5 +234,28 @@ public class ListTaskItemActivity extends AppCompatActivity {
     private void prePageTaskItem(View view) {
 
 
+    }
+
+    /**
+     * 以分頁機制顯示清單
+     *
+     * @param isGoForward 是否前進或後退或原地不動
+     */
+    private void showListView(Boolean isGoForward) {
+
+        Calendar calendarToday = Calendar.getInstance();
+        String startTm = GlobalNaming.getTmString(calendarToday);
+        String endTm = this.getSearchEndDateString((Calendar) calendarToday.clone());
+
+        Pager pager = new Pager(this, TASK_TABLE_NAME, TASK_FIELD_TIME, PAGE_SIZE);
+        Cursor cursor = pager.getPagedCursor(startTm, endTm, this.currentPage, isGoForward);
+
+        MyCursorAdapter myCursorAdapter = new MyCursorAdapter(this
+                , R.layout.embedding_task_list
+                , cursor
+                , new String[]{TASK_FIELD_NAME, TASK_FIELD_SITE, TASK_FIELD_TIME}
+                , new int[]{R.id.taskName, R.id.taskSite, R.id.taskTime}
+                , 0);
+        this.tasklist.setAdapter(myCursorAdapter);
     }
 }

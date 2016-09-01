@@ -45,7 +45,7 @@ public class GlobalNaming {
      * @param tm 14碼時間字串
      * @return 1980/10/25 07:40:55
      */
-    public static String transDateFormat(String tm) {
+    public static String getDateFormat(String tm) {
 
         String year = tm.substring(0, 4);
         String month = tm.substring(4, 6);
@@ -63,7 +63,7 @@ public class GlobalNaming {
     }
 
     /**
-     * 取得現在時間的14碼字串
+     * 取得時間的14碼字串
      *
      * @param calendar 要轉的日曆物件
      * @return 20160901124055
