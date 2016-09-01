@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-    這裡是單一行程的明細頁面
     底下的清單是備忘的事項 分兩種類型
     第一種是單純的記事
     第二種是購物的項目
-    這一頁 list_task_item.xml 有可能與 list_task.xml 合併為 fragment 結構
 
-    id -> remindSetUp
     若無設定提醒則顯示"新增提醒" 若有設定 則顯示"修改或取消提醒"
     使用alertDialog 可選編輯 刪除 或取消
 -->
@@ -22,7 +19,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-    tools:context=".HomeActivity"
+    tools:context=".ListTaskItemActivity"
     tools:showIn="@layout/list_task_item_activity">
 
     <LinearLayout
@@ -31,21 +28,21 @@
         android:orientation="horizontal">
 
         <Button
-            android:id="@+id/backList"
+            android:id="@+id/backTaskList"
             android:layout_width="@dimen/useWeight"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="返回"/>
 
         <Button
-            android:id="@+id/deleteTask"
+            android:id="@+id/editOrDeleteTask"
             android:layout_width="@dimen/useWeight"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="編輯或刪除"/>
 
         <Button
-            android:id="@+id/remindSetUp"
+            android:id="@+id/setReminder"
             android:layout_width="@dimen/useWeight"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -61,7 +58,7 @@
             android:id="@+id/taskLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="行程 : "
+            android:text="名稱 : "
             android:textSize="@dimen/textSizeDetail"/>
 
         <TextView
@@ -82,7 +79,7 @@
             android:layout_below="@id/taskName"/>
 
         <TextView
-            android:id="@+id/dateAndTimeValue"
+            android:id="@+id/taskTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="2016/08/12 13:30"
@@ -99,18 +96,18 @@
             android:layout_below="@id/dateAndTimeLabel"/>
 
         <TextView
-            android:id="@+id/siteValue"
+            android:id="@+id/taskSite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="國父紀念館"
             android:textSize="@dimen/textSizeDetail"
             android:lines="2"
             android:layout_toRightOf="@id/siteLabel"
-            android:layout_below="@id/dateAndTimeValue"/>
+            android:layout_below="@id/dateAndTimeLabel"/>
     </RelativeLayout>
 
     <ListView
-        android:id="@+id/noteOrShoppingList"
+        android:id="@+id/taskItemList"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:divider="@drawable/selector"

@@ -1,5 +1,7 @@
 package silver.reminder.itinerary;
 
+import java.util.Calendar;
+
 /**
  * Created by Administrator on 2016/8/31.
  */
@@ -26,9 +28,58 @@ public class GlobalNaming {
     public static final int TASK_SEARCH_MODE_THIS_SEASON = 0x1000;
     public static final int TASK_SEARCH_MODE_THIS_YEAR = 0x10000;
 
+    /**
+     * 被點擊的單一行程 id 傳送到listTaskItemActivity
+     */
+    public static final String TASK_ID_CLICKED = GlobalNaming.class.getName() + DOT + "TASK_ID_CLICKED";
+    public static final String TASK_ITEM_ID_CLICKED = GlobalNaming.class.getName() + DOT + "TASK_ITEM_ID_CLICKED";
+
     /*
         音效檔
      */
     public static final String SCHEDULE_SETUP_FEEDBACK = GlobalNaming.class.getName() + DOT + "SCHEDULE_SETUP_FEEDBACK";
 
+    /**
+     * 將時間欄位14碼 轉為日期格式
+     *
+     * @param tm 14碼時間字串
+     * @return 1980/10/25 07:40:55
+     */
+    public static String transDateFormat(String tm) {
+
+        String year = tm.substring(0, 4);
+        String month = tm.substring(4, 6);
+        String date = tm.substring(6, 8);
+        String hour = tm.substring(8, 10);
+        String minute = tm.substring(10, 12);
+        String second = tm.substring(12, 14);
+
+        StringBuffer tmBuffer = new StringBuffer();
+        tmBuffer.append(year).append("/").append(month).append("/").append(date)
+                .append(" ")
+                .append(hour).append(":").append(minute).append(":").append(second);
+
+        return tmBuffer.toString();
+    }
+
+    /**
+     * 取得現在時間的14碼字串
+     *
+     * @param calendar 要轉的日曆物件
+     * @return 20160901124055
+     */
+    public static String getTmString(Calendar calendar) {
+
+        int year = calendar.get(Calendar.YEAR);
+        int month = calendar.get(Calendar.MONTH) + 1;
+        int date = calendar.get(Calendar.DATE);
+        int hour = calendar.get(Calendar.HOUR);
+        int minute = calendar.get(Calendar.MINUTE);
+        int second = calendar.get(Calendar.SECOND);
+
+        StringBuffer tmBuffer = new StringBuffer();
+        tmBuffer.append(year).append(month).append(date).append(hour).append(minute).append(second);
+
+        return tmBuffer.toString();
+    }
 }

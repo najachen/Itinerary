@@ -33,16 +33,12 @@ public class ChoiceOutdoorAllOperationActivity extends AppCompatActivity {
     private void findViews() {
         backChoiceHome = (Button) findViewById(R.id.backChoiceHome);
         backChoiceHome.setOnClickListener(this::backChoiceHome);
-
         todayTask = (Button) findViewById(R.id.todayTask);
         todayTask.setOnClickListener(this::todayTask);
-
         allTask = (Button) findViewById(R.id.allTask);
         allTask.setOnClickListener(this::allTask);
-
         createTask = (Button) findViewById(R.id.createTask);
         createTask.setOnClickListener(this::createTask);
-
         createSoucdFile = (Button) findViewById(R.id.createSoucdFile);
         createSoucdFile.setOnClickListener(this::createSoundFile);
     }
@@ -55,7 +51,7 @@ public class ChoiceOutdoorAllOperationActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CreateSoundFileActivity.class);
         startActivity(intent);
 
-        //xxx 這裡等錄音功能熟悉了再繼續做
+        // xxx 這裡等錄音功能熟悉了再繼續做
     }
 
     /**

@@ -3,7 +3,7 @@ package silver.reminder.itinerary;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
-public class CreateOrEditTaskDetailListItemActivity extends AppCompatActivity {
+public class CreateOrEditTaskItemActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
