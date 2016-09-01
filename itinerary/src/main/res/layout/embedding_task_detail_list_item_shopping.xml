@@ -12,6 +12,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/background_color_green_white"
     tools:context=".HomeActivity">
 
     <LinearLayout
@@ -55,6 +56,8 @@
         android:layout_alignParentEnd="true"
         android:layout_centerVertical="true"
         android:text="修改"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:background="@drawable/btn_shape_index_1"
+        android:textColor="#445566"/>
 
 </RelativeLayout>
