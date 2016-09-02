@@ -22,7 +22,7 @@
         android:text="回上一頁"
         android:background="@drawable/btn_shape_index_1"
         android:textColor="#445566"
-        android:id="@+id/backPage"/>
+        android:id="@+id/backCreateDingDong"/>
 
     <ListView
         android:id="@+id/soundFileList"

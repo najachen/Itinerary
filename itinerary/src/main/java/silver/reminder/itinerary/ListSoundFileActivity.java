@@ -1,71 +1,124 @@
 package silver.reminder.itinerary;
 
+import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.ArrayAdapter;
+import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
+import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Created by Administrator on 2016/8/23.
  */
 public class ListSoundFileActivity extends AppCompatActivity {
-    int page = 0;   //設定一開始頁數
-    int count = 0 ; //計算頁數，未完成如何計算更換soundDataX
 
-    String [] soundData1 = {"sound1", "sound2", "sound3", "sound4"};
-    String [] soundData2 = {"sound5", "sound6", "sound7", "sound8"};
-    String [] soundData3 = {"sound9", "soundA", "soundB", "soundC"};
-    private Button backpage;
-    private ListView soundfilelist;
+    private Button backCreateDingDong;
+    private ListView soundFileList;
+    private FloatingActionButton nextPageSoundFile;
+    private FloatingActionButton prePageSoundFile;
+
+    /*
+        分頁相關
+     */
+    private static final int PAGE_SIZE = 5;
+    private int currentPage = 1;
+
+    /*
+        table name and field name
+     */
+    private static final String SOUND_FILE_TABLE_NAME = "soundFile";
+    private static final String SOUND_FILE_FIELD_ID = "id";
+    private static final String SOUND_FILE_FIELD_FILE_NAME = "fileName";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.list_sound_file_activity);
 
-        FloatingActionButton fabright = (FloatingActionButton) findViewById(R.id.fabRight);
-        FloatingActionButton fableft = (FloatingActionButton) findViewById(R.id.fabLeft);
-
-        backpage = (Button) findViewById(R.id.backPage);
-        soundfilelist = (ListView) findViewById(R.id.soundFileList);
-
-        soundfilelist.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, soundData1));
-        soundfilelist.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, soundData2));
-        soundfilelist.setAdapter(new ArrayAdapter<String>(this,android.R.layout.simple_list_item_1, soundData3));
-
-        backpage.setOnClickListener(new Button.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish(); ;
-            }
-        });
-
-        fableft.setOnClickListener(new FloatingActionButton.OnClickListener() {    //清單下一頁
-            @Override
-            public void onClick(View view) {
-                page--; //按上一頁到第一張時，繼續在按，未完成 Listview string陣列 ，參考吳老師的CH6圖片相關介面，更換圖片是更換陣列裡的檔案名稱???
-                if (page < 0) ;
-                page = soundData2.length - 1;
-//                Intent intent = new Intent(ListSoundFileActivity.this, ListSoundFileContent.class);
-//                startActivity(intent);
-            }
-        });
-        fabright.setOnClickListener(new FloatingActionButton.OnClickListener() { //清單下一頁
-            @Override
-            public void onClick(View view) {
-                page++;
-                if (page == count) {
-                    page = 0;
-                }
-            }
-        });
+        findViews();
     }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
 
+        listSoundFile(null);
+    }
 
+    private void findViews() {
+        nextPageSoundFile = (FloatingActionButton) findViewById(R.id.nextPageSoundFile);
+        nextPageSoundFile.setOnClickListener(this::nextPageSoundFile);
+        prePageSoundFile = (FloatingActionButton) findViewById(R.id.prePageSoundFile);
+        prePageSoundFile.setOnClickListener(this::prePageSoundFile);
+        backCreateDingDong = (Button) findViewById(R.id.backCreateDingDong);
+        backCreateDingDong.setOnClickListener(this::backCreateDingDong);
 
+        soundFileList = (ListView) findViewById(R.id.soundFileList);
+        soundFileList.setOnItemClickListener(this::onSoundFileClick);
+    }
 
+    /**
+     * @param adapterView
+     * @param view
+     * @param i
+     * @param l
+     */
+    private void onSoundFileClick(AdapterView<?> adapterView, View view, int i, long l) {
+        TextView soundFileId = (TextView) view.findViewById(R.id.soundFileId);
+        TextView soundFileName = (TextView) view.findViewById(R.id.soundFileName);
+
+        Toast.makeText(this, "您選的是 " + soundFileName.getText().toString(), Toast.LENGTH_LONG).show();
+
+        Intent intent = getIntent();
+        intent.putExtra(GlobalNaming.SOUND_FILE_ID, soundFileId.getText().toString());
+        intent.putExtra(GlobalNaming.SOUND_FILE_NAME, soundFileName.getText().toString());
+        setResult(RESULT_OK, intent);
+
+        this.backCreateDingDong(view);
+    }
+
+    /**
+     * @param view
+     */
+    private void backCreateDingDong(View view) {
+        finish();
+    }
+
+    /**
+     * @param view
+     */
+    private void prePageSoundFile(View view) {
+        listSoundFile(Pager.GO_BACKWARD);
+    }
+
+    /**
+     * @param view
+     */
+    private void nextPageSoundFile(View view) {
+        listSoundFile(Pager.GO_FORWARD);
+    }
+
+    private void listSoundFile(Boolean isGoForward) {
+
+        Pager pager = new Pager(this, PAGE_SIZE);
+        Cursor cursor = pager.getPagedCursorBySearchingCondition(SOUND_FILE_TABLE_NAME
+                , SOUND_FILE_FIELD_ID
+                , String.valueOf(0)
+                , String.valueOf(Integer.MAX_VALUE)
+                , this.currentPage
+                , isGoForward);
+        SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(this
+                , R.layout.embedding_sound_file_list_item
+                , cursor
+                , new String[]{SOUND_FILE_FIELD_ID, SOUND_FILE_FIELD_FILE_NAME}
+                , new int[]{R.id.soundFileId, R.id.soundFileName}
+                , 0);
+        soundFileList.setAdapter(simpleCursorAdapter);
+    }
 }

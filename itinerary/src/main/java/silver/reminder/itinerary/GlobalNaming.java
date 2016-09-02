@@ -36,10 +36,16 @@ public class GlobalNaming {
     public static final String TASK_ITEM_VIEW_TYPE = GlobalNaming.class.getName() + DOT + "TASK_ITEM_VIEW_TYPE";
 
     /*
-        音效檔
+        提醒檔
      */
     public static final String SCHEDULE_OBJECT = GlobalNaming.class.getName() + DOT + "SCHEDULE_OBJECT";
-    public static final String SCHEDULE_ID = GlobalNaming.class.getName() + DOT + "SCHEDULE_ID";;
+    public static final String SCHEDULE_ID = GlobalNaming.class.getName() + DOT + "SCHEDULE_ID";
+
+    /*
+        音效檔
+     */
+    public static final String SOUND_FILE_ID = GlobalNaming.class.getName() + DOT + "SOUND_FILE_ID";
+    public static final String SOUND_FILE_NAME = GlobalNaming.class.getName() + DOT + "SOUND_FILE_NAME";;
 
     /**
      * 將時間欄位14碼 轉為日期格式

@@ -140,7 +140,7 @@
             android:id="@+id/soundFilePathSchedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="/data/freeMind.mp3"
+            android:text="freeMind.mp3"
             android:textSize="@dimen/textSizeDetail"/>
     </LinearLayout>
 

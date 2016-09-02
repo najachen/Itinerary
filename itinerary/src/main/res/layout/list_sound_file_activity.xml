@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.design.widget.CoordinatorLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
-    tools:context=".ChoiceHomeActivity">
+    tools:context=".ListSoundFileActivity">
 
-    <include layout="@layout/list_sound_file_content"
-        android:id="@+id/listsoundactivity" />
+    <include layout="@layout/list_sound_file_content"/>
+    <!--android:id="@+id/listsoundactivity"-->
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabLeft"
+        android:id="@+id/prePageSoundFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|start"
@@ -20,7 +19,7 @@
         android:src="@drawable/arrow_left"/>
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabRight"
+        android:id="@+id/nextPageSoundFile"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|end"
