@@ -38,7 +38,8 @@ public class GlobalNaming {
     /*
         音效檔
      */
-    public static final String SCHEDULE_SETUP_FEEDBACK = GlobalNaming.class.getName() + DOT + "SCHEDULE_SETUP_FEEDBACK";
+    public static final String SCHEDULE_OBJECT = GlobalNaming.class.getName() + DOT + "SCHEDULE_OBJECT";
+    public static final String SCHEDULE_ID = GlobalNaming.class.getName() + DOT + "SCHEDULE_ID";;
 
     /**
      * 將時間欄位14碼 轉為日期格式

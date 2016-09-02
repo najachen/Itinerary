@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -65,6 +66,11 @@ public class ListTaskItemActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_EDIT_TASK = 0x0010;
     private static final int REQUEST_CODE_CREATE_TASK_ITEM = 0x0100;
 
+    /**
+     * bo
+     */
+    private ItineraryBo itineraryBo;
+
     /*
       欄位名稱
     */
@@ -89,10 +95,16 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
         this.taskId = getIntent().getIntExtra(GlobalNaming.TASK_ID, GlobalNaming.ERROR_CODE);
 
+        this.itineraryBo = ItineraryBoImpl.getInstance(this);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
         /*
             顯示明細與清單
          */
-        ItineraryBo itineraryBo = ItineraryBoImpl.getInstance(this);
         //顯示明細
         Task task = itineraryBo.findTaskById(this.taskId);
         this.taskName.setText(task.getName());
@@ -176,7 +188,6 @@ public class ListTaskItemActivity extends AppCompatActivity {
      * @param which
      */
     private void deleteTaskItem(DialogInterface dialogInterface, int which) {
-        ItineraryBo itineraryBo = ItineraryBoImpl.getInstance(this);
 
         if (this.taskItemViewType == MyViewHolderAdapter.NOTE_VIEW) {
             itineraryBo.removeNote(this.taskItemId);
@@ -200,13 +211,13 @@ public class ListTaskItemActivity extends AppCompatActivity {
     }
 
     /**
-     * 編輯或修改行程
+     * 編輯或刪除行程
      *
      * @param view
      */
     private void editOrDeleteTask(View view) {
         new AlertDialog.Builder(this)
-                .setMessage("編輯或新增行程??")
+                .setMessage("編輯或刪除行程??")
                 .setPositiveButton("編輯", ListTaskItemActivity.this::editTask)
                 .setNegativeButton("刪除", ListTaskItemActivity.this::deleteTask)
                 .setNeutralButton("取消", null)
@@ -227,10 +238,12 @@ public class ListTaskItemActivity extends AppCompatActivity {
         /*
             開始操作DB
          */
-        ItineraryBo itineraryBo = ItineraryBoImpl.getInstance(this);
+
 
         //移除task
         itineraryBo.removeTask(this.taskId);
+
+        //移除提醒 xxx
 
         //移除note群
         Note keyNote = new Note();
@@ -238,7 +251,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
         Cursor noteCursorDelete = itineraryBo.findNoteList(keyNote);
 
         List<Integer> noteIdListDelete = new ArrayList<Integer>();
-        while(noteCursorDelete.moveToNext()){
+        while (noteCursorDelete.moveToNext()) {
             int noteId = noteCursorDelete.getInt(noteCursorDelete.getColumnIndexOrThrow("id"));
             noteIdListDelete.add(noteId);
         }
@@ -250,7 +263,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
         Cursor shoppingCursorDelete = itineraryBo.findShoppingList(keyShopping);
 
         List<Integer> shoppingIdListDelete = new ArrayList<Integer>();
-        while(shoppingCursorDelete.moveToNext()){
+        while (shoppingCursorDelete.moveToNext()) {
             int shoppingId = shoppingCursorDelete.getInt(shoppingCursorDelete.getColumnIndexOrThrow("id"));
             shoppingIdListDelete.add(shoppingId);
         }
@@ -456,14 +469,19 @@ public class ListTaskItemActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
-        //        private static final int REQUEST_CODE_EDIT_TASK = 0x0010;
-        //        private static final int REQUEST_CODE_CREATE_TASK_ITEM = 0x0100;
-        //        private static final int REQUEST_CODE_EDIT_TASK_ITEM = 0x0001;
+        switch (requestCode) {
+            case REQUEST_CODE_EDIT_TASK:
 
 
+                // xxx
 
-
-
-
+                break;
+            case REQUEST_CODE_CREATE_TASK_ITEM:
+                break;
+            case REQUEST_CODE_EDIT_TASK_ITEM:
+                break;
+            default:
+                Log.d("onActivityResult 錯誤 -> ", "當前requestCode = " + requestCode);
+        }
     }
 }

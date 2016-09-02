@@ -64,7 +64,7 @@
         android:layout_height="wrap_content">
 
         <TextView
-            android:id="@+id/taskLabel"
+            android:id="@+id/nameLabelTaskItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="名稱 : "
@@ -77,17 +77,17 @@
             android:layout_height="wrap_content"
             android:text="辦理申請老人年金手續"
             android:textSize="@dimen/textSizeDetail"
-            android:layout_toRightOf="@id/taskLabel"
+            android:layout_toRightOf="@id/nameLabelTaskItem"
             android:lines="2"
             android:layout_marginTop="5dp" />
 
         <TextView
-            android:id="@+id/dateAndTimeLabel"
+            android:id="@+id/dateAndTimeLabelTaskItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="時間 : "
             android:textSize="@dimen/textSizeDetail"
-            android:layout_below="@id/taskName"/>
+            android:layout_below="@id/nameLabelTaskItem"/>
 
         <TextView
             android:id="@+id/taskTime"
@@ -95,16 +95,16 @@
             android:layout_height="wrap_content"
             android:text="2016/08/12 13:30"
             android:textSize="@dimen/textSizeDetail"
-            android:layout_toRightOf="@id/dateAndTimeLabel"
-            android:layout_below="@id/taskName"/>
+            android:layout_toRightOf="@id/dateAndTimeLabelTaskItem"
+            android:layout_alignTop="@id/dateAndTimeLabelTaskItem"/>
 
         <TextView
-            android:id="@+id/siteLabel"
+            android:id="@+id/siteLabelTaskItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="地點 : "
             android:textSize="@dimen/textSizeDetail"
-            android:layout_below="@id/dateAndTimeLabel"/>
+            android:layout_below="@id/dateAndTimeLabelTaskItem"/>
 
         <TextView
             android:id="@+id/taskSite"
@@ -113,8 +113,8 @@
             android:text="國父紀念館"
             android:textSize="@dimen/textSizeDetail"
             android:lines="2"
-            android:layout_toRightOf="@id/siteLabel"
-            android:layout_below="@id/dateAndTimeLabel"/>
+            android:layout_toRightOf="@id/siteLabelTaskItem"
+            android:layout_alignTop="@id/siteLabelTaskItem"/>
     </RelativeLayout>
 
     <ListView

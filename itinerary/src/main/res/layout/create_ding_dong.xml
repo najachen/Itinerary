@@ -12,26 +12,16 @@
     android:background="@drawable/background_color_green_white">
 
     <LinearLayout
-        android:id="@+id/header_button"
+        android:id="@+id/headerButtonDingDong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <Button
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="新增"
-            android:id="@+id/Btn_NewSound"
-            android:background="@drawable/btn_shape_index_1"
-            android:textColor="#445566"
-            android:layout_weight="1"
-            android:layout_marginRight="5dp" />
-
-        <Button
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="取消"
-            android:id="@+id/Btn_Back"
+            android:id="@+id/backCreateOrEditTask"
             android:background="@drawable/btn_shape_index_1"
             android:textColor="#445566"
             android:layout_weight="1"
@@ -39,10 +29,20 @@
             android:layout_marginRight="5sp" />
 
         <Button
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:text="新增"
+            android:id="@+id/createSoundFile"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:layout_weight="1"
+            android:layout_marginRight="5dp" />
+
+        <Button
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:text="確定"
-            android:id="@+id/Btn_OK"
+            android:id="@+id/saveSchedule"
             android:background="@drawable/btn_shape_index_1"
             android:textColor="#445566"
             android:layout_weight="1"
@@ -50,10 +50,10 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/remind_set_title"
+        android:id="@+id/remindSetTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/header_button"
+        android:layout_below="@id/headerButtonDingDong"
         android:text="提醒設置"
         android:textColor="#445566"
         android:textSize="@dimen/textSizeLargeTitle"
@@ -61,61 +61,61 @@
         android:layout_margin="10dp" />
 
     <TextView
-        android:id="@+id/date_label"
+        android:id="@+id/dateLabelDingDong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/remind_set_title"
+        android:layout_below="@id/remindSetTitle"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="日期 : "
         android:textColor="#445566"
         android:textSize="@dimen/textSizeTitle"/>
 
     <EditText
-        android:id="@+id/date_value"
+        android:id="@+id/dateSchedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/remind_set_title"
-        android:layout_toRightOf="@id/date_label"
+        android:layout_alignTop="@id/dateLabelDingDong"
+        android:layout_toRightOf="@id/dateLabelDingDong"
         android:text="2016-08-18"
         android:textSize="@dimen/textSizeTitle"/>
 
     <TextView
-        android:id="@+id/time_label"
+        android:id="@+id/timeLabelDingDong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/date_label"
+        android:layout_below="@id/dateLabelDingDong"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="時間 : "
         android:textColor="#445566"
         android:textSize="@dimen/textSizeTitle"/>
 
     <EditText
-        android:id="@+id/time_value"
+        android:id="@+id/timeSchedule"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/date_label"
+        android:layout_alignTop="@id/timeLabelDingDong"
+        android:layout_toRightOf="@id/timeLabelDingDong"
         android:layout_span="2"
-        android:layout_toRightOf="@id/time_label"
         android:text="12:00"
         android:textSize="@dimen/textSizeTitle"/>
 
     <TextView
-        android:id="@+id/site_label"
+        android:id="@+id/siteLabelDingDong"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/time_label"
+        android:layout_below="@id/timeLabelDingDong"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="地點 : "
         android:textSize="@dimen/textSizeTitle"
         android:textColor="#445566"/>
 
     <TextView
-        android:id="@+id/site_value"
+        android:id="@+id/siteDingDong"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/time_label"
+        android:layout_alignTop="@id/siteLabelDingDong"
+        android:layout_toRightOf="@id/siteLabelDingDong"
         android:layout_span="2"
-        android:layout_toRightOf="@id/site_label"
         android:paddingTop="@dimen/labelPaddingTop"
         android:lines="3"
         android:text="台北市大安區北歐寵物旅館"
@@ -125,7 +125,7 @@
         android:id="@+id/sound_file"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/site_value"
+        android:layout_below="@id/siteDingDong"
         android:orientation="horizontal">
 
         <TextView
@@ -137,7 +137,7 @@
             android:textColor="#445566"/>
 
         <EditText
-            android:id="@+id/sound_file_path"
+            android:id="@+id/soundFilePathSchedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="/data/freeMind.mp3"
@@ -145,12 +145,14 @@
     </LinearLayout>
 
     <Button
-        android:id="@+id/Btn_Browse_SoundFile"
+        android:id="@+id/browseSoundFileSchedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/sound_file"
         android:background="@drawable/btn_shape_index_1"
         android:textColor="#445566"
         android:text="瀏覽"/>
+
+
 
 </RelativeLayout>

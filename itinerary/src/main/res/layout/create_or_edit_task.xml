@@ -12,7 +12,7 @@
     tools:context=".ChoiceHomeActivity">
 
     <LinearLayout
-        android:id="@+id/header_button"
+        android:id="@+id/headerButtonTask"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
@@ -48,10 +48,10 @@
     </LinearLayout>
 
     <TextView
-        android:id="@+id/create_task_title"
+        android:id="@+id/createOrEditTaskTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/header_button"
+        android:layout_below="@id/headerButtonTask"
         android:gravity="center_horizontal"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="編輯行程"
@@ -59,11 +59,11 @@
         android:textSize="@dimen/textSizeLargeTitle"/>
 
     <TextView
-        android:id="@+id/name_label"
+        android:id="@+id/nameLabelTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/create_task_title"
+        android:layout_below="@+id/createOrEditTaskTitle"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="名稱："
         android:textColor="#445566"
@@ -73,17 +73,17 @@
         android:id="@+id/taskName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/create_task_title"
-        android:layout_toRightOf="@id/date_label"
+        android:layout_alignTop="@id/nameLabelTask"
+        android:layout_toRightOf="@id/nameLabelTask"
         android:text="行程名稱"
         android:textSize="@dimen/textSizeTitle"/>
 
     <TextView
-        android:id="@+id/date_label"
+        android:id="@+id/dateLabelTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:layout_below="@+id/name_label"
+        android:layout_below="@+id/nameLabelTask"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="日期："
         android:textColor="#445566"
@@ -93,17 +93,17 @@
         android:id="@+id/taskDate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignTop="@+id/date_label"
-        android:layout_toRightOf="@+id/date_label"
+        android:layout_alignTop="@+id/dateLabelTask"
+        android:layout_toRightOf="@+id/dateLabelTask"
         android:inputType="date"
         android:text="2016-09-01"
         android:textSize="@dimen/textSizeTitle"/>
 
     <TextView
-        android:id="@+id/time_label"
+        android:id="@+id/timeLabelTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/date_label"
+        android:layout_below="@id/dateLabelTask"
         android:paddingTop="@dimen/labelPaddingTop"
         android:text="時間："
         android:textColor="#445566"
@@ -113,17 +113,17 @@
         android:id="@+id/taskTime"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/date_label"
-        android:layout_toRightOf="@id/time_label"
+        android:layout_alignTop="@id/timeLabelTask"
+        android:layout_toRightOf="@id/timeLabelTask"
         android:inputType="time"
         android:text="12:00"
         android:textSize="@dimen/textSizeTitle"/>
 
     <TextView
-        android:id="@+id/site_label"
+        android:id="@+id/siteLabelTask"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/time_label"
+        android:layout_below="@id/timeLabelTask"
         android:paddingTop="@dimen/labelPaddingTopLines2"
         android:text="地點："
         android:textColor="#445566"
@@ -133,17 +133,17 @@
         android:id="@+id/taskSite"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/time_label"
-        android:layout_toRightOf="@id/site_label"
-        android:lines="2"
+        android:layout_alignTop="@id/siteLabelTask"
+        android:layout_toRightOf="@id/siteLabelTask"
+        android:lines="3"
         android:text="民生東路三段 - 世界兒童展望會"
         android:textSize="@dimen/textSizeTitle"/>
 
     <Button
-        android:id="@+id/createDingDong"
+        android:id="@+id/createSchedule"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/taskSite"
+        android:layout_alignParentBottom="true"
         android:background="@drawable/btn_shape_index_1"
         android:text="設定音效"
         android:textColor="#445566"/>

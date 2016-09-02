@@ -54,6 +54,11 @@ public class ListTaskActivity extends AppCompatActivity {
         findViews();
 
         this.searchMode = getIntent().getIntExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.ERROR_CODE);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
 
         //顯示第一頁清單
         showListView(null);
@@ -122,7 +127,7 @@ public class ListTaskActivity extends AppCompatActivity {
             int taskId = cursor.getInt(cursor.getColumnIndexOrThrow(TASK_FIELD_ID));
 
             Intent intent = new Intent(this, ListTaskItemActivity.class);
-            intent.putExtra(GlobalNaming.TASK_ID_CLICKED, taskId);
+            intent.putExtra(GlobalNaming.TASK_ID, taskId);
             startActivity(intent);
         } else {
             Log.d("選取cursor其中一筆資料的id有誤!!", "目前cursor位置 = " + cursor.getPosition());
