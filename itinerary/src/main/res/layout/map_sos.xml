@@ -9,7 +9,8 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".MapSosActivity"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:background="@drawable/background_color_green_white">
 
 
     <!--<ImageView-->
@@ -19,11 +20,15 @@
         <!--android:id="@+id/imageView2"/>-->
 
     <Button
+        android:background="@drawable/btn_shape_index_1"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:text="更新資料"
-        android:id="@+id/button16"/>
+        android:id="@+id/button16"
+        android:textColor="#445566"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -36,7 +41,10 @@
             android:layout_weight="1"
             android:textSize="20sp"
             android:text="提交前往意願"
-            android:id="@+id/button17"/>
+            android:id="@+id/button17"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:layout_marginRight="5dp" />
 
         <Button
             android:layout_width="wrap_content"
@@ -44,6 +52,9 @@
             android:layout_weight="1"
             android:textSize="20sp"
             android:text="退出或支援其他項目"
-            android:id="@+id/button18"/>
+            android:id="@+id/button18"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"
+            android:layout_marginLeft="5dp" />
     </LinearLayout>
 </LinearLayout>
