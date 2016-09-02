@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ChoiceHomeActivity"
-    android:background="@color/highlighted_text_material_dark">
+    android:background="@drawable/background_color_green_white">
 
     <LinearLayout
         android:layout_width="match_parent"
