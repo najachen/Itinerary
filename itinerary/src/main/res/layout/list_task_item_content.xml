@@ -68,7 +68,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="名稱 : "
-            android:textSize="@dimen/textSizeDetail"/>
+            android:textSize="@dimen/textSizeDetail"
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/taskName"
@@ -77,7 +78,8 @@
             android:text="辦理申請老人年金手續"
             android:textSize="@dimen/textSizeDetail"
             android:layout_toRightOf="@id/taskLabel"
-            android:lines="2" />
+            android:lines="2"
+            android:layout_marginTop="5dp" />
 
         <TextView
             android:id="@+id/dateAndTimeLabel"
