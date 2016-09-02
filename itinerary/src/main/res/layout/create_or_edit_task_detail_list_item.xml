@@ -14,7 +14,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context=".CreateOrEditTaskDetailListItemActivity"
+    tools:context=".CreateOrEditTaskItemActivity"
     android:orientation="vertical"
     android:background="@color/highlighted_text_material_dark">
 
@@ -24,6 +24,7 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/cancelEditTaskItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -33,6 +34,7 @@
             android:layout_marginRight="5dp" />
 
         <Button
+            android:id="@+id/createOrUpdateTaskItem"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -43,13 +45,28 @@
     </LinearLayout>
 
     <TextView
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:textSize="@dimen/textSizeTitle"
+    android:text="內容 : "
+    android:textColor="#445566"/>
+
+    <EditText
+        android:id="@+id/noteContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="@dimen/textSizeTitle"
-        android:text="待辦事項:"
+        android:text="詳細說明 : "
         android:textColor="#445566"/>
 
     <EditText
+        android:id="@+id/noteExplain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
@@ -70,6 +87,7 @@
         android:textColor="#445566"/>
 
     <EditText
+        android:id="@+id/name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -81,6 +99,20 @@
         android:textColor="#445566"/>
 
     <EditText
+        android:id="@+id/quantity"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeDetail"
+        android:text="單價:"
+        android:textColor="#445566"/>
+
+    <EditText
+        android:id="@+id/unitPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"/>
@@ -91,6 +123,7 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/switchFunctionNote"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -100,6 +133,7 @@
             android:layout_marginRight="5dp" />
 
         <Button
+            android:id="@+id/switchFunctionShopping"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"

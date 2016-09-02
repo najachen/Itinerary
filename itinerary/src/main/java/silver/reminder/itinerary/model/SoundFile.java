@@ -1,4 +1,4 @@
-package silver.reminder.itinerary.javabean;
+package silver.reminder.itinerary.model;
 /**
  * Wed Aug 31 22:02:29 CST 2016 by freemarker template
  */

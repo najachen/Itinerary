@@ -10,8 +10,8 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import silver.reminder.itinerary.javabean.Schedule;
-import silver.reminder.itinerary.javabean.SoundFile;
+import silver.reminder.itinerary.model.Schedule;
+import silver.reminder.itinerary.model.SoundFile;
 /**
  * Wed Aug 31 22:02:29 CST 2016 by freemarker template
  */

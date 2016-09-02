@@ -9,18 +9,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:gravity="center_vertical"
-    tools:context=".HomeActivity">
+    android:gravity="center_vertical">
+
+    <!--<TextView-->
+        <!--android:id="@+id/noteId"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:visibility="gone"/>-->
 
     <TextView
-        android:id="@+id/noteTitle"
+        android:id="@+id/noteContent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="進行健康檢查"
         android:textSize="@dimen/textSizeExplain"/>
 
     <TextView
-        android:id="@+id/noteDetail"
+        android:id="@+id/noteExplain"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="攜帶個人身分證與健保卡"

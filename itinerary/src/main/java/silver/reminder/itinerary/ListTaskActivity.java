@@ -149,8 +149,8 @@ public class ListTaskActivity extends AppCompatActivity {
         String startTm = GlobalNaming.getTmString(calendarToday);
         String endTm = this.getSearchEndDateString((Calendar) calendarToday.clone());
 
-        Pager pager = new Pager(this, TASK_TABLE_NAME, TASK_FIELD_TIME, PAGE_SIZE);
-        Cursor cursor = pager.getPagedCursor(startTm, endTm, this.currentPage, isGoForward);
+        Pager pager = new Pager(this, PAGE_SIZE);
+        Cursor cursor = pager.getPagedCursorBySearchingCondition(this.TASK_TABLE_NAME, this.TASK_FIELD_TIME, startTm, endTm, this.currentPage, isGoForward);
 
         MyCursorAdapter myCursorAdapter = new MyCursorAdapter(this
                 , R.layout.embedding_task_list

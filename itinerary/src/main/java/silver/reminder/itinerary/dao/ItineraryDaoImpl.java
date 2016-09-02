@@ -10,9 +10,9 @@ import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
 
-import silver.reminder.itinerary.javabean.Note;
-import silver.reminder.itinerary.javabean.Task;
-import silver.reminder.itinerary.javabean.Shopping;
+import silver.reminder.itinerary.model.Note;
+import silver.reminder.itinerary.model.Task;
+import silver.reminder.itinerary.model.Shopping;
 /**
  * Wed Aug 31 22:02:29 CST 2016 by freemarker template
  */

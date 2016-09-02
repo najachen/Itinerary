@@ -31,8 +31,9 @@ public class GlobalNaming {
     /**
      * 被點擊的單一行程 id 傳送到listTaskItemActivity
      */
-    public static final String TASK_ID_CLICKED = GlobalNaming.class.getName() + DOT + "TASK_ID_CLICKED";
-    public static final String TASK_ITEM_ID_CLICKED = GlobalNaming.class.getName() + DOT + "TASK_ITEM_ID_CLICKED";
+    public static final String TASK_ID = GlobalNaming.class.getName() + DOT + "TASK_ID";
+    public static final String TASK_ITEM_ID = GlobalNaming.class.getName() + DOT + "TASK_ITEM_ID";
+    public static final String TASK_ITEM_VIEW_TYPE = GlobalNaming.class.getName() + DOT + "TASK_ITEM_VIEW_TYPE";
 
     /*
         音效檔

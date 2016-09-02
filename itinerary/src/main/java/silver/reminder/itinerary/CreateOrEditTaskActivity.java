@@ -12,8 +12,8 @@ import silver.reminder.itinerary.bo.ItineraryBo;
 import silver.reminder.itinerary.bo.ItineraryBoImpl;
 import silver.reminder.itinerary.bo.SoundDingDongBo;
 import silver.reminder.itinerary.bo.SoundDingDongBoImpl;
-import silver.reminder.itinerary.javabean.Schedule;
-import silver.reminder.itinerary.javabean.Task;
+import silver.reminder.itinerary.model.Schedule;
+import silver.reminder.itinerary.model.Task;
 
 /**
  * Created by Administrator on 2016/8/22.
