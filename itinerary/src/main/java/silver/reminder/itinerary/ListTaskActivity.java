@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.Button;
@@ -207,21 +206,27 @@ public class ListTaskActivity extends AppCompatActivity {
         @Override
         public void bindView(View view, Context context, Cursor cursor) {
 
-            if (view == null) {
-                view = LayoutInflater.from(context).inflate(R.layout.embedding_task_list, null, false);
+//            if (view == null) {
+//                view = LayoutInflater.from(context).inflate(R.layout.embedding_task_list, null, false);
+//
+//                TextView taskName = (TextView) view.findViewById(R.id.taskName);
+//                String name = cursor.getString(cursor.getColumnIndex(TASK_FIELD_NAME));
+//                taskName.setText(name);
+//
+//                TextView taskSite = (TextView) view.findViewById(R.id.taskSite);
+//                String site = cursor.getString(cursor.getColumnIndex(TASK_FIELD_SITE));
+//                taskSite.setText(site);
+//
+//                TextView taskTime = (TextView) view.findViewById(R.id.taskTime);
+//                String tm = cursor.getString(cursor.getColumnIndex(TASK_FIELD_TIME));
+//                taskTime.setText(GlobalNaming.getDateFormat(tm));
+//            }
 
-                TextView taskName = (TextView) view.findViewById(R.id.taskName);
-                String name = cursor.getString(cursor.getColumnIndex(TASK_FIELD_NAME));
-                taskName.setText(name);
+            super.bindView(view, context, cursor);
 
-                TextView taskSite = (TextView) view.findViewById(R.id.taskSite);
-                String site = cursor.getString(cursor.getColumnIndex(TASK_FIELD_SITE));
-                taskSite.setText(site);
-
-                TextView taskTime = (TextView) view.findViewById(R.id.taskTime);
-                String tm = cursor.getString(cursor.getColumnIndex(TASK_FIELD_TIME));
-                taskTime.setText(GlobalNaming.getDateFormat(tm));
-            }
+            TextView taskTime = (TextView) view.findViewById(R.id.taskTime);
+            String tm = cursor.getString(cursor.getColumnIndex(TASK_FIELD_TIME));
+            taskTime.setText(GlobalNaming.getDateFormat(tm));
         }
     }
 }

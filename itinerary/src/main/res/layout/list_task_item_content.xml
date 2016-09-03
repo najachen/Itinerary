@@ -48,14 +48,14 @@
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp" />
 
-        <Button
-            android:id="@+id/setReminder"
-            android:layout_width="@dimen/useWeight"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="修改提醒"
-            android:background="@drawable/btn_shape_index_1"
-            android:textColor="#445566"/>
+        <!--<Button-->
+            <!--android:id="@+id/setReminder"-->
+            <!--android:layout_width="@dimen/useWeight"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_weight="1"-->
+            <!--android:text="修改提醒"-->
+            <!--android:background="@drawable/btn_shape_index_1"-->
+            <!--android:textColor="#445566"/>-->
 
     </LinearLayout>
 

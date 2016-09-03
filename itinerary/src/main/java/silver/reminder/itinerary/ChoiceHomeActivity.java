@@ -10,7 +10,7 @@ public class ChoiceHomeActivity extends AppCompatActivity {
 
     private Button intinBulletin;
     private Button intinOption;
-    private Button intinSos;
+//    private Button intinSos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,8 +27,8 @@ public class ChoiceHomeActivity extends AppCompatActivity {
         intinOption = (Button) findViewById(R.id.intinOption);
         intinOption.setOnClickListener(this::option);
 
-        intinSos = (Button) findViewById(R.id.intinSos);
-        intinSos.setOnClickListener(this::sos);
+//        intinSos = (Button) findViewById(R.id.intinSos);
+//        intinSos.setOnClickListener(this::sos);
     }
 
     /**
@@ -56,8 +56,8 @@ public class ChoiceHomeActivity extends AppCompatActivity {
      *
      * @param view
      */
-    private void sos(View view) {
-        Intent intent = new Intent(this, MapSosActivity.class);
-        startActivity(intent);
-    }
+//    private void sos(View view) {
+//        Intent intent = new Intent(this, MapSosActivity.class);
+//        startActivity(intent);
+//    }
 }

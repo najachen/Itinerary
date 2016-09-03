@@ -55,7 +55,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="通報外出"
+            android:text="路徑建議"
             android:textSize="30sp"
             android:id="@+id/intinBulletin"/>
 
@@ -63,7 +63,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="外出規劃"
+            android:text="外出行程"
             android:textSize="30sp"
             android:id="@+id/intinOption"
             android:nestedScrollingEnabled="false" />
@@ -78,10 +78,8 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:text="SOS"
-            android:textSize="30sp"
-            android:id="@+id/intinSos"/>
-
+            android:textSize="30sp"/>
+        <!--android:id="@+id/intinsos"-->
 
         <Button
             android:layout_width="match_parent"

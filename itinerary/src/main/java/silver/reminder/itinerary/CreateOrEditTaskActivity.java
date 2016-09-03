@@ -37,28 +37,18 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
         請求碼
      */
     private static final int REQUEST_CODE_CREATE_DING_DONG = 0x0001;
-    private static final int REQUEST_CODE_EDIT_DING_DONG = 0x0010;
 
     /**
-     * 欲編輯行程的id
+     * 頁面物件
      */
-    private int taskId;
-
-    /**
-     * 相關scheduleId
-     */
-    private int scheduleId;
+    private Task task;
+    private Schedule schedule;
 
     /*
         Bo
      */
     private ItineraryBo itineraryBo;
     private SoundDingDongBo soundDingDongBo;
-
-    /**
-     * 任務要設定的音效id(存關聯檔時使用)
-     */
-    private Schedule scheduleSetupFeedback;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,22 +57,8 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
         findViews();
 
-        //新增狀態 什麼也沒帶過來
-        //編輯 帶來 taskId
-        this.taskId = getIntent().getIntExtra(GlobalNaming.TASK_ID, GlobalNaming.ERROR_CODE);
-
-        this.itineraryBo = ItineraryBoImpl.getInstance(this);
-        this.soundDingDongBo = SoundDingDongBoImpl.getInstance(this);
-
-        if (this.taskId != 0) {
-            Schedule keySchedule = new Schedule();
-            keySchedule.setTaskId(this.taskId);
-            Cursor cursorSchedule = soundDingDongBo.findScheduleList(keySchedule);
-
-            if (cursorSchedule.getCount() == 1 && cursorSchedule.moveToFirst()) {
-                this.scheduleId = cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id"));
-            }
-        }
+        itineraryBo = ItineraryBoImpl.getInstance(this);
+        soundDingDongBo = SoundDingDongBoImpl.getInstance(this);
     }
 
     @Override
@@ -90,22 +66,45 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
         super.onResume();
 
         /*
+            準備頁面物件
+         */
+        int taskId =  getIntent().getIntExtra(GlobalNaming.TASK_ID, GlobalNaming.ERROR_CODE);
+
+        //
+        task = itineraryBo.findTaskById(taskId);
+        task = task == null ? new Task() : task;
+
+        //
+        schedule = new Schedule();
+
+        Schedule keySchedule = new Schedule();
+        keySchedule.setTaskId(taskId);
+        Cursor cursorSchedule = soundDingDongBo.findScheduleList(keySchedule);
+
+        if (cursorSchedule.getCount() == 1 && cursorSchedule.moveToFirst()) {
+            schedule.setId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id")));
+            schedule.setTaskId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("taskId")));
+            schedule.setSoundFileId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("soundFileId")));
+            schedule.setTm(cursorSchedule.getString(cursorSchedule.getColumnIndexOrThrow("tm")));
+        }
+
+        /*
             顯示內容
          */
-        if (this.taskId == 0) { //若為新增狀態 清空所有欄位
-            this.taskName.setText(GlobalNaming.SPACE);
-            this.taskDate.setText(GlobalNaming.SPACE);
-            this.taskTime.setText(GlobalNaming.SPACE);
-            this.taskSite.setText(GlobalNaming.SPACE);
+        if (task.getId() == 0) { //若為新增狀態 清空所有欄位
+            taskName.setText(GlobalNaming.SPACE);
+            taskDate.setText(GlobalNaming.SPACE);
+            taskTime.setText(GlobalNaming.SPACE);
+            taskSite.setText(GlobalNaming.SPACE);
         } else { //若為編輯狀態 帶出所有的值並放進欄位
-            Task task = itineraryBo.findTaskById(this.taskId);
+
             String dateAndTimeString = GlobalNaming.getDateFormat(task.getTm());
             String[] dateAndTimeArray = dateAndTimeString.split(GlobalNaming.SPACE);
 
-            this.taskName.setText(task.getName());
-            this.taskDate.setText(dateAndTimeArray[0]);
-            this.taskTime.setText(dateAndTimeArray[1]);
-            this.taskSite.setText(task.getSite());
+            taskName.setText(task.getName());
+            taskDate.setText(dateAndTimeArray[0]);
+            taskTime.setText(dateAndTimeArray[1]);
+            taskSite.setText(task.getSite());
         }
 
         /*
@@ -113,9 +112,9 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             若無設定 為"新增提醒"
             若有設定 為"編輯提醒"
          */
-        if (this.scheduleId != 0) {
+        if (schedule.getId() != 0) {
             createSchedule.setText("編輯或刪除提醒");
-        } else if (this.scheduleId == 0) {
+        } else if (schedule.getId() == 0) {
             createSchedule.setText("新增提醒");
         }
     }
@@ -138,7 +137,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
     }
 
     /**
-     * 存檔 xxx 這裡設定時間的方式很不優 待後續改進(如果有時間的話)
+     * 存檔 這裡設定時間的方式很不優 待後續改進(如果有時間的話)
      *
      * @param view
      */
@@ -146,46 +145,41 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
         //時間資料格式處理
         String tm = taskDate.getText().toString() + taskTime.getText().toString();
-        tm = tm.replace("-", "").replace(":", "");
+        tm = GlobalNaming.cleanSpecCharTo14DigiCode(tm);
 
-        Task task = new Task();
-        task.setName(taskName.getText().toString());
-        task.setTm(tm);
-        task.setSite(taskSite.getText().toString());
+        Task taskSave = new Task();
+        taskSave.setName(taskName.getText().toString());
+        taskSave.setTm(tm);
+        taskSave.setSite(taskSite.getText().toString());
 
         long taskRowId = 0;
-        if (this.taskId == 0) {
-            taskRowId = itineraryBo.createTask(task);
+        if (task.getId() == 0) {
+            taskRowId = itineraryBo.createTask(taskSave);
         } else {
-            task.setId(this.taskId);
-            itineraryBo.modifyTask(task);
+            taskSave.setId(task.getId());
+            itineraryBo.modifyTask(taskSave);
         }
 
         //test
         Log.d("新增行程id", String.valueOf(taskRowId));
 
-
-
-
-
-
-        //如果有設定音效 要加入關係檔 xxx 這裡設計有誤
-        if (scheduleSetupFeedback != null) {
+        //如果有設定提醒 要存檔
+        boolean isHaveNoTaskId = task.getId() == null || task.getId() == 0;
+        boolean isHaveScheduleTm = schedule.getTm() != null && task.getTm().length() > 0;
+        boolean isHaveScheduleSoundFileId = schedule.getSoundFileId() != null && schedule.getSoundFileId() > 0;
+        if (isHaveNoTaskId && isHaveScheduleTm && isHaveScheduleSoundFileId) {
 
             //內容已經有音效檔的id跟發射時間的設定
-            scheduleSetupFeedback.setTaskId((int) taskRowId);
-            long scheduleRowId = soundDingDongBo.createSchedule(scheduleSetupFeedback);
+            schedule.setTaskId((int) taskRowId);
+            long scheduleRowId = soundDingDongBo.createSchedule(schedule);
 
             //test
             Log.d("新增提醒設定id", String.valueOf(scheduleRowId));
-
-            //清空暫存資料
-            scheduleSetupFeedback = null;
         }
 
         //清空欄位並返回
-        this.resetFields(view);
-        this.backChoiceOutdoorAllOperation(view);
+        resetFields(view);
+        backChoiceOutdoorAllOperation(view);
     }
 
     /**
@@ -201,17 +195,17 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
     }
 
     /**
-     * 新增行程與音效關聯檔 xxx
+     * 新增或編輯提醒
      *
      * @param view
      */
     private void createSchedule(View view) {
 
-        if(this.scheduleId == 0){
+        if (this.schedule.getId() == 0) {
             Intent intent = new Intent(this, CreateDingDongActivity.class);
-            intent.putExtra(GlobalNaming.TASK_ID, this.taskId);
+            intent.putExtra(GlobalNaming.TASK_ID, task.getId());
             startActivityForResult(intent, REQUEST_CODE_CREATE_DING_DONG);
-        }else{
+        } else {
             new AlertDialog.Builder(this)
                     .setMessage("編輯或刪除提醒??")
                     .setPositiveButton("編輯", CreateOrEditTaskActivity.this::editSchedule)
@@ -223,22 +217,24 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
     /**
      * 編輯提醒
+     *
      * @param dialogInterface
      * @param which
      */
-    private void editSchedule(DialogInterface dialogInterface, int which){
+    private void editSchedule(DialogInterface dialogInterface, int which) {
         Intent intent = new Intent(this, CreateDingDongActivity.class);
-        intent.putExtra(GlobalNaming.SCHEDULE_ID, this.scheduleId);
-        startActivityForResult(intent, REQUEST_CODE_EDIT_DING_DONG);
+        intent.putExtra(GlobalNaming.TASK_ID, task.getId());
+        startActivity(intent);
     }
 
     /**
      * 刪除提醒
+     *
      * @param dialogInterface
      * @param which
      */
-    private void deleteSchedule(DialogInterface dialogInterface, int which){
-
+    private void deleteSchedule(DialogInterface dialogInterface, int which) {
+        soundDingDongBo.removeSchedule(schedule.getId());
     }
 
     /**
@@ -256,17 +252,13 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
             case REQUEST_CODE_CREATE_DING_DONG:
                 if (resultCode == RESULT_OK) {
-                    Bundle bundle = data.getExtras();
-                    scheduleSetupFeedback = (Schedule) bundle.get(GlobalNaming.SCHEDULE_OBJECT);
-                }
-                break;
-            case REQUEST_CODE_EDIT_DING_DONG:
-                if(resultCode == RESULT_OK){
+                    String tm = data.getStringExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_TM);
+                    Integer soundFileId = data.getIntExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_SOUND_FILE_ID, GlobalNaming.ERROR_CODE);
 
-
-
-
-                    //XXX
+                    if (tm != null && tm.length() > 0 && soundFileId != null && soundFileId > 0) {
+                        schedule.setTm(tm);
+                        schedule.setSoundFileId(soundFileId);
+                    }
                 }
                 break;
         }

@@ -1,7 +1,9 @@
 package silver.reminder.itinerary;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
@@ -12,8 +14,9 @@ import silver.reminder.itinerary.bo.ItineraryBo;
 import silver.reminder.itinerary.bo.ItineraryBoImpl;
 import silver.reminder.itinerary.bo.SoundDingDongBo;
 import silver.reminder.itinerary.bo.SoundDingDongBoImpl;
+import silver.reminder.itinerary.model.Schedule;
+import silver.reminder.itinerary.model.SoundFile;
 import silver.reminder.itinerary.model.Task;
-import silver.reminder.itinerary.util.TableSchemaSetSpec;
 
 /**
  * Created by hsuan on 2016/8/27.
@@ -35,10 +38,11 @@ public class CreateDingDongActivity extends AppCompatActivity {
     private static final int REQUEST_CODE_SELECT_SOUND_FILE = 0x0001;
 
     /*
-        id
+        頁面物件
      */
-    private int taskId;
-    private int scheduleId;
+    private Task task;
+    private Schedule schedule;
+    private SoundFile soundFile;
 
     /*
         Bo
@@ -46,39 +50,59 @@ public class CreateDingDongActivity extends AppCompatActivity {
     private ItineraryBo itineraryBo;
     private SoundDingDongBo soundDingDongBo;
 
-    /**
-     * 所選的音效檔id fileName
-     */
-    private int soundFileId;
-    private String soundFileName;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView (R.layout.create_ding_dong);
+        setContentView(R.layout.create_ding_dong);
 
         findViews();
 
-        //新增 帶了taskId 但不保證有值 (新增行程就沒有值)
-        //編輯 帶了scheduleId
-        Intent intent = getIntent();
-        this.taskId = intent.getIntExtra(GlobalNaming.TASK_ID, GlobalNaming.ERROR_CODE);
-        this.scheduleId = intent.getIntExtra(GlobalNaming.SCHEDULE_ID, GlobalNaming.ERROR_CODE);
-
-        this.itineraryBo = ItineraryBoImpl.getInstance(this);
-        this.soundDingDongBo = SoundDingDongBoImpl.getInstance(this);
+        itineraryBo = ItineraryBoImpl.getInstance(this);
+        soundDingDongBo = SoundDingDongBoImpl.getInstance(this);
     }
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        if(this.taskId == 0){
-            siteDingDong.setText(GlobalNaming.SPACE);
-        }else{
-            Task task = this.itineraryBo.findTaskById(this.taskId);
-            siteDingDong.setText(task.getSite());
+        /*
+            準備頁面物件
+         */
+        int taskId = getIntent().getIntExtra(GlobalNaming.TASK_ID, GlobalNaming.ERROR_CODE);
+
+        //
+        task = itineraryBo.findTaskById(taskId);
+        task = task == null ? new Task() : task;
+
+        //
+        schedule = new Schedule();
+
+        Schedule keySchedule = new Schedule();
+        keySchedule.setTaskId(taskId);
+        Cursor cursorSchedule = soundDingDongBo.findScheduleList(keySchedule);
+
+        if (cursorSchedule.getCount() == 1 && cursorSchedule.moveToFirst()) {
+            schedule.setId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id")));
+            schedule.setTaskId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("taskId")));
+            schedule.setSoundFileId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("soundFileId")));
+            schedule.setTm(cursorSchedule.getString(cursorSchedule.getColumnIndexOrThrow("tm")));
         }
+
+        //
+        soundFile = soundDingDongBo.findSoundFileById(schedule.getSoundFileId());
+        soundFile = soundFile == null ? new SoundFile() : soundFile;
+
+        /*
+            顯示內容
+         */
+        String timeFormat = GlobalNaming.getDateFormat(schedule.getTm());
+        String[] timeArray = timeFormat.split(GlobalNaming.SPACE);
+        dateSchedule.setText(timeArray[0]);
+        timeSchedule.setText(timeArray[1]);
+
+        soundFilePathSchedule.setText(soundFile.getFileName());
+
+        siteDingDong.setText(task.getSite());
     }
 
     private void findViews() {
@@ -100,6 +124,7 @@ public class CreateDingDongActivity extends AppCompatActivity {
 
     /**
      * 瀏覽音效檔清單
+     *
      * @param view
      */
     private void browseSoundFileSchedule(View view) {
@@ -109,30 +134,71 @@ public class CreateDingDongActivity extends AppCompatActivity {
 
     /**
      * 儲存提醒
+     *
      * @param view
      */
     private void saveSchedule(View view) {
 
-//        put("tm", TableSchemaSetSpec.TEXT | TableSchemaSetSpec.NOT_NULL);
-//        put("taskId", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
-//        put("soundFileId", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
-
         //檢查欄位是否都有填
-        if(){
-
+        String dateSchedule = this.dateSchedule.getText().toString();
+        if (dateSchedule == null || dateSchedule.length() == 0) {
+            Snackbar.make(view, "日期未填寫!!", Snackbar.LENGTH_SHORT).show();
+            return;
         }
+        String timeSchedule = this.timeSchedule.getText().toString();
+        if (timeSchedule == null || timeSchedule.length() == 0) {
+            Snackbar.make(view, "時間未填寫!!", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        String tm = GlobalNaming.cleanSpecCharTo14DigiCode(dateSchedule + timeSchedule);
+        schedule.setTm(tm);
+
+        Integer soundFileId = soundFile.getId();
+        if (soundFileId == null || soundFileId == 0) {
+            Snackbar.make(view, "未選擇音效檔!!", Snackbar.LENGTH_SHORT).show();
+            return;
+        }
+        schedule.setSoundFileId(soundFileId);
+
+        /*
+            先看 schedule本身有無id
+                有 則一定有taskid -> 更新schedule
+                無 看有無 task id
+                    有 -> 新增schedule
+                    無 -> 帶回上頁 與task一起儲存
+         */
+        Integer scheduleId = schedule.getId();
+        if (scheduleId != null && scheduleId > 0) {
+            int modRowCount = soundDingDongBo.modifySchedule(schedule);
+        } else {
+            Integer taskId = task.getId();
+            if (taskId != null && taskId > 0) {
+                schedule.setTaskId(task.getId());
+                long rowId = soundDingDongBo.createSchedule(schedule);
+            } else {
+                Intent intent = new Intent();
+                intent.putExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_TM, schedule.getTm());
+                intent.putExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_SOUND_FILE_ID, schedule.getSoundFileId());
+                setResult(RESULT_OK, intent);
+            }
+        }
+
+        backCreateOrEditTask(view);
     }
 
     /**
      * 新增音效檔
+     *
      * @param view
      */
     private void createSoundFile(View view) {
-
+        Intent intent = new Intent(this, CreateSoundFileActivity.class);
+        startActivity(intent);
     }
 
     /**
      * 回上一頁
+     *
      * @param view
      */
     private void backCreateOrEditTask(View view) {
@@ -141,14 +207,17 @@ public class CreateDingDongActivity extends AppCompatActivity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        switch (requestCode){
+        switch (requestCode) {
             case REQUEST_CODE_SELECT_SOUND_FILE:
-                if(resultCode == RESULT_OK){
-                    this.soundFileId = data.getIntExtra(GlobalNaming.SOUND_FILE_ID, GlobalNaming.ERROR_CODE);
-                    this.soundFileName = data.getStringExtra(GlobalNaming.SOUND_FILE_NAME);
-                    this.soundFilePathSchedule.setText(this.soundFileName);
+                if (resultCode == RESULT_OK) {
+
+                    int soundFileId = data.getIntExtra(GlobalNaming.SOUND_FILE_ID, GlobalNaming.ERROR_CODE);
+                    soundFile.setId(soundFileId);
+                    String soundFileName = data.getStringExtra(GlobalNaming.SOUND_FILE_NAME);
+                    soundFile.setFileName(soundFileName);
                 }
                 break;
+            default:
         }
     }
 }

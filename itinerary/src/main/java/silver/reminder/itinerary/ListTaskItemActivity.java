@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,8 +23,11 @@ import java.util.List;
 
 import silver.reminder.itinerary.bo.ItineraryBo;
 import silver.reminder.itinerary.bo.ItineraryBoImpl;
+import silver.reminder.itinerary.bo.SoundDingDongBo;
+import silver.reminder.itinerary.bo.SoundDingDongBoImpl;
 import silver.reminder.itinerary.dao.ItineraryDatabaseHelper;
 import silver.reminder.itinerary.model.Note;
+import silver.reminder.itinerary.model.Schedule;
 import silver.reminder.itinerary.model.Shopping;
 import silver.reminder.itinerary.model.Task;
 
@@ -36,19 +38,19 @@ public class ListTaskItemActivity extends AppCompatActivity {
     private FloatingActionButton nextPageTaskItem;
     private Button backTaskList;
     private Button editOrDeleteTask;
-    private Button setReminder;
+//    private Button setReminder;
     private ListView taskItemList;
     private TextView taskName;
     private TextView taskTime;
     private TextView taskSite;
 
-    /**
-     * 上一頁被點擊的 taskId
+    /*
+       頁面物件
      */
-    private int taskId;
+    private Task task;
 
     /**
-     * 這一頁被點擊的taskItemId
+     * 這一頁被點擊的taskItemId(暫存)
      */
     private int taskItemId;
     private int taskItemViewType;
@@ -59,32 +61,11 @@ public class ListTaskItemActivity extends AppCompatActivity {
     private static final int PAGE_SIZE = 5;
     private int currentPage = 1;
 
-    /*
-        請求碼
-     */
-    private static final int REQUEST_CODE_EDIT_TASK_ITEM = 0x0001;
-    private static final int REQUEST_CODE_EDIT_TASK = 0x0010;
-    private static final int REQUEST_CODE_CREATE_TASK_ITEM = 0x0100;
-
     /**
      * bo
      */
     private ItineraryBo itineraryBo;
-
-    /*
-      欄位名稱
-    */
-//    private static final String COMMON_FIELD_ID = "id";
-//    private static final String COMMON_FIELD_TASK_ID = "taskId";
-
-    // shopping 欄位名稱
-//    private static final String SHOPPING_FIELD_NAME = "name";
-//    private static final String SHOPPING_FIELD_QUANTITY = "quantity";
-//    private static final String SHOPPING_FIELD_UNITPRICE = "unitPrice";
-
-    // note 欄位名稱
-//    private static final String SHOPPING_FIELD_NOTE_CONTENT = "noteContent";
-//    private static final String SHOPPING_FIELD_NOTE_EXPLAIN = "noteExplain";
+    private SoundDingDongBo soundDingDongBo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,9 +74,8 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
         findViews();
 
-        this.taskId = getIntent().getIntExtra(GlobalNaming.TASK_ID, GlobalNaming.ERROR_CODE);
-
-        this.itineraryBo = ItineraryBoImpl.getInstance(this);
+        itineraryBo = ItineraryBoImpl.getInstance(this);
+        soundDingDongBo = SoundDingDongBoImpl.getInstance(this);
     }
 
     @Override
@@ -103,10 +83,18 @@ public class ListTaskItemActivity extends AppCompatActivity {
         super.onResume();
 
         /*
+            準備頁面物件
+         */
+        int taskId = getIntent().getIntExtra(GlobalNaming.TASK_ID, GlobalNaming.ERROR_CODE);
+
+        //
+        task = itineraryBo.findTaskById(taskId);
+        task = task == null ? new Task() : task;
+
+        /*
             顯示明細與清單
          */
         //顯示明細
-        Task task = itineraryBo.findTaskById(this.taskId);
         this.taskName.setText(task.getName());
         this.taskTime.setText(GlobalNaming.getDateFormat(task.getTm()));
         this.taskSite.setText(task.getSite());
@@ -126,8 +114,8 @@ public class ListTaskItemActivity extends AppCompatActivity {
         backTaskList.setOnClickListener(this::backTaskList);
         editOrDeleteTask = (Button) findViewById(R.id.editOrDeleteTask);
         editOrDeleteTask.setOnClickListener(this::editOrDeleteTask);
-        setReminder = (Button) findViewById(R.id.setReminder);
-        setReminder.setOnClickListener(this::setReminder);
+//        setReminder = (Button) findViewById(R.id.setReminder);
+//        setReminder.setOnClickListener(this::setReminder);
 
         taskItemList = (ListView) findViewById(R.id.taskItemList);
         taskItemList.setOnItemClickListener(this::onTaskItemClick);
@@ -150,7 +138,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
         Pager.TaskItemHolder taskItemHolder = adapter.getItem(position);
         taskItemViewType = adapter.getItemViewType(position);
 
-        if (this.taskItemViewType == MyViewHolderAdapter.NOTE_VIEW) {
+        if (this.taskItemViewType == MyViewHolderAdapter.VIEW_NOTE) {
             this.taskItemId = taskItemHolder.note.getId();
         } else {
             this.taskItemId = taskItemHolder.shopping.getId();
@@ -174,11 +162,11 @@ public class ListTaskItemActivity extends AppCompatActivity {
         Intent intent = new Intent(this, CreateOrEditTaskItemActivity.class);
         intent.putExtra(GlobalNaming.TASK_ITEM_ID, this.taskItemId);
         intent.putExtra(GlobalNaming.TASK_ITEM_VIEW_TYPE, this.taskItemViewType);
-        startActivityForResult(intent, REQUEST_CODE_EDIT_TASK_ITEM);
+        startActivity(intent);
 
         //清空
-        this.taskItemId = 0;
-        this.taskItemViewType = 0;
+        taskItemId = 0;
+        taskItemViewType = 0;
     }
 
     /**
@@ -189,26 +177,25 @@ public class ListTaskItemActivity extends AppCompatActivity {
      */
     private void deleteTaskItem(DialogInterface dialogInterface, int which) {
 
-        if (this.taskItemViewType == MyViewHolderAdapter.NOTE_VIEW) {
+        if (this.taskItemViewType == MyViewHolderAdapter.VIEW_NOTE) {
             itineraryBo.removeNote(this.taskItemId);
         } else {
             itineraryBo.removeShopping(this.taskItemId);
         }
 
         //清空
-        this.taskItemId = 0;
-        this.taskItemViewType = 0;
+        taskItemId = 0;
+        taskItemViewType = 0;
     }
 
     /**
-     * 設置提醒 xxx 等錄音檔好了再弄
+     * 設置提醒 (這裡取消 因為邏輯上不合理 修改提醒的地方 改在編輯行程的地方)
      *
      * @param view
      */
-    private void setReminder(View view) {
-
-
-    }
+//    private void setReminder(View view) {
+//
+//    }
 
     /**
      * 編輯或刪除行程
@@ -238,16 +225,22 @@ public class ListTaskItemActivity extends AppCompatActivity {
         /*
             開始操作DB
          */
-
-
         //移除task
-        itineraryBo.removeTask(this.taskId);
+        itineraryBo.removeTask(task.getId());
 
-        //移除提醒 xxx
+        //移除提醒
+        Schedule keySchedule = new Schedule();
+        keySchedule.setTaskId(task.getId());
+        Cursor cursorSchedule = soundDingDongBo.findScheduleList(keySchedule);
+
+        if(cursorSchedule.getCount() == 1 && cursorSchedule.moveToFirst()){
+            int scheduleId = cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id"));
+            soundDingDongBo.removeSchedule(scheduleId);
+        }
 
         //移除note群
         Note keyNote = new Note();
-        keyNote.setTaskId(this.taskId);
+        keyNote.setTaskId(task.getId());
         Cursor noteCursorDelete = itineraryBo.findNoteList(keyNote);
 
         List<Integer> noteIdListDelete = new ArrayList<Integer>();
@@ -259,7 +252,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
         //移除shopping群
         Shopping keyShopping = new Shopping();
-        keyShopping.setTaskId(this.taskId);
+        keyShopping.setTaskId(task.getId());
         Cursor shoppingCursorDelete = itineraryBo.findShoppingList(keyShopping);
 
         List<Integer> shoppingIdListDelete = new ArrayList<Integer>();
@@ -281,8 +274,8 @@ public class ListTaskItemActivity extends AppCompatActivity {
      */
     private void editTask(DialogInterface dialogInterface, int which) {
         Intent intent = new Intent(this, CreateOrEditTaskActivity.class);
-        intent.putExtra(GlobalNaming.TASK_ID, this.taskId);
-        startActivityForResult(intent, REQUEST_CODE_EDIT_TASK);
+        intent.putExtra(GlobalNaming.TASK_ID, task.getId());
+        startActivity(intent);
     }
 
     /**
@@ -310,8 +303,8 @@ public class ListTaskItemActivity extends AppCompatActivity {
      */
     private void fabAddNoteOrShopping(View view) {
         Intent intent = new Intent(this, CreateOrEditTaskItemActivity.class);
-        intent.putExtra(GlobalNaming.TASK_ID, this.taskId);
-        startActivityForResult(intent, REQUEST_CODE_CREATE_TASK_ITEM);
+        intent.putExtra(GlobalNaming.TASK_ID, task.getId());
+        startActivity(intent);
     }
 
     /**
@@ -332,7 +325,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
         //開始跟結束條件
         Pager pager = new Pager(this, PAGE_SIZE);
-        List<Pager.TaskItemHolder> list = pager.getPagedTaskItemHolderListForViewHolder(this.taskId, this.currentPage, isGoForward);
+        List<Pager.TaskItemHolder> list = pager.getPagedTaskItemHolderListForViewHolder(task.getId(), this.currentPage, isGoForward);
         MyViewHolderAdapter adapter = new MyViewHolderAdapter(this, list);
         this.taskItemList.setAdapter(adapter);
     }
@@ -345,8 +338,8 @@ public class ListTaskItemActivity extends AppCompatActivity {
         /*
             View類型
          */
-        private static final int NOTE_VIEW = 0x0001;
-        private static final int SHOPPING_VIEW = 0x0010;
+        public static final int VIEW_NOTE = 0x0001;
+        public static final int VIEW_SHOPPING = 0x0010;
 
         private List<Pager.TaskItemHolder> dataList;
         private Context context;
@@ -404,9 +397,9 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
             int viewType = 0;
             if (taskItemHolder.note != null && taskItemHolder.shopping == null) {
-                viewType = NOTE_VIEW;
+                viewType = VIEW_NOTE;
             } else {
-                viewType = SHOPPING_VIEW;
+                viewType = VIEW_SHOPPING;
             }
             return viewType;
         }
@@ -428,7 +421,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
                 int viewType = this.getItemViewType(position);
                 switch (viewType) {
 
-                    case NOTE_VIEW:
+                    case VIEW_NOTE:
                         view = LayoutInflater.from(this.context).inflate(R.layout.embedding_task_detail_list_item_note, parent, false);
                         Note note = taskItemHolder.note;
 
@@ -442,7 +435,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
                         break;
 
-                    case SHOPPING_VIEW:
+                    case VIEW_SHOPPING:
                         view = LayoutInflater.from(this.context).inflate(R.layout.embedding_task_detail_list_item_shopping, parent, false);
                         Shopping shopping = taskItemHolder.shopping;
 
@@ -463,25 +456,6 @@ public class ListTaskItemActivity extends AppCompatActivity {
 //                this.viewHolder = (ViewHolder) view.getTag();
             }
             return view;
-        }
-    }
-
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
-        switch (requestCode) {
-            case REQUEST_CODE_EDIT_TASK:
-
-
-                // xxx
-
-                break;
-            case REQUEST_CODE_CREATE_TASK_ITEM:
-                break;
-            case REQUEST_CODE_EDIT_TASK_ITEM:
-                break;
-            default:
-                Log.d("onActivityResult 錯誤 -> ", "當前requestCode = " + requestCode);
         }
     }
 }

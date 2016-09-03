@@ -28,7 +28,7 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/soundList"
+            android:id="@+id/soundFileList"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -40,7 +40,7 @@
             android:textSize="20sp" />
 
         <Button
-            android:id="@+id/saveSound"
+            android:id="@+id/saveSoundFile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -61,6 +61,16 @@
         android:background="@drawable/button_record_sound"/>
 
     <TextView
+        android:id="@+id/isRecording"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="錄音中..."
+        android:textColor="#f23131"
+        android:textSize="@dimen/textSizeTitle"
+        android:layout_gravity="center_horizontal"
+        android:visibility="invisible"/>
+
+    <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="儲存檔名 : "
@@ -75,6 +85,7 @@
         android:textSize="@dimen/textSizeDetail"/>
 
     <TextView
+        android:id="@+id/recordDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="已完成錄音(00分45秒)"

@@ -50,8 +50,6 @@ public class ChoiceOutdoorAllOperationActivity extends AppCompatActivity {
     private void createSoundFile(View view) {
         Intent intent = new Intent(this, CreateSoundFileActivity.class);
         startActivity(intent);
-
-        // xxx 這裡等錄音功能熟悉了再繼續做
     }
 
     /**

@@ -38,8 +38,8 @@ public class GlobalNaming {
     /*
         提醒檔
      */
-    public static final String SCHEDULE_OBJECT = GlobalNaming.class.getName() + DOT + "SCHEDULE_OBJECT";
-    public static final String SCHEDULE_ID = GlobalNaming.class.getName() + DOT + "SCHEDULE_ID";
+    public static final String SCHEDULE_FIELD_TO_SAVE_TM = GlobalNaming.class.getName() + DOT + "SCHEDULE_FIELD_TO_SAVE_TM";
+    public static final String SCHEDULE_FIELD_TO_SAVE_SOUND_FILE_ID = GlobalNaming.class.getName() + DOT + "SCHEDULE_FIELD_TO_SAVE_SOUND_FILE_ID";
 
     /*
         音效檔
@@ -89,5 +89,16 @@ public class GlobalNaming {
         tmBuffer.append(year).append(month).append(date).append(hour).append(minute).append(second);
 
         return tmBuffer.toString();
+    }
+
+    /**
+     * 清空字串中的特殊字 變成乾淨的14碼時間資料
+     * 很糟的作法 我知道 但沒時間作更好
+     *
+     * @param timeString
+     * @return
+     */
+    public static String cleanSpecCharTo14DigiCode(String timeString){
+        return timeString.replace("-", "").replace(":", "");
     }
 }
