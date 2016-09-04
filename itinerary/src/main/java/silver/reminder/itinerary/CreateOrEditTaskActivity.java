@@ -1,5 +1,8 @@
 package silver.reminder.itinerary;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -11,12 +14,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import java.util.Calendar;
+
 import silver.reminder.itinerary.bo.ItineraryBo;
 import silver.reminder.itinerary.bo.ItineraryBoImpl;
 import silver.reminder.itinerary.bo.SoundDingDongBo;
 import silver.reminder.itinerary.bo.SoundDingDongBoImpl;
 import silver.reminder.itinerary.model.Schedule;
 import silver.reminder.itinerary.model.Task;
+import silver.reminder.itinerary.util.GlobalNaming;
 
 /**
  * Created by Administrator on 2016/8/22.
@@ -160,7 +166,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             itineraryBo.modifyTask(taskSave);
         }
 
-        //test
+        //test-
         Log.d("新增行程id", String.valueOf(taskRowId));
 
         //如果有設定提醒 要存檔
@@ -173,7 +179,25 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             schedule.setTaskId((int) taskRowId);
             long scheduleRowId = soundDingDongBo.createSchedule(schedule);
 
-            //test
+            /*
+                新增鬧鐘
+             */
+            AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+
+            //manifest.xml 設定的 action name 是
+            //silver.reminder.itinerary.util.GlobalNaming.ALARM_RECEIVER_INTENT_ACTION_NAME
+
+            //test-
+            Log.d("GlobalNaming action - ", GlobalNaming.INTENT_ACTION_NAME_ALARM_RECEIVER);
+
+            Intent intent = new Intent();
+            intent.setAction(GlobalNaming.INTENT_ACTION_NAME_ALARM_RECEIVER);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int)scheduleRowId, intent, PendingIntent.FLAG_ONE_SHOT);
+
+            Calendar tmCalendar = GlobalNaming.getTmCalendar(schedule.getTm());
+            alarmManager.set(AlarmManager.RTC_WAKEUP, tmCalendar.getTimeInMillis(), pendingIntent);
+
+            //test-
             Log.d("新增提醒設定id", String.valueOf(scheduleRowId));
         }
 
@@ -235,6 +259,11 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
      */
     private void deleteSchedule(DialogInterface dialogInterface, int which) {
         soundDingDongBo.removeSchedule(schedule.getId());
+
+        //刪除鬧鐘
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
+        PendingIntent pendingIntent = GlobalNaming.getAlarmPendingIntent(this, schedule.getId());
+        alarmManager.cancel(pendingIntent);
     }
 
     /**

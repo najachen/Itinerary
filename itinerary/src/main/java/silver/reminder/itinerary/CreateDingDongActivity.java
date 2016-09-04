@@ -1,5 +1,8 @@
 package silver.reminder.itinerary;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -10,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import java.util.Calendar;
+
 import silver.reminder.itinerary.bo.ItineraryBo;
 import silver.reminder.itinerary.bo.ItineraryBoImpl;
 import silver.reminder.itinerary.bo.SoundDingDongBo;
@@ -17,6 +22,7 @@ import silver.reminder.itinerary.bo.SoundDingDongBoImpl;
 import silver.reminder.itinerary.model.Schedule;
 import silver.reminder.itinerary.model.SoundFile;
 import silver.reminder.itinerary.model.Task;
+import silver.reminder.itinerary.util.GlobalNaming;
 
 /**
  * Created by hsuan on 2016/8/27.
@@ -138,6 +144,7 @@ public class CreateDingDongActivity extends AppCompatActivity {
      * @param view
      */
     private void saveSchedule(View view) {
+        AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
 
         //檢查欄位是否都有填
         String dateSchedule = this.dateSchedule.getText().toString();
@@ -170,11 +177,30 @@ public class CreateDingDongActivity extends AppCompatActivity {
         Integer scheduleId = schedule.getId();
         if (scheduleId != null && scheduleId > 0) {
             int modRowCount = soundDingDongBo.modifySchedule(schedule);
+
+            /*
+                更新鬧鐘
+             */
+            //取消原有的
+            PendingIntent pendingIntent = GlobalNaming.getAlarmPendingIntent(this, scheduleId);
+            alarmManager.cancel(pendingIntent);
+            //建立新的
+            Calendar calendar = GlobalNaming.getTmCalendar(schedule.getTm());
+            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+
         } else {
             Integer taskId = task.getId();
             if (taskId != null && taskId > 0) {
                 schedule.setTaskId(task.getId());
                 long rowId = soundDingDongBo.createSchedule(schedule);
+
+                /*
+                    新增鬧鐘
+                 */
+                PendingIntent pendingIntent = GlobalNaming.getAlarmPendingIntent(this, rowId);
+                Calendar tmCalendar = GlobalNaming.getTmCalendar(schedule.getTm());
+                alarmManager.set(AlarmManager.RTC_WAKEUP, tmCalendar.getTimeInMillis(), pendingIntent);
+
             } else {
                 Intent intent = new Intent();
                 intent.putExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_TM, schedule.getTm());

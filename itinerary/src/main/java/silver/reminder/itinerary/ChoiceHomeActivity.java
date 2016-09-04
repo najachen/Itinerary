@@ -10,7 +10,6 @@ public class ChoiceHomeActivity extends AppCompatActivity {
 
     private Button intinBulletin;
     private Button intinOption;
-//    private Button intinSos;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,13 +25,10 @@ public class ChoiceHomeActivity extends AppCompatActivity {
 
         intinOption = (Button) findViewById(R.id.intinOption);
         intinOption.setOnClickListener(this::option);
-
-//        intinSos = (Button) findViewById(R.id.intinSos);
-//        intinSos.setOnClickListener(this::sos);
     }
 
     /**
-     * 通報外出(最佳化外出路徑)
+     * 最佳化外出路徑
      *
      * @param view
      */
@@ -50,14 +46,4 @@ public class ChoiceHomeActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ChoiceOutdoorAllOperationActivity.class);
         startActivity(intent);
     }
-
-    /**
-     * 求救(先暫時不做)
-     *
-     * @param view
-     */
-//    private void sos(View view) {
-//        Intent intent = new Intent(this, MapSosActivity.class);
-//        startActivity(intent);
-//    }
 }

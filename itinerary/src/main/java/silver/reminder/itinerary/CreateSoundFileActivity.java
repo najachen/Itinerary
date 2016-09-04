@@ -29,6 +29,7 @@ import java.util.List;
 import silver.reminder.itinerary.bo.SoundDingDongBo;
 import silver.reminder.itinerary.bo.SoundDingDongBoImpl;
 import silver.reminder.itinerary.model.SoundFile;
+import silver.reminder.itinerary.util.GlobalNaming;
 
 /**
  * Created by Administrator on 2016/8/22.
@@ -46,9 +47,9 @@ public class CreateSoundFileActivity extends AppCompatActivity {
     /**
      * 銀級小幫手 專用音樂資料夾名稱
      */
-    static final String DIR_SILVER_REMINDER = "/silverReminderMedia/";
-    static final String DIR_SILVER_REMINDER_TEMP = "temp/";
-    static final String DIR_SILVER_REMINDER_STORE = "store/";
+    public static final String DIR_SILVER_REMINDER = "/silverReminderMedia/";
+    public static final String DIR_SILVER_REMINDER_TEMP = "temp/";
+    public static final String DIR_SILVER_REMINDER_STORE = "store/";
 
     private static final String MEDIA_FILE_NAME_EXT = ".mp3";
 

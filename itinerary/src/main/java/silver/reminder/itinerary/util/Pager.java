@@ -1,4 +1,4 @@
-package silver.reminder.itinerary;
+package silver.reminder.itinerary.util;
 
 import android.content.Context;
 import android.database.Cursor;
