@@ -16,6 +16,7 @@ import silver.reminder.itinerary.bo.ItineraryBo;
 import silver.reminder.itinerary.bo.ItineraryBoImpl;
 import silver.reminder.itinerary.model.Note;
 import silver.reminder.itinerary.model.Shopping;
+import silver.reminder.itinerary.util.GlobalNaming;
 
 public class CreateOrEditTaskItemActivity extends AppCompatActivity {
 

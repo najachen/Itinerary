@@ -1,47 +1,48 @@
 <resources>
 
     <string name="app_name">外出</string>
+    <string name="title_activity_map_optimize_path">Map</string>
 
     <!--
         音樂清單測試用
     -->
     <!--<string-array name="soundFileNameArray">-->
-        <!--<item>止戰之殤.mp3</item>-->
-        <!--<item>夜曲.mp3</item>-->
-        <!--<item>以父之名.mp3</item>-->
+    <!--<item>止戰之殤.mp3</item>-->
+    <!--<item>夜曲.mp3</item>-->
+    <!--<item>以父之名.mp3</item>-->
     <!--</string-array>-->
     <!--<string-array name="soundShootTimeArray">-->
-        <!--<item>2016/08/10 13:30 啟動</item>-->
-        <!--<item>2016/08/15 10:00 啟動</item>-->
-        <!--<item>2016/08/20 12:00 啟動</item>-->
+    <!--<item>2016/08/10 13:30 啟動</item>-->
+    <!--<item>2016/08/15 10:00 啟動</item>-->
+    <!--<item>2016/08/20 12:00 啟動</item>-->
     <!--</string-array>-->
 
     <!--
         行程清單測試用
     -->
     <!--<string-array name="taskTitle">-->
-        <!--<item>去中正紀念堂</item>-->
-        <!--<item>去南門市場</item>-->
-        <!--<item>去西昌街買草藥</item>-->
+    <!--<item>去中正紀念堂</item>-->
+    <!--<item>去南門市場</item>-->
+    <!--<item>去西昌街買草藥</item>-->
     <!--</string-array>-->
     <!--<string-array name="taskDetail">-->
-        <!--<item>2016/08/10 13:30</item>-->
-        <!--<item>2016/08/15 10:00</item>-->
-        <!--<item>2016/08/20 12:00</item>-->
+    <!--<item>2016/08/10 13:30</item>-->
+    <!--<item>2016/08/15 10:00</item>-->
+    <!--<item>2016/08/20 12:00</item>-->
     <!--</string-array>-->
 
     <!--
         備忘事項或購物項目測試用
     -->
     <!--<string-array name="noteTitle">-->
-        <!--<item>進行健康檢查</item>-->
-        <!--<item>晚上里長招待社區年長者餐會</item>-->
-        <!--<item>社區大學烹飪課</item>-->
+    <!--<item>進行健康檢查</item>-->
+    <!--<item>晚上里長招待社區年長者餐會</item>-->
+    <!--<item>社區大學烹飪課</item>-->
     <!--</string-array>-->
     <!--<string-array name="noteDetail">-->
-        <!--<item>攜帶個人身分證與健保卡</item>-->
-        <!--<item>帶要給小王的水果</item>-->
-        <!--<item>跟老李拿他家傳的醬油</item>-->
+    <!--<item>攜帶個人身分證與健保卡</item>-->
+    <!--<item>帶要給小王的水果</item>-->
+    <!--<item>跟老李拿他家傳的醬油</item>-->
     <!--</string-array>-->
 
 </resources>

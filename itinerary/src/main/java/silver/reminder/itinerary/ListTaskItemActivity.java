@@ -30,6 +30,8 @@ import silver.reminder.itinerary.model.Note;
 import silver.reminder.itinerary.model.Schedule;
 import silver.reminder.itinerary.model.Shopping;
 import silver.reminder.itinerary.model.Task;
+import silver.reminder.itinerary.util.GlobalNaming;
+import silver.reminder.itinerary.util.Pager;
 
 public class ListTaskItemActivity extends AppCompatActivity {
 

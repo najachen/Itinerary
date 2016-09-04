@@ -183,7 +183,7 @@ public class Pager {
     /**
      * for viewHolder 使用
      */
-    static class TaskItemHolder {
+    public static class TaskItemHolder {
         public Note note;
         public Shopping shopping;
     }

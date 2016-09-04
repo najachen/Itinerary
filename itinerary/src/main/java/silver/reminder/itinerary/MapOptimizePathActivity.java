@@ -1,54 +1,61 @@
 package silver.reminder.itinerary;
 
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.webkit.WebView;
-import android.widget.TextView;
+import android.support.v4.app.FragmentActivity;
 
-import java.util.Calendar;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.BitmapDescriptor;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 
-import silver.reminder.itinerary.dao.ItineraryDatabaseHelper;
-import silver.reminder.itinerary.util.GlobalNaming;
+public class MapOptimizePathActivity extends FragmentActivity implements OnMapReadyCallback {
 
-public class MapOptimizePathActivity extends AppCompatActivity {
-
-    private TextView goal;
-    private WebView mapDirection;
+    private GoogleMap mMap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.map_optimize_path);
+        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
+        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
+                .findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
 
-        findViews();
     }
 
+
+    /**
+     * Manipulates the map once available.
+     * This callback is triggered when the map is ready to be used.
+     * This is where we can add markers or lines, add listeners or move the camera. In this case,
+     * we just add a marker near Sydney, Australia.
+     * If Google Play services is not installed on the device, the user will be prompted to install
+     * it inside the SupportMapFragment. This method will only be triggered once the user has
+     * installed Google Play services and returned to the app.
+     */
     @Override
-    protected void onResume() {
-        super.onResume();
+    public void onMapReady(GoogleMap googleMap) {
+        mMap = googleMap;
 
-        SQLiteDatabase db = ItineraryDatabaseHelper.getInstance(this).getReadableDatabase();
+//        mMap.clear();
 
-        String tmTodayLike = GlobalNaming.getTmString(Calendar.getInstance()).substring(0, 8);
-        Cursor cursorNextTask = db.rawQuery("select * from task where tm like ? order by tm asc limit 1", new String[]{tmTodayLike + "%"});
+        // Add a marker in Sydney and move the camera
+        LatLng sydney = new LatLng(-34, 151);
 
-        String name = "";
-        String site = "";
-        if (cursorNextTask.getCount() == 1 && cursorNextTask.moveToFirst()) {
-            name = cursorNextTask.getString(cursorNextTask.getColumnIndexOrThrow("name"));
-            site = cursorNextTask.getString(cursorNextTask.getColumnIndexOrThrow("site"));
-        }
+        BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ROSE);
 
-        //顯示畫面
-        goal.setText(name + "\n" + site);
-        mapDirection.loadUrl("file:///android_asset/directionMap.html");
-        mapDirection.loadUrl("javascript:reflashDirection('" + site + "')");
-    }
+        MarkerOptions markerOptions = new MarkerOptions();
+        markerOptions.position(sydney).title("Marker in Sydney").snippet("很好!!").icon(bitmapDescriptor);
 
-    private void findViews() {
-        mapDirection = (WebView) findViewById(R.id.mapDirection);
-        goal = (TextView) findViewById(R.id.goal);
+
+        mMap.addMarker(markerOptions);
+        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(sydney, 16));
+
+//        DownloadTask downloadTask = new DownloadTask();
+
     }
 }

@@ -22,6 +22,9 @@ import android.widget.Toast;
 
 import java.io.File;
 
+import silver.reminder.itinerary.util.GlobalNaming;
+import silver.reminder.itinerary.util.Pager;
+
 /**
  * Created by Administrator on 2016/8/23.
  */

@@ -16,6 +16,9 @@ import android.widget.TextView;
 
 import java.util.Calendar;
 
+import silver.reminder.itinerary.util.GlobalNaming;
+import silver.reminder.itinerary.util.Pager;
+
 /**
  * Created by Administrator on 2016/8/22.
  */
