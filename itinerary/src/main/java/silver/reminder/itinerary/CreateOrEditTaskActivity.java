@@ -88,7 +88,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
         Cursor cursorSchedule = soundDingDongBo.findScheduleList(keySchedule);
 
         if (cursorSchedule.getCount() == 1 && cursorSchedule.moveToFirst()) {
-            schedule.setId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id")));
+            schedule.set_id(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id")));
             schedule.setTaskId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("taskId")));
             schedule.setSoundFileId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("soundFileId")));
             schedule.setTm(cursorSchedule.getString(cursorSchedule.getColumnIndexOrThrow("tm")));
@@ -97,7 +97,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
         /*
             顯示內容
          */
-        if (task.getId() == 0) { //若為新增狀態 清空所有欄位
+        if (task.get_id() == null || task.get_id() == 0) { //若為新增狀態 清空所有欄位
             taskName.setText(GlobalNaming.SPACE);
             taskDate.setText(GlobalNaming.SPACE);
             taskTime.setText(GlobalNaming.SPACE);
@@ -118,9 +118,9 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             若無設定 為"新增提醒"
             若有設定 為"編輯提醒"
          */
-        if (schedule.getId() != 0) {
+        if (schedule.get_id() != 0) {
             createSchedule.setText("編輯或刪除提醒");
-        } else if (schedule.getId() == 0) {
+        } else if (schedule.get_id() == 0) {
             createSchedule.setText("新增提醒");
         }
     }
@@ -159,10 +159,10 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
         taskSave.setSite(taskSite.getText().toString());
 
         long taskRowId = 0;
-        if (task.getId() == 0) {
+        if (task.get_id() == 0) {
             taskRowId = itineraryBo.createTask(taskSave);
         } else {
-            taskSave.setId(task.getId());
+            taskSave.set_id(task.get_id());
             itineraryBo.modifyTask(taskSave);
         }
 
@@ -170,7 +170,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
         Log.d("新增行程id", String.valueOf(taskRowId));
 
         //如果有設定提醒 要存檔
-        boolean isHaveNoTaskId = task.getId() == null || task.getId() == 0;
+        boolean isHaveNoTaskId = task.get_id() == null || task.get_id() == 0;
         boolean isHaveScheduleTm = schedule.getTm() != null && task.getTm().length() > 0;
         boolean isHaveScheduleSoundFileId = schedule.getSoundFileId() != null && schedule.getSoundFileId() > 0;
         if (isHaveNoTaskId && isHaveScheduleTm && isHaveScheduleSoundFileId) {
@@ -225,9 +225,9 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
      */
     private void createSchedule(View view) {
 
-        if (this.schedule.getId() == 0) {
+        if (this.schedule.get_id() == 0) {
             Intent intent = new Intent(this, CreateDingDongActivity.class);
-            intent.putExtra(GlobalNaming.TASK_ID, task.getId());
+            intent.putExtra(GlobalNaming.TASK_ID, task.get_id());
             startActivityForResult(intent, REQUEST_CODE_CREATE_DING_DONG);
         } else {
             new AlertDialog.Builder(this)
@@ -247,7 +247,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
      */
     private void editSchedule(DialogInterface dialogInterface, int which) {
         Intent intent = new Intent(this, CreateDingDongActivity.class);
-        intent.putExtra(GlobalNaming.TASK_ID, task.getId());
+        intent.putExtra(GlobalNaming.TASK_ID, task.get_id());
         startActivity(intent);
     }
 
@@ -258,11 +258,11 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
      * @param which
      */
     private void deleteSchedule(DialogInterface dialogInterface, int which) {
-        soundDingDongBo.removeSchedule(schedule.getId());
+        soundDingDongBo.removeSchedule(schedule.get_id());
 
         //刪除鬧鐘
         AlarmManager alarmManager = (AlarmManager) this.getSystemService(Context.ALARM_SERVICE);
-        PendingIntent pendingIntent = GlobalNaming.getAlarmPendingIntent(this, schedule.getId());
+        PendingIntent pendingIntent = GlobalNaming.getAlarmPendingIntent(this, schedule.get_id());
         alarmManager.cancel(pendingIntent);
     }
 

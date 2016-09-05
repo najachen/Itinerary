@@ -1,1 +1,1 @@
-include ':itinerary'
+include ':itinerary', ':directions_map'

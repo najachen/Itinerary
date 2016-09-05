@@ -88,7 +88,7 @@ public class CreateDingDongActivity extends AppCompatActivity {
         Cursor cursorSchedule = soundDingDongBo.findScheduleList(keySchedule);
 
         if (cursorSchedule.getCount() == 1 && cursorSchedule.moveToFirst()) {
-            schedule.setId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id")));
+            schedule.set_id(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id")));
             schedule.setTaskId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("taskId")));
             schedule.setSoundFileId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("soundFileId")));
             schedule.setTm(cursorSchedule.getString(cursorSchedule.getColumnIndexOrThrow("tm")));
@@ -160,7 +160,7 @@ public class CreateDingDongActivity extends AppCompatActivity {
         String tm = GlobalNaming.cleanSpecCharTo14DigiCode(dateSchedule + timeSchedule);
         schedule.setTm(tm);
 
-        Integer soundFileId = soundFile.getId();
+        Integer soundFileId = soundFile.get_id();
         if (soundFileId == null || soundFileId == 0) {
             Snackbar.make(view, "未選擇音效檔!!", Snackbar.LENGTH_SHORT).show();
             return;
@@ -174,7 +174,7 @@ public class CreateDingDongActivity extends AppCompatActivity {
                     有 -> 新增schedule
                     無 -> 帶回上頁 與task一起儲存
          */
-        Integer scheduleId = schedule.getId();
+        Integer scheduleId = schedule.get_id();
         if (scheduleId != null && scheduleId > 0) {
             int modRowCount = soundDingDongBo.modifySchedule(schedule);
 
@@ -189,9 +189,9 @@ public class CreateDingDongActivity extends AppCompatActivity {
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
         } else {
-            Integer taskId = task.getId();
+            Integer taskId = task.get_id();
             if (taskId != null && taskId > 0) {
-                schedule.setTaskId(task.getId());
+                schedule.setTaskId(task.get_id());
                 long rowId = soundDingDongBo.createSchedule(schedule);
 
                 /*
@@ -238,7 +238,7 @@ public class CreateDingDongActivity extends AppCompatActivity {
                 if (resultCode == RESULT_OK) {
 
                     int soundFileId = data.getIntExtra(GlobalNaming.SOUND_FILE_ID, GlobalNaming.ERROR_CODE);
-                    soundFile.setId(soundFileId);
+                    soundFile.set_id(soundFileId);
                     String soundFileName = data.getStringExtra(GlobalNaming.SOUND_FILE_NAME);
                     soundFile.setFileName(soundFileName);
                 }

@@ -141,9 +141,9 @@ public class ListTaskItemActivity extends AppCompatActivity {
         taskItemViewType = adapter.getItemViewType(position);
 
         if (this.taskItemViewType == MyViewHolderAdapter.VIEW_NOTE) {
-            this.taskItemId = taskItemHolder.note.getId();
+            this.taskItemId = taskItemHolder.note.get_id();
         } else {
-            this.taskItemId = taskItemHolder.shopping.getId();
+            this.taskItemId = taskItemHolder.shopping.get_id();
         }
 
         new AlertDialog.Builder(this)
@@ -228,11 +228,11 @@ public class ListTaskItemActivity extends AppCompatActivity {
             開始操作DB
          */
         //移除task
-        itineraryBo.removeTask(task.getId());
+        itineraryBo.removeTask(task.get_id());
 
         //移除提醒
         Schedule keySchedule = new Schedule();
-        keySchedule.setTaskId(task.getId());
+        keySchedule.setTaskId(task.get_id());
         Cursor cursorSchedule = soundDingDongBo.findScheduleList(keySchedule);
 
         if(cursorSchedule.getCount() == 1 && cursorSchedule.moveToFirst()){
@@ -242,7 +242,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
         //移除note群
         Note keyNote = new Note();
-        keyNote.setTaskId(task.getId());
+        keyNote.setTaskId(task.get_id());
         Cursor noteCursorDelete = itineraryBo.findNoteList(keyNote);
 
         List<Integer> noteIdListDelete = new ArrayList<Integer>();
@@ -254,7 +254,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
         //移除shopping群
         Shopping keyShopping = new Shopping();
-        keyShopping.setTaskId(task.getId());
+        keyShopping.setTaskId(task.get_id());
         Cursor shoppingCursorDelete = itineraryBo.findShoppingList(keyShopping);
 
         List<Integer> shoppingIdListDelete = new ArrayList<Integer>();
@@ -276,7 +276,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
      */
     private void editTask(DialogInterface dialogInterface, int which) {
         Intent intent = new Intent(this, CreateOrEditTaskActivity.class);
-        intent.putExtra(GlobalNaming.TASK_ID, task.getId());
+        intent.putExtra(GlobalNaming.TASK_ID, task.get_id());
         startActivity(intent);
     }
 
@@ -305,7 +305,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
      */
     private void fabAddNoteOrShopping(View view) {
         Intent intent = new Intent(this, CreateOrEditTaskItemActivity.class);
-        intent.putExtra(GlobalNaming.TASK_ID, task.getId());
+        intent.putExtra(GlobalNaming.TASK_ID, task.get_id());
         startActivity(intent);
     }
 
@@ -327,7 +327,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
         //開始跟結束條件
         Pager pager = new Pager(this, PAGE_SIZE);
-        List<Pager.TaskItemHolder> list = pager.getPagedTaskItemHolderListForViewHolder(task.getId(), this.currentPage, isGoForward);
+        List<Pager.TaskItemHolder> list = pager.getPagedTaskItemHolderListForViewHolder(task.get_id(), this.currentPage, isGoForward);
         MyViewHolderAdapter adapter = new MyViewHolderAdapter(this, list);
         this.taskItemList.setAdapter(adapter);
     }
@@ -388,8 +388,8 @@ public class ListTaskItemActivity extends AppCompatActivity {
         @Override
         public long getItemId(int position) {
             Pager.TaskItemHolder taskItemHolder = this.getItem(position);
-            long noteId = taskItemHolder.note == null ? 0 : taskItemHolder.note.getId();
-            long shoppingId = taskItemHolder.shopping == null ? 0 : taskItemHolder.shopping.getId();
+            long noteId = taskItemHolder.note == null ? 0 : taskItemHolder.note.get_id();
+            long shoppingId = taskItemHolder.shopping == null ? 0 : taskItemHolder.shopping.get_id();
             return noteId + shoppingId;
         }
 

@@ -11,7 +11,7 @@ import silver.reminder.itinerary.model.Note;
 import silver.reminder.itinerary.model.Task;
 import silver.reminder.itinerary.model.Shopping;
 /**
- * Wed Aug 31 22:02:29 CST 2016 by freemarker template
+ * Mon Sep 05 23:52:20 CST 2016 by freemarker template
  */
 public class ItineraryBoImpl implements ItineraryBo {
 
@@ -60,8 +60,8 @@ public class ItineraryBoImpl implements ItineraryBo {
     }
 
     @Override
-    public void removeNote(Integer id) {
-        this.itineraryDao.deleteNote(id);
+    public void removeNote(Integer _id) {
+        this.itineraryDao.deleteNote(_id);
     }
 
     @Override
@@ -70,8 +70,8 @@ public class ItineraryBoImpl implements ItineraryBo {
     }
 
     @Override
-    public Note findNoteById(Integer id) {
-        Note result = this.itineraryDao.selectNoteById(id);
+    public Note findNoteById(Integer _id) {
+        Note result = this.itineraryDao.selectNoteById(_id);
         return result;
     }
 
@@ -80,7 +80,7 @@ public class ItineraryBoImpl implements ItineraryBo {
         Cursor result = this.itineraryDao.selectNoteList(note);
         return result;
     }
-    
+
     @Override
     public long createTask(Task task) {
         long rowId = this.itineraryDao.insertTask(task);
@@ -104,8 +104,8 @@ public class ItineraryBoImpl implements ItineraryBo {
     }
 
     @Override
-    public void removeTask(Integer id) {
-        this.itineraryDao.deleteTask(id);
+    public void removeTask(Integer _id) {
+        this.itineraryDao.deleteTask(_id);
     }
 
     @Override
@@ -114,8 +114,8 @@ public class ItineraryBoImpl implements ItineraryBo {
     }
 
     @Override
-    public Task findTaskById(Integer id) {
-        Task result = this.itineraryDao.selectTaskById(id);
+    public Task findTaskById(Integer _id) {
+        Task result = this.itineraryDao.selectTaskById(_id);
         return result;
     }
 
@@ -124,7 +124,7 @@ public class ItineraryBoImpl implements ItineraryBo {
         Cursor result = this.itineraryDao.selectTaskList(task);
         return result;
     }
-    
+
     @Override
     public long createShopping(Shopping shopping) {
         long rowId = this.itineraryDao.insertShopping(shopping);
@@ -148,8 +148,8 @@ public class ItineraryBoImpl implements ItineraryBo {
     }
 
     @Override
-    public void removeShopping(Integer id) {
-        this.itineraryDao.deleteShopping(id);
+    public void removeShopping(Integer _id) {
+        this.itineraryDao.deleteShopping(_id);
     }
 
     @Override
@@ -158,8 +158,8 @@ public class ItineraryBoImpl implements ItineraryBo {
     }
 
     @Override
-    public Shopping findShoppingById(Integer id) {
-        Shopping result = this.itineraryDao.selectShoppingById(id);
+    public Shopping findShoppingById(Integer _id) {
+        Shopping result = this.itineraryDao.selectShoppingById(_id);
         return result;
     }
 
@@ -168,5 +168,5 @@ public class ItineraryBoImpl implements ItineraryBo {
         Cursor result = this.itineraryDao.selectShoppingList(shopping);
         return result;
     }
-    
+
 }

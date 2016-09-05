@@ -14,7 +14,7 @@ import silver.reminder.itinerary.model.Note;
 import silver.reminder.itinerary.model.Task;
 import silver.reminder.itinerary.model.Shopping;
 /**
- * Wed Aug 31 22:02:29 CST 2016 by freemarker template
+ * Tue Sep 06 00:15:27 CST 2016 by freemarker template
  */
 public class ItineraryDaoImpl implements ItineraryDao {
 
@@ -44,11 +44,11 @@ public class ItineraryDaoImpl implements ItineraryDao {
      */
     @Override
     public long insertNote(Note note) {
-		
+
         ContentValues contentValues = new ContentValues();
-		contentValues.put("noteContent", note.getNoteContent());
-		contentValues.put("noteExplain", note.getNoteExplain());
-		contentValues.put("taskId", note.getTaskId());
+        contentValues.put("noteContent", note.getNoteContent());
+        contentValues.put("noteExplain", note.getNoteExplain());
+        contentValues.put("taskId", note.getTaskId());
         long rowId = this.writableDB.insert("note", null, contentValues);
         return rowId;
     }
@@ -70,10 +70,10 @@ public class ItineraryDaoImpl implements ItineraryDao {
 
         //這裡是要修改的資料
         ContentValues contentValues = new ContentValues();
-		contentValues.put("noteContent", note.getNoteContent());
-		contentValues.put("noteExplain", note.getNoteExplain());
-		contentValues.put("taskId", note.getTaskId());
-        int updateDataAmount = this.writableDB.updateWithOnConflict("note", contentValues, "id = ?", new String[]{note.getId().toString()}, SQLiteDatabase.CONFLICT_ROLLBACK);
+        contentValues.put("noteContent", note.getNoteContent());
+        contentValues.put("noteExplain", note.getNoteExplain());
+        contentValues.put("taskId", note.getTaskId());
+        int updateDataAmount = this.writableDB.updateWithOnConflict("note", contentValues, "_id = ?", new String[]{note.get_id().toString()}, SQLiteDatabase.CONFLICT_ROLLBACK);
         return updateDataAmount;
     }
 
@@ -90,9 +90,9 @@ public class ItineraryDaoImpl implements ItineraryDao {
     }
 
     @Override
-    public void deleteNote(Integer id) {
+    public void deleteNote(Integer _id) {
 
-        int deleteDataAmount = this.writableDB.delete("note", "id = ?", new String[]{id.toString()});
+        int deleteDataAmount = this.writableDB.delete("note", "_id = ?", new String[]{_id.toString()});
         if (deleteDataAmount > 1) {
             Log.d("移除 note 異常!! 移除了 ", deleteDataAmount + " 筆");
         }
@@ -111,9 +111,13 @@ public class ItineraryDaoImpl implements ItineraryDao {
     }
 
     @Override
-    public Note selectNoteById(Integer id) {
+    public Note selectNoteById(Integer _id) {
 
-        Cursor noteCursor = this.readableDB.rawQuery("select * from note where id = ?", new String[]{id.toString()});
+        Cursor noteCursor = this.readableDB.rawQuery("select * from note where _id = ?", new String[]{_id.toString()});
+
+        if(noteCursor.getCount() == 0){
+            return null;
+        }
 
         Note result = new Note();
 
@@ -123,17 +127,17 @@ public class ItineraryDaoImpl implements ItineraryDao {
 
             switch (columnName) {
                 case "noteContent":
-	                result.setNoteContent(noteCursor.getString(columnIndex));
-	                break;
+                    result.setNoteContent(noteCursor.getString(columnIndex));
+                    break;
                 case "noteExplain":
-	                result.setNoteExplain(noteCursor.getString(columnIndex));
-	                break;
-                case "id":
-	                result.setId(noteCursor.getInt(columnIndex));
-	                break;
+                    result.setNoteExplain(noteCursor.getString(columnIndex));
+                    break;
+                case "_id":
+                    result.set_id(noteCursor.getInt(columnIndex));
+                    break;
                 case "taskId":
-	                result.setTaskId(noteCursor.getInt(columnIndex));
-	                break;
+                    result.setTaskId(noteCursor.getInt(columnIndex));
+                    break;
                 default:
                     Log.d("出現欄位名稱錯誤 => ", columnName + columnIndex);
             }
@@ -149,22 +153,22 @@ public class ItineraryDaoImpl implements ItineraryDao {
 
         List<String> whereArgs = new ArrayList<String>();
 
-		String noteContent = note.getNoteContent();
+        String noteContent = note.getNoteContent();
         if (noteContent != null && noteContent.toString().length() > 0) {
             sqlWhere.append(" and noteContent = ? ");
             whereArgs.add(noteContent.toString());
         }
-		String noteExplain = note.getNoteExplain();
+        String noteExplain = note.getNoteExplain();
         if (noteExplain != null && noteExplain.toString().length() > 0) {
             sqlWhere.append(" and noteExplain = ? ");
             whereArgs.add(noteExplain.toString());
         }
-		Integer id = note.getId();
-        if (id != null && id.toString().length() > 0) {
-            sqlWhere.append(" and id = ? ");
-            whereArgs.add(id.toString());
+        Integer _id = note.get_id();
+        if (_id != null && _id.toString().length() > 0) {
+            sqlWhere.append(" and _id = ? ");
+            whereArgs.add(_id.toString());
         }
-		Integer taskId = note.getTaskId();
+        Integer taskId = note.getTaskId();
         if (taskId != null && taskId.toString().length() > 0) {
             sqlWhere.append(" and taskId = ? ");
             whereArgs.add(taskId.toString());
@@ -172,17 +176,17 @@ public class ItineraryDaoImpl implements ItineraryDao {
         String[] whereArgsStringArray = new String[whereArgs.size()];
         whereArgsStringArray = whereArgs.toArray(whereArgsStringArray);
 
-        Cursor result = this.readableDB.query("note", null, sqlWhere.toString(), whereArgsStringArray, null, null, "id");
+        Cursor result = this.readableDB.query("note", null, sqlWhere.toString(), whereArgsStringArray, null, null, "_id");
         return result;
     }
-    
+
     @Override
     public long insertTask(Task task) {
-		
+
         ContentValues contentValues = new ContentValues();
-		contentValues.put("site", task.getSite());
-		contentValues.put("name", task.getName());
-		contentValues.put("tm", task.getTm());
+        contentValues.put("site", task.getSite());
+        contentValues.put("name", task.getName());
+        contentValues.put("tm", task.getTm());
         long rowId = this.writableDB.insert("task", null, contentValues);
         return rowId;
     }
@@ -204,10 +208,10 @@ public class ItineraryDaoImpl implements ItineraryDao {
 
         //這裡是要修改的資料
         ContentValues contentValues = new ContentValues();
-		contentValues.put("site", task.getSite());
-		contentValues.put("name", task.getName());
-		contentValues.put("tm", task.getTm());
-        int updateDataAmount = this.writableDB.updateWithOnConflict("task", contentValues, "id = ?", new String[]{task.getId().toString()}, SQLiteDatabase.CONFLICT_ROLLBACK);
+        contentValues.put("site", task.getSite());
+        contentValues.put("name", task.getName());
+        contentValues.put("tm", task.getTm());
+        int updateDataAmount = this.writableDB.updateWithOnConflict("task", contentValues, "_id = ?", new String[]{task.get_id().toString()}, SQLiteDatabase.CONFLICT_ROLLBACK);
         return updateDataAmount;
     }
 
@@ -224,9 +228,9 @@ public class ItineraryDaoImpl implements ItineraryDao {
     }
 
     @Override
-    public void deleteTask(Integer id) {
+    public void deleteTask(Integer _id) {
 
-        int deleteDataAmount = this.writableDB.delete("task", "id = ?", new String[]{id.toString()});
+        int deleteDataAmount = this.writableDB.delete("task", "_id = ?", new String[]{_id.toString()});
         if (deleteDataAmount > 1) {
             Log.d("移除 task 異常!! 移除了 ", deleteDataAmount + " 筆");
         }
@@ -245,9 +249,13 @@ public class ItineraryDaoImpl implements ItineraryDao {
     }
 
     @Override
-    public Task selectTaskById(Integer id) {
+    public Task selectTaskById(Integer _id) {
 
-        Cursor taskCursor = this.readableDB.rawQuery("select * from task where id = ?", new String[]{id.toString()});
+        Cursor taskCursor = this.readableDB.rawQuery("select * from task where _id = ?", new String[]{_id.toString()});
+
+        if(taskCursor.getCount() == 0){
+            return null;
+        }
 
         Task result = new Task();
 
@@ -257,17 +265,17 @@ public class ItineraryDaoImpl implements ItineraryDao {
 
             switch (columnName) {
                 case "site":
-	                result.setSite(taskCursor.getString(columnIndex));
-	                break;
+                    result.setSite(taskCursor.getString(columnIndex));
+                    break;
                 case "name":
-	                result.setName(taskCursor.getString(columnIndex));
-	                break;
+                    result.setName(taskCursor.getString(columnIndex));
+                    break;
                 case "tm":
-	                result.setTm(taskCursor.getString(columnIndex));
-	                break;
-                case "id":
-	                result.setId(taskCursor.getInt(columnIndex));
-	                break;
+                    result.setTm(taskCursor.getString(columnIndex));
+                    break;
+                case "_id":
+                    result.set_id(taskCursor.getInt(columnIndex));
+                    break;
                 default:
                     Log.d("出現欄位名稱錯誤 => ", columnName + columnIndex);
             }
@@ -283,41 +291,41 @@ public class ItineraryDaoImpl implements ItineraryDao {
 
         List<String> whereArgs = new ArrayList<String>();
 
-		String site = task.getSite();
+        String site = task.getSite();
         if (site != null && site.toString().length() > 0) {
             sqlWhere.append(" and site = ? ");
             whereArgs.add(site.toString());
         }
-		String name = task.getName();
+        String name = task.getName();
         if (name != null && name.toString().length() > 0) {
             sqlWhere.append(" and name = ? ");
             whereArgs.add(name.toString());
         }
-		String tm = task.getTm();
+        String tm = task.getTm();
         if (tm != null && tm.toString().length() > 0) {
             sqlWhere.append(" and tm = ? ");
             whereArgs.add(tm.toString());
         }
-		Integer id = task.getId();
-        if (id != null && id.toString().length() > 0) {
-            sqlWhere.append(" and id = ? ");
-            whereArgs.add(id.toString());
+        Integer _id = task.get_id();
+        if (_id != null && _id.toString().length() > 0) {
+            sqlWhere.append(" and _id = ? ");
+            whereArgs.add(_id.toString());
         }
         String[] whereArgsStringArray = new String[whereArgs.size()];
         whereArgsStringArray = whereArgs.toArray(whereArgsStringArray);
 
-        Cursor result = this.readableDB.query("task", null, sqlWhere.toString(), whereArgsStringArray, null, null, "id");
+        Cursor result = this.readableDB.query("task", null, sqlWhere.toString(), whereArgsStringArray, null, null, "_id");
         return result;
     }
-    
+
     @Override
     public long insertShopping(Shopping shopping) {
-		
+
         ContentValues contentValues = new ContentValues();
-		contentValues.put("unitPrice", shopping.getUnitPrice());
-		contentValues.put("quantity", shopping.getQuantity());
-		contentValues.put("name", shopping.getName());
-		contentValues.put("taskId", shopping.getTaskId());
+        contentValues.put("unitPrice", shopping.getUnitPrice());
+        contentValues.put("quantity", shopping.getQuantity());
+        contentValues.put("name", shopping.getName());
+        contentValues.put("taskId", shopping.getTaskId());
         long rowId = this.writableDB.insert("shopping", null, contentValues);
         return rowId;
     }
@@ -339,11 +347,11 @@ public class ItineraryDaoImpl implements ItineraryDao {
 
         //這裡是要修改的資料
         ContentValues contentValues = new ContentValues();
-		contentValues.put("unitPrice", shopping.getUnitPrice());
-		contentValues.put("quantity", shopping.getQuantity());
-		contentValues.put("name", shopping.getName());
-		contentValues.put("taskId", shopping.getTaskId());
-        int updateDataAmount = this.writableDB.updateWithOnConflict("shopping", contentValues, "id = ?", new String[]{shopping.getId().toString()}, SQLiteDatabase.CONFLICT_ROLLBACK);
+        contentValues.put("unitPrice", shopping.getUnitPrice());
+        contentValues.put("quantity", shopping.getQuantity());
+        contentValues.put("name", shopping.getName());
+        contentValues.put("taskId", shopping.getTaskId());
+        int updateDataAmount = this.writableDB.updateWithOnConflict("shopping", contentValues, "_id = ?", new String[]{shopping.get_id().toString()}, SQLiteDatabase.CONFLICT_ROLLBACK);
         return updateDataAmount;
     }
 
@@ -360,9 +368,9 @@ public class ItineraryDaoImpl implements ItineraryDao {
     }
 
     @Override
-    public void deleteShopping(Integer id) {
+    public void deleteShopping(Integer _id) {
 
-        int deleteDataAmount = this.writableDB.delete("shopping", "id = ?", new String[]{id.toString()});
+        int deleteDataAmount = this.writableDB.delete("shopping", "_id = ?", new String[]{_id.toString()});
         if (deleteDataAmount > 1) {
             Log.d("移除 shopping 異常!! 移除了 ", deleteDataAmount + " 筆");
         }
@@ -381,9 +389,13 @@ public class ItineraryDaoImpl implements ItineraryDao {
     }
 
     @Override
-    public Shopping selectShoppingById(Integer id) {
+    public Shopping selectShoppingById(Integer _id) {
 
-        Cursor shoppingCursor = this.readableDB.rawQuery("select * from shopping where id = ?", new String[]{id.toString()});
+        Cursor shoppingCursor = this.readableDB.rawQuery("select * from shopping where _id = ?", new String[]{_id.toString()});
+
+        if(shoppingCursor.getCount() == 0){
+            return null;
+        }
 
         Shopping result = new Shopping();
 
@@ -393,19 +405,19 @@ public class ItineraryDaoImpl implements ItineraryDao {
 
             switch (columnName) {
                 case "unitPrice":
-	                break;
+                    break;
                 case "quantity":
-	                result.setQuantity(shoppingCursor.getInt(columnIndex));
-	                break;
+                    result.setQuantity(shoppingCursor.getInt(columnIndex));
+                    break;
                 case "name":
-	                result.setName(shoppingCursor.getString(columnIndex));
-	                break;
-                case "id":
-	                result.setId(shoppingCursor.getInt(columnIndex));
-	                break;
+                    result.setName(shoppingCursor.getString(columnIndex));
+                    break;
+                case "_id":
+                    result.set_id(shoppingCursor.getInt(columnIndex));
+                    break;
                 case "taskId":
-	                result.setTaskId(shoppingCursor.getInt(columnIndex));
-	                break;
+                    result.setTaskId(shoppingCursor.getInt(columnIndex));
+                    break;
                 default:
                     Log.d("出現欄位名稱錯誤 => ", columnName + columnIndex);
             }
@@ -421,27 +433,27 @@ public class ItineraryDaoImpl implements ItineraryDao {
 
         List<String> whereArgs = new ArrayList<String>();
 
-		Float unitPrice = shopping.getUnitPrice();
+        Float unitPrice = shopping.getUnitPrice();
         if (unitPrice != null && unitPrice.toString().length() > 0) {
             sqlWhere.append(" and unitPrice = ? ");
             whereArgs.add(unitPrice.toString());
         }
-		Integer quantity = shopping.getQuantity();
+        Integer quantity = shopping.getQuantity();
         if (quantity != null && quantity.toString().length() > 0) {
             sqlWhere.append(" and quantity = ? ");
             whereArgs.add(quantity.toString());
         }
-		String name = shopping.getName();
+        String name = shopping.getName();
         if (name != null && name.toString().length() > 0) {
             sqlWhere.append(" and name = ? ");
             whereArgs.add(name.toString());
         }
-		Integer id = shopping.getId();
-        if (id != null && id.toString().length() > 0) {
-            sqlWhere.append(" and id = ? ");
-            whereArgs.add(id.toString());
+        Integer _id = shopping.get_id();
+        if (_id != null && _id.toString().length() > 0) {
+            sqlWhere.append(" and _id = ? ");
+            whereArgs.add(_id.toString());
         }
-		Integer taskId = shopping.getTaskId();
+        Integer taskId = shopping.getTaskId();
         if (taskId != null && taskId.toString().length() > 0) {
             sqlWhere.append(" and taskId = ? ");
             whereArgs.add(taskId.toString());
@@ -449,8 +461,8 @@ public class ItineraryDaoImpl implements ItineraryDao {
         String[] whereArgsStringArray = new String[whereArgs.size()];
         whereArgsStringArray = whereArgs.toArray(whereArgsStringArray);
 
-        Cursor result = this.readableDB.query("shopping", null, sqlWhere.toString(), whereArgsStringArray, null, null, "id");
+        Cursor result = this.readableDB.query("shopping", null, sqlWhere.toString(), whereArgsStringArray, null, null, "_id");
         return result;
     }
-    
+
 }

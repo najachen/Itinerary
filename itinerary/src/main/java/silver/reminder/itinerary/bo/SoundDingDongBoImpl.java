@@ -10,7 +10,7 @@ import silver.reminder.itinerary.dao.SoundDingDongDaoImpl;
 import silver.reminder.itinerary.model.Schedule;
 import silver.reminder.itinerary.model.SoundFile;
 /**
- * Wed Aug 31 22:02:29 CST 2016 by freemarker template
+ * Mon Sep 05 23:52:20 CST 2016 by freemarker template
  */
 public class SoundDingDongBoImpl implements SoundDingDongBo {
 
@@ -59,8 +59,8 @@ public class SoundDingDongBoImpl implements SoundDingDongBo {
     }
 
     @Override
-    public void removeSchedule(Integer id) {
-        this.soundDingDongDao.deleteSchedule(id);
+    public void removeSchedule(Integer _id) {
+        this.soundDingDongDao.deleteSchedule(_id);
     }
 
     @Override
@@ -69,8 +69,8 @@ public class SoundDingDongBoImpl implements SoundDingDongBo {
     }
 
     @Override
-    public Schedule findScheduleById(Integer id) {
-        Schedule result = this.soundDingDongDao.selectScheduleById(id);
+    public Schedule findScheduleById(Integer _id) {
+        Schedule result = this.soundDingDongDao.selectScheduleById(_id);
         return result;
     }
 
@@ -79,7 +79,7 @@ public class SoundDingDongBoImpl implements SoundDingDongBo {
         Cursor result = this.soundDingDongDao.selectScheduleList(schedule);
         return result;
     }
-    
+
     @Override
     public long createSoundFile(SoundFile soundFile) {
         long rowId = this.soundDingDongDao.insertSoundFile(soundFile);
@@ -103,8 +103,8 @@ public class SoundDingDongBoImpl implements SoundDingDongBo {
     }
 
     @Override
-    public void removeSoundFile(Integer id) {
-        this.soundDingDongDao.deleteSoundFile(id);
+    public void removeSoundFile(Integer _id) {
+        this.soundDingDongDao.deleteSoundFile(_id);
     }
 
     @Override
@@ -113,8 +113,8 @@ public class SoundDingDongBoImpl implements SoundDingDongBo {
     }
 
     @Override
-    public SoundFile findSoundFileById(Integer id) {
-        SoundFile result = this.soundDingDongDao.selectSoundFileById(id);
+    public SoundFile findSoundFileById(Integer _id) {
+        SoundFile result = this.soundDingDongDao.selectSoundFileById(_id);
         return result;
     }
 
@@ -123,5 +123,5 @@ public class SoundDingDongBoImpl implements SoundDingDongBo {
         Cursor result = this.soundDingDongDao.selectSoundFileList(soundFile);
         return result;
     }
-    
+
 }

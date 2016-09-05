@@ -7,7 +7,7 @@ import java.util.List;
 import silver.reminder.itinerary.model.Schedule;
 import silver.reminder.itinerary.model.SoundFile;
 /**
- * Wed Aug 31 22:02:29 CST 2016 by freemarker template
+ * Mon Sep 05 23:52:20 CST 2016 by freemarker template
  */
 public interface SoundDingDongDao {
 
@@ -19,14 +19,14 @@ public interface SoundDingDongDao {
 
     void updateScheduleList(List<Schedule> scheduleList);
 
-    void deleteSchedule(Integer id);
+    void deleteSchedule(Integer _id);
 
     void deleteScheduleList(List<Integer> scheduleIdList);
 
-    Schedule selectScheduleById(Integer id);
+    Schedule selectScheduleById(Integer _id);
 
     Cursor selectScheduleList(Schedule schedule);
-    
+
     long insertSoundFile(SoundFile soundFile);
 
     void insertSoundFileList(List<SoundFile> soundFileList);
@@ -35,12 +35,12 @@ public interface SoundDingDongDao {
 
     void updateSoundFileList(List<SoundFile> soundFileList);
 
-    void deleteSoundFile(Integer id);
+    void deleteSoundFile(Integer _id);
 
     void deleteSoundFileList(List<Integer> soundFileIdList);
 
-    SoundFile selectSoundFileById(Integer id);
+    SoundFile selectSoundFileById(Integer _id);
 
     Cursor selectSoundFileList(SoundFile soundFile);
-    
+
 }

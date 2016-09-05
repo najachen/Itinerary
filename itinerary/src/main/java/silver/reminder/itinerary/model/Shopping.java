@@ -1,6 +1,6 @@
 package silver.reminder.itinerary.model;
 /**
- * Wed Aug 31 22:02:29 CST 2016 by freemarker template
+ * Mon Sep 05 23:27:31 CST 2016 by freemarker template
  */
 public class Shopping {
 
@@ -10,7 +10,7 @@ public class Shopping {
     
     private String name;
     
-    private Integer id;
+    private Integer _id;
     
     private Integer taskId;
     
@@ -35,11 +35,11 @@ public class Shopping {
         return this.name;
     }
     
-    public void setId(Integer id){
-        this.id = id;
+    public void set_id(Integer _id){
+        this._id = _id;
     }
-    public Integer getId(){
-        return this.id;
+    public Integer get_id(){
+        return this._id;
     }
     
     public void setTaskId(Integer taskId){

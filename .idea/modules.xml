@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Itinerary.iml" filepath="$PROJECT_DIR$/Itinerary.iml" />
+      <module fileurl="file://$PROJECT_DIR$/directions_map/directions_map.iml" filepath="$PROJECT_DIR$/directions_map/directions_map.iml" />
       <module fileurl="file://$PROJECT_DIR$/itinerary/itinerary.iml" filepath="$PROJECT_DIR$/itinerary/itinerary.iml" />
     </modules>
   </component>

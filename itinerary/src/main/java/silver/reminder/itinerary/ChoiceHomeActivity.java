@@ -8,7 +8,6 @@ import android.widget.Button;
 
 public class ChoiceHomeActivity extends AppCompatActivity {
 
-    private Button intinBulletin;
     private Button intinOption;
 
     @Override
@@ -20,21 +19,8 @@ public class ChoiceHomeActivity extends AppCompatActivity {
     }
 
     private void findViews() {
-        intinBulletin = (Button) findViewById(R.id.intinBulletin);
-        intinBulletin.setOnClickListener(this::bulletin);
-
         intinOption = (Button) findViewById(R.id.intinOption);
         intinOption.setOnClickListener(this::option);
-    }
-
-    /**
-     * 最佳化外出路徑
-     *
-     * @param view
-     */
-    private void bulletin(View view) {
-        Intent intent = new Intent(this, MapOptimizePathActivity.class);
-        startActivity(intent);
     }
 
     /**

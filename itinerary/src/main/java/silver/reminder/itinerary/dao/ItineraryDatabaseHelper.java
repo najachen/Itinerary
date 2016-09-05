@@ -14,7 +14,7 @@ import silver.reminder.itinerary.genCodeTools.TableSchemaSet;
 
 
 /**
-  * Wed Aug 31 22:02:29 CST 2016 by freemarker template
+  * Mon Sep 05 23:27:31 CST 2016 by freemarker template
   */
 public class ItineraryDatabaseHelper extends SQLiteOpenHelper {
 

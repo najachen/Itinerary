@@ -48,7 +48,7 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 			public Map getFieldMetaData() {
 				return new HashMap() {
 					{
-						put("id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
+						put("_id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
 						put("name", TableSchemaSetSpec.TEXT);
 						put("tm", TableSchemaSetSpec.TEXT | TableSchemaSetSpec.NOT_NULL);
 						put("site", TableSchemaSetSpec.TEXT);
@@ -67,7 +67,7 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 			public Map getFieldMetaData() {
 				return new HashMap() {
 					{
-						put("id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
+						put("_id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
 						put("tm", TableSchemaSetSpec.TEXT | TableSchemaSetSpec.NOT_NULL);
 						put("taskId", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
 						put("soundFileId", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
@@ -86,7 +86,7 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 			public Map getFieldMetaData() {
 				return new HashMap() {
 					{
-						put("id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
+						put("_id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
 						put("fileName", TableSchemaSetSpec.TEXT | TableSchemaSetSpec.NOT_NULL);
 					}
 				};
@@ -103,7 +103,7 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 			public Map getFieldMetaData() {
 				return new HashMap() {
 					{
-						put("id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
+						put("_id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
 						put("taskId", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
 						put("name", TableSchemaSetSpec.TEXT | TableSchemaSetSpec.NOT_NULL);
 						put("quantity", TableSchemaSetSpec.INTEGER);
@@ -123,7 +123,7 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 			public Map getFieldMetaData() {
 				return new HashMap() {
 					{
-						put("id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
+						put("_id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
 						put("taskId", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
 						put("noteContent", TableSchemaSetSpec.TEXT | TableSchemaSetSpec.NOT_NULL);
 						put("noteExplain", TableSchemaSetSpec.TEXT);

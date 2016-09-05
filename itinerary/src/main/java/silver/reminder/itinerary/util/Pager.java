@@ -49,7 +49,7 @@ public class Pager {
         currentPage = currentPage == 0 ? 1 : currentPage;
 
         //判斷是否為第一頁或最後一頁
-        String whereDesc = " where " + conditionFieldName + " >= ? and " + conditionFieldName + " <= ? ";
+        String whereDesc = conditionFieldName + " >= ? and " + conditionFieldName + " <= ? ";
         long count = DatabaseUtils.queryNumEntries(db, tableName, whereDesc, new String[]{conditionStart, conditionEnd});
         int totalPageNum = (int) count / this.pageSize + 1;
 
@@ -72,7 +72,7 @@ public class Pager {
         String strDataOffset = String.valueOf(intDataOffset);
 
         //開始搜尋資料
-        String searchSql = "select * from " + tableName + whereDesc + "limit ? offset ?";
+        String searchSql = "select * from " + tableName + GlobalNaming.SPACE + "where " + whereDesc + "limit ? offset ?";
         Cursor cursor = db.rawQuery(searchSql, new String[]{conditionStart, conditionEnd, strDataNumStart, strDataOffset});
 
         return cursor;
@@ -197,12 +197,12 @@ public class Pager {
     private static Note cursorToNote(Cursor cursor) {
         Note result = new Note();
 
-        int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
         int taskId = cursor.getInt(cursor.getColumnIndexOrThrow("taskId"));
         String noteContent = cursor.getString(cursor.getColumnIndexOrThrow("noteContent"));
         String noteExplain = cursor.getString(cursor.getColumnIndexOrThrow("noteExplain"));
 
-        result.setId(id);
+        result.set_id(id);
         result.setTaskId(taskId);
         result.setNoteContent(noteContent);
         result.setNoteExplain(noteExplain);
@@ -219,13 +219,13 @@ public class Pager {
     private static Shopping cursorToShopping(Cursor cursor) {
         Shopping result = new Shopping();
 
-        int id = cursor.getInt(cursor.getColumnIndexOrThrow("id"));
+        int id = cursor.getInt(cursor.getColumnIndexOrThrow("_id"));
         int taskId = cursor.getInt(cursor.getColumnIndexOrThrow("taskId"));
         String name = cursor.getString(cursor.getColumnIndexOrThrow("name"));
         int quantity = cursor.getInt(cursor.getColumnIndexOrThrow("quantity"));
         float unitPrice = cursor.getFloat(cursor.getColumnIndexOrThrow("unitPrice"));
 
-        result.setId(id);
+        result.set_id(id);
         result.setTaskId(taskId);
         result.setName(name);
         result.setQuantity(quantity);
