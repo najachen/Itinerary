@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     tools:context=".ChoiceHomeActivity"
     android:orientation="vertical"
-    android:background="@drawable/background_color_green_white">
+    android:background="#FFECB3">
 
     <Button
         android:layout_width="match_parent"
