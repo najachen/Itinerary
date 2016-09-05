@@ -7,7 +7,7 @@
     android:orientation="vertical"
 
     tools:context=".ChoiceOutdoorAllOperationActivity"
-    android:background="@drawable/background_color_green_white">
+    android:background="#FFECB3">
     <!--style="@style/AppStyle2"-->
 
     <LinearLayout

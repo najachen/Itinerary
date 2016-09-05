@@ -21,7 +21,7 @@
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ListTaskItemActivity"
     tools:showIn="@layout/list_task_item_activity"
-    android:background="@drawable/background_color_green_white">
+    android:background="#FFECB3">
 
     <LinearLayout
         android:layout_width="match_parent"

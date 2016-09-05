@@ -9,7 +9,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context=".ChoiceHomeActivity"
-    android:background="@drawable/background_color_green_white">
+    android:background="#FFECB3">
 
     <LinearLayout
         android:id="@+id/headerButtonDingDong"

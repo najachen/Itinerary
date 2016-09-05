@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:background="@drawable/background_color_green_white">
+    android:background="#FFECB3">
 
     <TextView
         android:id="@+id/taskName"
