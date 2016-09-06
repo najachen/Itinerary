@@ -14,7 +14,7 @@ import silver.reminder.itinerary.model.Note;
 import silver.reminder.itinerary.model.Task;
 import silver.reminder.itinerary.model.Shopping;
 /**
- * Tue Sep 06 00:15:27 CST 2016 by freemarker template
+ * Tue Sep 06 14:18:17 CST 2016 by freemarker template
  */
 public class ItineraryDaoImpl implements ItineraryDao {
 
@@ -184,9 +184,10 @@ public class ItineraryDaoImpl implements ItineraryDao {
     public long insertTask(Task task) {
 
         ContentValues contentValues = new ContentValues();
+        contentValues.put("date", task.getDate());
         contentValues.put("site", task.getSite());
         contentValues.put("name", task.getName());
-        contentValues.put("tm", task.getTm());
+        contentValues.put("time", task.getTime());
         long rowId = this.writableDB.insert("task", null, contentValues);
         return rowId;
     }
@@ -208,9 +209,10 @@ public class ItineraryDaoImpl implements ItineraryDao {
 
         //這裡是要修改的資料
         ContentValues contentValues = new ContentValues();
+        contentValues.put("date", task.getDate());
         contentValues.put("site", task.getSite());
         contentValues.put("name", task.getName());
-        contentValues.put("tm", task.getTm());
+        contentValues.put("time", task.getTime());
         int updateDataAmount = this.writableDB.updateWithOnConflict("task", contentValues, "_id = ?", new String[]{task.get_id().toString()}, SQLiteDatabase.CONFLICT_ROLLBACK);
         return updateDataAmount;
     }
@@ -264,17 +266,20 @@ public class ItineraryDaoImpl implements ItineraryDao {
             int columnIndex = taskCursor.getColumnIndexOrThrow(columnName);
 
             switch (columnName) {
+                case "date":
+                    result.setDate(taskCursor.getInt(columnIndex));
+                    break;
                 case "site":
                     result.setSite(taskCursor.getString(columnIndex));
                     break;
                 case "name":
                     result.setName(taskCursor.getString(columnIndex));
                     break;
-                case "tm":
-                    result.setTm(taskCursor.getString(columnIndex));
-                    break;
                 case "_id":
                     result.set_id(taskCursor.getInt(columnIndex));
+                    break;
+                case "time":
+                    result.setTime(taskCursor.getInt(columnIndex));
                     break;
                 default:
                     Log.d("出現欄位名稱錯誤 => ", columnName + columnIndex);
@@ -291,6 +296,11 @@ public class ItineraryDaoImpl implements ItineraryDao {
 
         List<String> whereArgs = new ArrayList<String>();
 
+        Integer date = task.getDate();
+        if (date != null && date.toString().length() > 0) {
+            sqlWhere.append(" and date = ? ");
+            whereArgs.add(date.toString());
+        }
         String site = task.getSite();
         if (site != null && site.toString().length() > 0) {
             sqlWhere.append(" and site = ? ");
@@ -301,15 +311,15 @@ public class ItineraryDaoImpl implements ItineraryDao {
             sqlWhere.append(" and name = ? ");
             whereArgs.add(name.toString());
         }
-        String tm = task.getTm();
-        if (tm != null && tm.toString().length() > 0) {
-            sqlWhere.append(" and tm = ? ");
-            whereArgs.add(tm.toString());
-        }
         Integer _id = task.get_id();
         if (_id != null && _id.toString().length() > 0) {
             sqlWhere.append(" and _id = ? ");
             whereArgs.add(_id.toString());
+        }
+        Integer time = task.getTime();
+        if (time != null && time.toString().length() > 0) {
+            sqlWhere.append(" and time = ? ");
+            whereArgs.add(time.toString());
         }
         String[] whereArgsStringArray = new String[whereArgs.size()];
         whereArgsStringArray = whereArgs.toArray(whereArgsStringArray);

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:gravity="center_vertical"
-    android:orientation="horizontal"
+    android:orientation="vertical"
     android:background="#FFECB3">
 
     <TextView
@@ -26,6 +26,13 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textSize="@dimen/textSizeDetail"
+            android:textAlignment="viewEnd" />
+
+        <TextView
+            android:id="@+id/taskDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="@dimen/textSizeExplain"
             android:textAlignment="viewEnd" />
 
         <TextView

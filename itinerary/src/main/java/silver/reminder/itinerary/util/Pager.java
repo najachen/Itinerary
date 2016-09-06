@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.DatabaseUtils;
 import android.database.sqlite.SQLiteDatabase;
+import android.util.Log;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,25 +34,40 @@ public class Pager {
 
     /**
      * 提供第Ｎ頁的內容(日期搜尋專用)
-     *
-     * @param conditionStart 搜尋條件開始值
-     * @param conditionEnd   搜尋條件結束值
-     * @param currentPage    當前在第幾頁
-     * @param isGoForward    前進或後退 若為空值則停在原地
+     * @param startDate
+     * @param startTime
+     * @param endDate
+     * @param endTime
+     * @param currentPage
+     * @param isGoForward
      * @return listView 需要的 Cursor
      */
-    public Cursor getPagedCursorBySearchingCondition(String tableName, String conditionFieldName, String conditionStart, String conditionEnd, int currentPage, Boolean isGoForward) {
+    public Cursor getPagedCursorForTask(int startDate, int startTime, int endDate, int endTime, int currentPage, Boolean isGoForward) {
         SQLiteDatabase db = ItineraryDatabaseHelper.getInstance(this.context).getReadableDatabase();
+        String tableName = "task";
 
         //預設值設定
-        conditionStart = conditionStart == null || conditionStart.length() == 0 ? "0" : conditionStart;
-        conditionEnd = conditionEnd == null || conditionEnd.length() == 0 ? String.valueOf(Integer.MAX_VALUE) : conditionEnd;
+        if (startDate == 0 || startTime == 0 || endDate == 0 || endTime == 0) {
+            Log.d("task 分頁條件不完全", startDate + "/" + startTime + "/" + endDate + "/" + endTime);
+        }
         currentPage = currentPage == 0 ? 1 : currentPage;
 
-        //判斷是否為第一頁或最後一頁
-        String whereDesc = conditionFieldName + " >= ? and " + conditionFieldName + " <= ? ";
-        long count = DatabaseUtils.queryNumEntries(db, tableName, whereDesc, new String[]{conditionStart, conditionEnd});
+        //where 敘述
+        String whereDesc = "date >= ? and time >= ? and date <= ? and time <= ?";
+        String strStartDate = String.valueOf(startDate);
+        String strStartTime = String.valueOf(startTime);
+        String strEndDate = String.valueOf(endDate);
+        String strEndTime = String.valueOf(endTime);
+
+        long count = DatabaseUtils.queryNumEntries(db, tableName, whereDesc, new String[]{strStartDate, strStartTime, strEndDate, strEndTime});
         int totalPageNum = (int) count / this.pageSize + 1;
+
+        //test-
+        Log.d("startDate---", strStartDate);
+        Log.d("strStartTime---", strStartTime);
+        Log.d("strEndDate---", strEndDate);
+        Log.d("strEndTime---", strEndTime);
+        Log.d("count---", String.valueOf(count));
 
         int targetPage = 0;
 
@@ -66,16 +82,31 @@ public class Pager {
         }
 
         //當頁開始與結束是第幾筆資料
-        int intDataNumStart = ((targetPage - 1) * this.pageSize) + 1;
-        String strDataNumStart = String.valueOf(intDataNumStart);
-        int intDataOffset = this.pageSize - 1;
-        String strDataOffset = String.valueOf(intDataOffset);
+        String strPageSize = String.valueOf(this.pageSize);
+        int intDataStartPosition = (targetPage - 1) * this.pageSize;
+        String strDataStartPosition = String.valueOf(intDataStartPosition);
 
         //開始搜尋資料
         String searchSql = "select * from " + tableName + GlobalNaming.SPACE + "where " + whereDesc + "limit ? offset ?";
-        Cursor cursor = db.rawQuery(searchSql, new String[]{conditionStart, conditionEnd, strDataNumStart, strDataOffset});
+        Cursor cursor = db.rawQuery(searchSql, new String[]{strStartDate, strStartTime, strEndDate, strEndTime, strPageSize, strDataStartPosition});
+
+        //test-
+        Log.d("searchSql---", searchSql);
+        Log.d("strPageSize---", strPageSize);
+        Log.d("strDataStartPosition---", strDataStartPosition);
+        Log.d("cursor.getCount()---", String.valueOf(cursor.getCount()));
 
         return cursor;
+    }
+
+    private Cursor getPagedCursorForMusicList(String conditionStart, String conditionEnd, int currentPage, Boolean isGoForward) {
+
+
+
+
+
+
+        return null;
     }
 
     /**

@@ -1,6 +1,5 @@
 package silver.reminder.itinerary;
 
-import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
@@ -12,7 +11,6 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
-import android.widget.TextView;
 
 import java.util.Calendar;
 
@@ -43,10 +41,11 @@ public class ListTaskActivity extends AppCompatActivity {
        task 欄位名稱
      */
     private static final String TASK_TABLE_NAME = "task";
-    private static final String TASK_FIELD_ID = "id";
+    private static final String TASK_FIELD_ID = "_id";
     private static final String TASK_FIELD_NAME = "name";
     private static final String TASK_FIELD_SITE = "site";
-    private static final String TASK_FIELD_TIME = "tm";
+    private static final String TASK_FIELD_TIME = "time";
+    private static final String TASK_FIELD_DATE = "date";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -153,17 +152,25 @@ public class ListTaskActivity extends AppCompatActivity {
     private void showListView(Boolean isGoForward) {
 
         Calendar calendarToday = Calendar.getInstance();
-        String startTm = GlobalNaming.getTmString(calendarToday);
-        String endTm = this.getSearchEndDateString((Calendar) calendarToday.clone());
+        int startDate = GlobalNaming.getDateInt(calendarToday);
+        int startTime = GlobalNaming.getTimeInt(calendarToday);
+
+        Calendar endCalendar = getSearchEndDateString((Calendar) calendarToday.clone());
+        int endDate = GlobalNaming.getDateInt(endCalendar);
+        int endTime = GlobalNaming.getTimeInt(endCalendar);
 
         Pager pager = new Pager(this, PAGE_SIZE);
-        Cursor cursor = pager.getPagedCursorBySearchingCondition(this.TASK_TABLE_NAME, this.TASK_FIELD_TIME, startTm, endTm, this.currentPage, isGoForward);
+        Cursor cursor = pager.getPagedCursorForTask(startDate, startTime
+                , endDate
+                , endTime
+                , this.currentPage
+                , isGoForward);
 
-        MyCursorAdapter myCursorAdapter = new MyCursorAdapter(this
+        SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(this
                 , R.layout.embedding_task_list
                 , cursor
-                , new String[]{TASK_FIELD_NAME, TASK_FIELD_SITE, TASK_FIELD_TIME}
-                , new int[]{R.id.taskName, R.id.taskSite, R.id.taskTime}
+                , new String[]{TASK_FIELD_NAME, TASK_FIELD_SITE, TASK_FIELD_DATE, TASK_FIELD_TIME}
+                , new int[]{R.id.taskName, R.id.taskSite, R.id.taskDate, R.id.taskTime}
                 , 0);
         this.tasklist.setAdapter(myCursorAdapter);
     }
@@ -173,7 +180,7 @@ public class ListTaskActivity extends AppCompatActivity {
      *
      * @return 20160528121542
      */
-    private String getSearchEndDateString(Calendar searchEndCalendar) {
+    private Calendar getSearchEndDateString(Calendar searchEndCalendar) {
 
         switch (searchMode) {
             case GlobalNaming.TASK_SEARCH_MODE_TODAY:
@@ -194,21 +201,25 @@ public class ListTaskActivity extends AppCompatActivity {
             default:
                 Log.d("searchMode 傳輸有誤", "其值為 " + searchMode);
         }
-        return GlobalNaming.getTmString(searchEndCalendar);
+        searchEndCalendar.set(Calendar.HOUR_OF_DAY, 23);
+        searchEndCalendar.set(Calendar.MINUTE, 59);
+        searchEndCalendar.set(Calendar.SECOND, 59);
+
+        return searchEndCalendar;
     }
 
     /**
      *
      */
-    class MyCursorAdapter extends SimpleCursorAdapter {
-
-        public MyCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
-            super(context, layout, c, from, to, flags);
-        }
-
-        @Override
-        public void bindView(View view, Context context, Cursor cursor) {
-
+//    class MyCursorAdapter extends SimpleCursorAdapter {
+//
+//        public MyCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
+//            super(context, layout, c, from, to, flags);
+//        }
+//
+//        @Override
+//        public void bindView(View view, Context context, Cursor cursor) {
+//
 //            if (view == null) {
 //                view = LayoutInflater.from(context).inflate(R.layout.embedding_task_list, null, false);
 //
@@ -224,12 +235,16 @@ public class ListTaskActivity extends AppCompatActivity {
 //                String tm = cursor.getString(cursor.getColumnIndex(TASK_FIELD_TIME));
 //                taskTime.setText(GlobalNaming.getDateFormat(tm));
 //            }
-
-            super.bindView(view, context, cursor);
-
-            TextView taskTime = (TextView) view.findViewById(R.id.taskTime);
-            String tm = cursor.getString(cursor.getColumnIndex(TASK_FIELD_TIME));
-            taskTime.setText(GlobalNaming.getDateFormat(tm));
-        }
-    }
+//
+//            super.bindView(view, context, cursor);
+//
+//            TextView taskDate = (TextView) view.findViewById(R.id.taskDate);
+//            int date = cursor.getInt(cursor.getColumnIndex(TASK_FIELD_DATE));
+//            taskDate.setText(GlobalNaming.getDateFormat(tm));
+//
+//            TextView taskTime = (TextView) view.findViewById(R.id.taskTime);
+//            String tm = cursor.getString(cursor.getColumnIndex(TASK_FIELD_TIME));
+//            taskTime.setText(GlobalNaming.getDateFormat(tm));
+//        }
+//    }
 }

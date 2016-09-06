@@ -88,10 +88,11 @@ public class CreateDingDongActivity extends AppCompatActivity {
         Cursor cursorSchedule = soundDingDongBo.findScheduleList(keySchedule);
 
         if (cursorSchedule.getCount() == 1 && cursorSchedule.moveToFirst()) {
-            schedule.set_id(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id")));
+            schedule.set_id(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("_id")));
             schedule.setTaskId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("taskId")));
             schedule.setSoundFileId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("soundFileId")));
-            schedule.setTm(cursorSchedule.getString(cursorSchedule.getColumnIndexOrThrow("tm")));
+            schedule.setDate(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("date")));
+            schedule.setTime(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("time")));
         }
 
         //
@@ -101,7 +102,7 @@ public class CreateDingDongActivity extends AppCompatActivity {
         /*
             顯示內容
          */
-        String timeFormat = GlobalNaming.getDateFormat(schedule.getTm());
+        String timeFormat = GlobalNaming.getDateFormat(String.valueOf(schedule.getDate()+schedule.getTime()));
         String[] timeArray = timeFormat.split(GlobalNaming.SPACE);
         dateSchedule.setText(timeArray[0]);
         timeSchedule.setText(timeArray[1]);
@@ -158,7 +159,8 @@ public class CreateDingDongActivity extends AppCompatActivity {
             return;
         }
         String tm = GlobalNaming.cleanSpecCharTo14DigiCode(dateSchedule + timeSchedule);
-        schedule.setTm(tm);
+        schedule.setDate(Integer.valueOf(tm.substring(0, 8)));
+        schedule.setTime(Integer.valueOf(tm.substring(8, 14)));
 
         Integer soundFileId = soundFile.get_id();
         if (soundFileId == null || soundFileId == 0) {
@@ -185,7 +187,7 @@ public class CreateDingDongActivity extends AppCompatActivity {
             PendingIntent pendingIntent = GlobalNaming.getAlarmPendingIntent(this, scheduleId);
             alarmManager.cancel(pendingIntent);
             //建立新的
-            Calendar calendar = GlobalNaming.getTmCalendar(schedule.getTm());
+            Calendar calendar = GlobalNaming.getTmCalendar(String.valueOf(schedule.getDate()+schedule.getTime()));
             alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
 
         } else {
@@ -198,12 +200,12 @@ public class CreateDingDongActivity extends AppCompatActivity {
                     新增鬧鐘
                  */
                 PendingIntent pendingIntent = GlobalNaming.getAlarmPendingIntent(this, rowId);
-                Calendar tmCalendar = GlobalNaming.getTmCalendar(schedule.getTm());
+                Calendar tmCalendar = GlobalNaming.getTmCalendar(String.valueOf(schedule.getDate()+schedule.getTime()));
                 alarmManager.set(AlarmManager.RTC_WAKEUP, tmCalendar.getTimeInMillis(), pendingIntent);
 
             } else {
                 Intent intent = new Intent();
-                intent.putExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_TM, schedule.getTm());
+                intent.putExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_TM, String.valueOf(schedule.getDate()+schedule.getTime()));
                 intent.putExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_SOUND_FILE_ID, schedule.getSoundFileId());
                 setResult(RESULT_OK, intent);
             }

@@ -10,17 +10,17 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 	 */
 	private static final String funNmItinerary = "itinerary";
 	private static final String funNmSoundDingDong = "soundDingDong";
-	
+
 	/*
 	 * 資料表名稱對映資料表結構
 	 */
 	private static final Map<String, TableSchemaSet> tablesItinerary = new HashMap<>();
 	private static final Map<String, TableSchemaSet> tablesSoundDingDong = new HashMap<>();
-	
+
 	/*
 	 * 功能對映資料表
 	 */
-	private static final Map<String, Map<String, TableSchemaSet>> functionTableMap = new HashMap<String, Map<String, TableSchemaSet>>(){
+	private static final Map<String, Map<String, TableSchemaSet>> functionTableMap = new HashMap<String, Map<String, TableSchemaSet>>() {
 		{
 			put(funNmItinerary, tablesItinerary);
 			put(funNmSoundDingDong, tablesSoundDingDong);
@@ -37,7 +37,7 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 	/*
 	 * 這裡設定資料表結構
 	 */
-	public GenJavaCodeAndSqliteCreateTables_Itinerary prepareTable(){
+	public GenJavaCodeAndSqliteCreateTables_Itinerary prepareTable() {
 
 		/*
 		 * table - task
@@ -50,14 +50,15 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 					{
 						put("_id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
 						put("name", TableSchemaSetSpec.TEXT);
-						put("tm", TableSchemaSetSpec.TEXT | TableSchemaSetSpec.NOT_NULL);
 						put("site", TableSchemaSetSpec.TEXT);
+						put("date", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
+						put("time", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
 					}
 				};
 			}
 		};
 		functionTableMap.get(funNmItinerary).put(taskTableSchemaSet.getTableName(), taskTableSchemaSet);
-		
+
 		/*
 		 * table - schedule
 		 */
@@ -68,9 +69,10 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 				return new HashMap() {
 					{
 						put("_id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
-						put("tm", TableSchemaSetSpec.TEXT | TableSchemaSetSpec.NOT_NULL);
 						put("taskId", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
 						put("soundFileId", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
+						put("date", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
+						put("time", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
 					}
 				};
 			}
@@ -132,7 +134,7 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 			}
 		};
 		functionTableMap.get(funNmItinerary).put(noteTableSchemaSet.getTableName(), noteTableSchemaSet);
-		
+
 		return this;
 	}
 }

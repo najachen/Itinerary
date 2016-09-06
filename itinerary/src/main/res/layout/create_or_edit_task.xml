@@ -32,7 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@drawable/btn_shape_index_1"
-            android:text="清空設定"
+            android:text="清空"
             android:textColor="#445566"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp" />
@@ -71,11 +71,10 @@
 
     <EditText
         android:id="@+id/taskName"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/nameLabelTask"
         android:layout_toRightOf="@id/nameLabelTask"
-        android:text="行程名稱"
         android:textSize="@dimen/textSizeTitle"/>
 
     <TextView
@@ -96,7 +95,6 @@
         android:layout_alignTop="@+id/dateLabelTask"
         android:layout_toRightOf="@+id/dateLabelTask"
         android:inputType="date"
-        android:text="2016-09-01"
         android:textSize="@dimen/textSizeTitle"/>
 
     <TextView
@@ -116,7 +114,6 @@
         android:layout_alignTop="@id/timeLabelTask"
         android:layout_toRightOf="@id/timeLabelTask"
         android:inputType="time"
-        android:text="12:00"
         android:textSize="@dimen/textSizeTitle"/>
 
     <TextView
@@ -136,7 +133,6 @@
         android:layout_alignTop="@id/siteLabelTask"
         android:layout_toRightOf="@id/siteLabelTask"
         android:lines="3"
-        android:text="民生東路三段 - 世界兒童展望會"
         android:textSize="@dimen/textSizeTitle"/>
 
     <Button
@@ -145,7 +141,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/btn_shape_index_1"
-        android:text="設定音效"
+        android:text="設定提醒"
         android:textColor="#445566"/>
 
 </RelativeLayout>

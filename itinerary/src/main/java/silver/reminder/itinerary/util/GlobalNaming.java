@@ -92,24 +92,48 @@ public class GlobalNaming {
     }
 
     /**
-     * 取得時間的14碼字串
+     * 取得日期的8碼整數
+     *
+     * @param calendar
+     * @return
+     */
+    public static int getDateInt(Calendar calendar) {
+        int year = calendar.get(Calendar.YEAR);
+        String month = addZeroIfLessThanTen(calendar.get(Calendar.MONTH) + 1);
+        String date = addZeroIfLessThanTen(calendar.get(Calendar.DATE));
+
+        StringBuffer dateBuffer = new StringBuffer();
+        dateBuffer.append(year).append(month).append(date);
+
+        return Integer.parseInt(dateBuffer.toString());
+    }
+
+    /**
+     * 取得時間的6碼整數
      *
      * @param calendar 要轉的日曆物件
-     * @return 20160901124055
+     * @return 124055
      */
-    public static String getTmString(Calendar calendar) {
+    public static int getTimeInt(Calendar calendar) {
 
-        int year = calendar.get(Calendar.YEAR);
-        int month = calendar.get(Calendar.MONTH) + 1;
-        int date = calendar.get(Calendar.DATE);
-        int hour = calendar.get(Calendar.HOUR);
-        int minute = calendar.get(Calendar.MINUTE);
-        int second = calendar.get(Calendar.SECOND);
+        String hour = addZeroIfLessThanTen(calendar.get(Calendar.HOUR_OF_DAY));
+        String minute = addZeroIfLessThanTen(calendar.get(Calendar.MINUTE));
+        String second = addZeroIfLessThanTen(calendar.get(Calendar.SECOND));
 
-        StringBuffer tmBuffer = new StringBuffer();
-        tmBuffer.append(year).append(month).append(date).append(hour).append(minute).append(second);
+        StringBuffer timeBuffer = new StringBuffer();
+        timeBuffer.append(hour).append(minute).append(second);
 
-        return tmBuffer.toString();
+        return Integer.parseInt(timeBuffer.toString());
+    }
+
+    /**
+     * 如果小於10 開頭補0
+     *
+     * @param value 要驗證的數字
+     * @return
+     */
+    private static String addZeroIfLessThanTen(int value) {
+        return String.valueOf(value < 10 ? "0" + value : value);
     }
 
     /**

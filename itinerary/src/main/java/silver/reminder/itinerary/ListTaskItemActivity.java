@@ -40,7 +40,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
     private FloatingActionButton nextPageTaskItem;
     private Button backTaskList;
     private Button editOrDeleteTask;
-//    private Button setReminder;
+    //    private Button setReminder;
     private ListView taskItemList;
     private TextView taskName;
     private TextView taskTime;
@@ -98,7 +98,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
          */
         //顯示明細
         this.taskName.setText(task.getName());
-        this.taskTime.setText(GlobalNaming.getDateFormat(task.getTm()));
+        this.taskTime.setText(GlobalNaming.getDateFormat(String.valueOf(task.getDate() + task.getTime())));
         this.taskSite.setText(task.getSite());
         //顯示清單
         showListView(null);
@@ -235,7 +235,7 @@ public class ListTaskItemActivity extends AppCompatActivity {
         keySchedule.setTaskId(task.get_id());
         Cursor cursorSchedule = soundDingDongBo.findScheduleList(keySchedule);
 
-        if(cursorSchedule.getCount() == 1 && cursorSchedule.moveToFirst()){
+        if (cursorSchedule.getCount() == 1 && cursorSchedule.moveToFirst()) {
             int scheduleId = cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id"));
             soundDingDongBo.removeSchedule(scheduleId);
         }

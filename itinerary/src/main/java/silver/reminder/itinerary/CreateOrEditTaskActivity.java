@@ -74,7 +74,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
         /*
             準備頁面物件
          */
-        int taskId =  getIntent().getIntExtra(GlobalNaming.TASK_ID, GlobalNaming.ERROR_CODE);
+        int taskId = getIntent().getIntExtra(GlobalNaming.TASK_ID, GlobalNaming.ERROR_CODE);
 
         //
         task = itineraryBo.findTaskById(taskId);
@@ -91,7 +91,9 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             schedule.set_id(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id")));
             schedule.setTaskId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("taskId")));
             schedule.setSoundFileId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("soundFileId")));
-            schedule.setTm(cursorSchedule.getString(cursorSchedule.getColumnIndexOrThrow("tm")));
+
+            schedule.setDate(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("date")));
+            schedule.setTime(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("time")));
         }
 
         /*
@@ -104,7 +106,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             taskSite.setText(GlobalNaming.SPACE);
         } else { //若為編輯狀態 帶出所有的值並放進欄位
 
-            String dateAndTimeString = GlobalNaming.getDateFormat(task.getTm());
+            String dateAndTimeString = GlobalNaming.getDateFormat(String.valueOf(task.getDate()+task.getTime()));
             String[] dateAndTimeArray = dateAndTimeString.split(GlobalNaming.SPACE);
 
             taskName.setText(task.getName());
@@ -118,9 +120,9 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             若無設定 為"新增提醒"
             若有設定 為"編輯提醒"
          */
-        if (schedule.get_id() != 0) {
+        if (schedule.get_id() != null && schedule.get_id() > 0) {
             createSchedule.setText("編輯或刪除提醒");
-        } else if (schedule.get_id() == 0) {
+        } else if (schedule.get_id() == null || schedule.get_id() == 0) {
             createSchedule.setText("新增提醒");
         }
     }
@@ -155,11 +157,12 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
         Task taskSave = new Task();
         taskSave.setName(taskName.getText().toString());
-        taskSave.setTm(tm);
+        taskSave.setDate(Integer.valueOf(tm.substring(0, 8)));
+        taskSave.setTime(Integer.valueOf(tm.substring(8, 14)));
         taskSave.setSite(taskSite.getText().toString());
 
         long taskRowId = 0;
-        if (task.get_id() == 0) {
+        if (task.get_id() == null || task.get_id() == 0) {
             taskRowId = itineraryBo.createTask(taskSave);
         } else {
             taskSave.set_id(task.get_id());
@@ -171,7 +174,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
         //如果有設定提醒 要存檔
         boolean isHaveNoTaskId = task.get_id() == null || task.get_id() == 0;
-        boolean isHaveScheduleTm = schedule.getTm() != null && task.getTm().length() > 0;
+        boolean isHaveScheduleTm = schedule.getDate() != null && task.getDate() > 0 && schedule.getTime() != null && task.getTime() > 0;
         boolean isHaveScheduleSoundFileId = schedule.getSoundFileId() != null && schedule.getSoundFileId() > 0;
         if (isHaveNoTaskId && isHaveScheduleTm && isHaveScheduleSoundFileId) {
 
@@ -192,9 +195,9 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
             Intent intent = new Intent();
             intent.setAction(GlobalNaming.INTENT_ACTION_NAME_ALARM_RECEIVER);
-            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int)scheduleRowId, intent, PendingIntent.FLAG_ONE_SHOT);
+            PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int) scheduleRowId, intent, PendingIntent.FLAG_ONE_SHOT);
 
-            Calendar tmCalendar = GlobalNaming.getTmCalendar(schedule.getTm());
+            Calendar tmCalendar = GlobalNaming.getTmCalendar(String.valueOf(schedule.getDate()+schedule.getTime()));
             alarmManager.set(AlarmManager.RTC_WAKEUP, tmCalendar.getTimeInMillis(), pendingIntent);
 
             //test-
@@ -285,7 +288,8 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
                     Integer soundFileId = data.getIntExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_SOUND_FILE_ID, GlobalNaming.ERROR_CODE);
 
                     if (tm != null && tm.length() > 0 && soundFileId != null && soundFileId > 0) {
-                        schedule.setTm(tm);
+                        schedule.setDate(Integer.valueOf(tm.substring(0, 8)));
+                        schedule.setTime(Integer.valueOf(tm.substring(8, 14)));
                         schedule.setSoundFileId(soundFileId);
                     }
                 }

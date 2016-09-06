@@ -4,6 +4,7 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteDatabase.CursorFactory;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 import java.util.Map;
 import java.util.Map.Entry;
@@ -33,7 +34,7 @@ public class ItineraryDatabaseHelper extends SQLiteOpenHelper {
 
     public static ItineraryDatabaseHelper getInstance(Context context){
         if(dbHelper == null){
-            dbHelper = new ItineraryDatabaseHelper(context, "ItineraryDatabase", null, 1);
+            dbHelper = new ItineraryDatabaseHelper(context, "ItineraryDatabase.db", null, 1);
         }
         return dbHelper;
     }
@@ -49,7 +50,10 @@ public class ItineraryDatabaseHelper extends SQLiteOpenHelper {
 
         	for(Entry<String, TableSchemaSet> e : tableSchemaSets.entrySet()){
         		db.execSQL(e.getValue().getCreateSql());
-        	}
+
+                //test-
+                Log.v(" create table ---- ", e.getValue().getCreateSql());
+            }
         }
     }
 

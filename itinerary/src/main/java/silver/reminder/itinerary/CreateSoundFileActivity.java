@@ -132,8 +132,12 @@ public class CreateSoundFileActivity extends AppCompatActivity {
         if (!isRecordingNow) {
 
             //檔名處理
-            String mediaFileName = GlobalNaming.getTmString(Calendar.getInstance());
-            String outputFilePath = new File(dirTemp, mediaFileName + MEDIA_FILE_NAME_EXT).getAbsolutePath();
+            Calendar now = Calendar.getInstance();
+            int dateInt = GlobalNaming.getDateInt(now);
+            int timeInt = GlobalNaming.getTimeInt(now);
+            String strDate = String.valueOf(dateInt);
+            String strTime = timeInt < 100000 ? "0" + timeInt : "" + timeInt;
+            String outputFilePath = new File(dirTemp, strDate + strTime + MEDIA_FILE_NAME_EXT).getAbsolutePath();
 
             //MediaRecorder 前置準備
             mediaRecorder = new MediaRecorder();
@@ -216,7 +220,7 @@ public class CreateSoundFileActivity extends AppCompatActivity {
         }
 
         //清空暫存區所有資料
-        for(String tempFileName:dirTemp.list()){
+        for (String tempFileName : dirTemp.list()) {
             new File(dirTemp, tempFileName).delete();
         }
 

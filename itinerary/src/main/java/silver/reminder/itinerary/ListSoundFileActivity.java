@@ -1,9 +1,6 @@
 package silver.reminder.itinerary;
 
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.database.Cursor;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -16,7 +13,6 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.ListView;
-import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -45,7 +41,7 @@ public class ListSoundFileActivity extends AppCompatActivity {
         table name and field name
      */
     private static final String SOUND_FILE_TABLE_NAME = "soundFile";
-    private static final String SOUND_FILE_FIELD_ID = "id";
+    private static final String SOUND_FILE_FIELD_ID = "_id";
     private static final String SOUND_FILE_FIELD_FILE_NAME = "fileName";
 
     /**
@@ -157,44 +153,44 @@ public class ListSoundFileActivity extends AppCompatActivity {
 
     private void listSoundFile(Boolean isGoForward) {
 
-        Pager pager = new Pager(this, PAGE_SIZE);
-        Cursor cursor = pager.getPagedCursorBySearchingCondition(SOUND_FILE_TABLE_NAME
-                , SOUND_FILE_FIELD_ID
-                , String.valueOf(0)
-                , String.valueOf(Integer.MAX_VALUE)
-                , this.currentPage
-                , isGoForward);
-        SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(this
-                , R.layout.embedding_sound_file_list_item
-                , cursor
-                , new String[]{SOUND_FILE_FIELD_ID, SOUND_FILE_FIELD_FILE_NAME}
-                , new int[]{R.id.soundFileId, R.id.soundFileName}
-                , 0) {
-            @Override
-            public void bindView(View view, Context context, Cursor cursor) {
-                super.bindView(view, context, cursor);
-
-                ImageButton startOrStopPlayMusic = (ImageButton) view.findViewById(R.id.startOrStopPlayMusic);
-
-                ComponentName componentName = ListSoundFileActivity.this.getCallingActivity();
-                if (componentName != null) {
-                    String componentShortName = componentName.getShortClassName();
-                    componentShortName = componentShortName.replace(".", "");
-
-                    if (CreateDingDongActivity.class.getSimpleName().equals(componentShortName)) {
-                        startOrStopPlayMusic.setEnabled(false);
-                        startOrStopPlayMusic.setFocusable(false);
-                        startOrStopPlayMusic.setVisibility(View.GONE);
-                    } else {
-                        startOrStopPlayMusic.setEnabled(true);
-                        startOrStopPlayMusic.setFocusable(true);
-                        startOrStopPlayMusic.setVisibility(View.VISIBLE);
-
-                        startOrStopPlayMusic.setOnClickListener(ListSoundFileActivity.this::startOrStopPlayMusic);
-                    }
-                }
-            }
-        };
-        soundFileList.setAdapter(simpleCursorAdapter);
+//        Pager pager = new Pager(this, PAGE_SIZE);
+//        Cursor cursor = pager.getPagedCursorBySearchingCondition(SOUND_FILE_TABLE_NAME
+//                , String.valueOf(0)
+//                , String.valueOf(Integer.MAX_VALUE)
+//                , this.currentPage
+//                , isGoForward
+//                , new String[]{SOUND_FILE_FIELD_ID});
+//        SimpleCursorAdapter simpleCursorAdapter = new SimpleCursorAdapter(this
+//                , R.layout.embedding_sound_file_list_item
+//                , cursor
+//                , new String[]{SOUND_FILE_FIELD_ID, SOUND_FILE_FIELD_FILE_NAME}
+//                , new int[]{R.id.soundFileId, R.id.soundFileName}
+//                , 0) {
+//            @Override
+//            public void bindView(View view, Context context, Cursor cursor) {
+//                super.bindView(view, context, cursor);
+//
+//                ImageButton startOrStopPlayMusic = (ImageButton) view.findViewById(R.id.startOrStopPlayMusic);
+//
+//                ComponentName componentName = ListSoundFileActivity.this.getCallingActivity();
+//                if (componentName != null) {
+//                    String componentShortName = componentName.getShortClassName();
+//                    componentShortName = componentShortName.replace(".", "");
+//
+//                    if (CreateDingDongActivity.class.getSimpleName().equals(componentShortName)) {
+//                        startOrStopPlayMusic.setEnabled(false);
+//                        startOrStopPlayMusic.setFocusable(false);
+//                        startOrStopPlayMusic.setVisibility(View.GONE);
+//                    } else {
+//                        startOrStopPlayMusic.setEnabled(true);
+//                        startOrStopPlayMusic.setFocusable(true);
+//                        startOrStopPlayMusic.setVisibility(View.VISIBLE);
+//
+//                        startOrStopPlayMusic.setOnClickListener(ListSoundFileActivity.this::startOrStopPlayMusic);
+//                    }
+//                }
+//            }
+//        };
+//        soundFileList.setAdapter(simpleCursorAdapter);
     }
 }
