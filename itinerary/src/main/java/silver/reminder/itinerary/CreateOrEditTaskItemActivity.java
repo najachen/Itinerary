@@ -192,6 +192,10 @@ public class CreateOrEditTaskItemActivity extends AppCompatActivity {
         noteViewList.add(noteExplainLabel);
         noteViewList.add(noteExplain);
         noteViewList.add(noteContent);
+
+        //先不顯示所有欄位
+//        switchView(shoppingViewList, null);
+//        switchView(noteViewList, null);
     }
 
     /**
