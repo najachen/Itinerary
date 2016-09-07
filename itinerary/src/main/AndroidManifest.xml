@@ -8,7 +8,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/icon"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -20,7 +20,7 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-
+        <!--android:icon="@mipmap/ic_launcher"  &lt;!&ndash;設APK icon原預設值&ndash;&gt;-->
         <activity android:name=".ChoiceOutdoorAllOperationActivity"/>
         <activity android:name=".ChoiceTaskListPeriodActivity"/>
         <activity android:name=".CreateOrEditTaskActivity"/>
