@@ -1,13 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
-<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
-    <solid android:color="#ffffff" />
-    <!-- padding设置内容区域离边界的间距 -->
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true" >
+    <shape>
+        <gradient
+            android:startColor="#FFFFFF"
+            android:endColor="@color/amber_300"
+            android:angle="270" />
+        <!--建層顏色開始-->
+        <!--建層顏色結束-->
+        <!--建層顏色角度-->
+    <!-- padding設置内容區域離邊界的間距 -->
     <padding
         android:bottom="12dp"
         android:left="12dp"
         android:right="12dp"
         android:top="12dp" />
-    <!-- corners设置圆角，只适用于rectangle -->
+    <!-- corners設置圓角，只适用于rectangle -->
     <corners android:radius="20dp"/>
     <!--android:topLeftRadius= "50dp"-->
     <!--android:topRightRadius="50dp"-->
@@ -17,5 +26,25 @@
     <!-- stroke设置描边 -->
     <stroke
         android:width="2dp"
-        android:color="@android:color/darker_gray" />
-</shape>
+        android:color="@color/red_a200" />
+    </shape>
+    </item>
+
+    <item>
+        <shape>
+            <solid android:color="#FFFFFF" />
+
+            <stroke
+                android:width="2dp"
+                android:color="@color/red_a200" />
+            <corners
+                android:radius="20dp" />
+            <!--倒角-->
+            <padding
+                android:left="12dp"
+                android:top="12dp"
+                android:right="12dp"
+                android:bottom="12dp" />
+        </shape>
+    </item>
+</selector>
