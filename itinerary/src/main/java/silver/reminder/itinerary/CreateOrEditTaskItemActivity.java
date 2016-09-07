@@ -3,6 +3,7 @@ package silver.reminder.itinerary;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +12,6 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-import silver.reminder.itinerary.ListTaskItemActivity.MyViewHolderAdapter;
 import silver.reminder.itinerary.bo.ItineraryBo;
 import silver.reminder.itinerary.bo.ItineraryBoImpl;
 import silver.reminder.itinerary.model.Note;
@@ -54,17 +54,29 @@ public class CreateOrEditTaskItemActivity extends AppCompatActivity {
     private List<View> noteViewList;
     private List<View> shoppingViewList;
 
+    /*
+
+     */
+    private int taskItemId;
+    private boolean isTaskItemNote;
+    private TextView noteItemTitle;
+
+    /*
+        edit which type (note or shopping)?
+     */
+    private boolean isNowEditTaskItemNote;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create_or_edit_task_detail_list_item);
 
+        noteViewList = new ArrayList<View>();
+        shoppingViewList = new ArrayList<View>();
+
         findViews();
 
         itineraryBo = ItineraryBoImpl.getInstance(this);
-
-        noteViewList = new ArrayList<View>();
-        shoppingViewList = new ArrayList<View>();
     }
 
     @Override
@@ -78,47 +90,56 @@ public class CreateOrEditTaskItemActivity extends AppCompatActivity {
         //編輯 帶 itemId viewType過來
         Intent intent = getIntent();
 
+        //create
         taskId = intent.getIntExtra(GlobalNaming.TASK_ID, GlobalNaming.ERROR_CODE);
 
-        int taskItemId = intent.getIntExtra(GlobalNaming.TASK_ITEM_ID, GlobalNaming.ERROR_CODE);
-        int taskItemViewType = intent.getIntExtra(GlobalNaming.TASK_ITEM_VIEW_TYPE, GlobalNaming.ERROR_CODE);
+        //edit task item
+        taskItemId = intent.getIntExtra(GlobalNaming.TASK_ITEM_ID, GlobalNaming.ERROR_CODE);
+        isTaskItemNote = intent.getBooleanExtra(GlobalNaming.TASK_ITEM_VIEW_TYPE, true);
 
-        if (taskItemViewType == MyViewHolderAdapter.VIEW_NOTE) {
-            note = itineraryBo.findNoteById(taskItemId);
-            shopping = null;
-        } else if (taskItemViewType == MyViewHolderAdapter.VIEW_SHOPPING) {
-            shopping = itineraryBo.findShoppingById(taskItemId);
-            note = null;
+        if (taskId == 0) {
+            if (isTaskItemNote) {
+                note = itineraryBo.findNoteById(taskItemId);
+                shopping = null;
+            } else {
+                shopping = itineraryBo.findShoppingById(taskItemId);
+                note = null;
+            }
         }
 
         /*
             顯示內容
          */
         //先決定要不要顯示底下的切換鈕
-        if (taskId == 0 && taskItemId != 0 && taskItemViewType != 0) { //修改
+        if (taskId == 0 && taskItemId != 0) { //修改
             switchFunctionShopping.setVisibility(View.GONE);
             switchFunctionNote.setVisibility(View.GONE);
         } else { //新增
             switchFunctionShopping.setVisibility(View.VISIBLE);
             switchFunctionNote.setVisibility(View.VISIBLE);
         }
+
         //切換其他欄位與label
-        if (taskItemViewType == MyViewHolderAdapter.VIEW_NOTE) {
-            switchView(shoppingViewList, noteViewList);
-        } else if (taskItemViewType == MyViewHolderAdapter.VIEW_SHOPPING) {
-            switchView(noteViewList, shoppingViewList);
-        } else if (taskId != 0 && taskItemId == 0 && taskItemViewType == 0) {
+        if (taskId != 0 && taskItemId == 0) {
             switchView(null, noteViewList);
             switchView(null, shoppingViewList);
         }
-        //填值
-        if (taskItemViewType == MyViewHolderAdapter.VIEW_NOTE) {
-            noteContent.setText(note.getNoteContent());
-            noteExplain.setText(note.getNoteExplain());
-        } else if (taskItemViewType == MyViewHolderAdapter.VIEW_SHOPPING) {
-            name.setText(shopping.getName());
-            quantity.setText(shopping.getQuantity());
-            unitPrice.setText(shopping.getUnitPrice().toString());
+
+        //修改欄位切換
+        if (taskId == 0 && taskItemId != 0) {
+            if (isTaskItemNote) {
+                switchView(shoppingViewList, noteViewList);
+
+                noteContent.setText(note.getNoteContent());
+                noteExplain.setText(note.getNoteExplain());
+
+            } else {
+                switchView(noteViewList, shoppingViewList);
+
+                name.setText(shopping.getName());
+                quantity.setText(shopping.getQuantity().toString());
+                unitPrice.setText(shopping.getUnitPrice().toString());
+            }
         }
     }
 
@@ -158,6 +179,7 @@ public class CreateOrEditTaskItemActivity extends AppCompatActivity {
         /*
             備忘
          */
+        noteItemTitle = (TextView) findViewById(R.id.noteItemTitle);
         noteContentLabel = (TextView) findViewById(R.id.noteContentLabel);
         noteExplainLabel = (TextView) findViewById(R.id.noteExplainLabel);
 
@@ -165,6 +187,7 @@ public class CreateOrEditTaskItemActivity extends AppCompatActivity {
         noteContent = (EditText) findViewById(R.id.noteContent);
 
         //集中管理
+        noteViewList.add(noteItemTitle);
         noteViewList.add(noteContentLabel);
         noteViewList.add(noteExplainLabel);
         noteViewList.add(noteExplain);
@@ -177,6 +200,7 @@ public class CreateOrEditTaskItemActivity extends AppCompatActivity {
      * @param view
      */
     private void switchFunctionShopping(View view) {
+        isNowEditTaskItemNote = false;
         switchView(noteViewList, shoppingViewList);
     }
 
@@ -186,6 +210,7 @@ public class CreateOrEditTaskItemActivity extends AppCompatActivity {
      * @param view
      */
     private void switchFunctionNote(View view) {
+        isNowEditTaskItemNote = true;
         switchView(shoppingViewList, noteViewList);
     }
 
@@ -196,18 +221,26 @@ public class CreateOrEditTaskItemActivity extends AppCompatActivity {
      */
     private void createOrUpdateTaskItem(View view) {
 
+        //test-
+        Log.d("TaskItemSave taskid", String.valueOf(taskId));
+        Log.d("note == null", String.valueOf(note == null));
+        Log.d("shopping == null", String.valueOf(shopping == null));
+
         if (taskId != 0 && note == null && shopping == null) { //新增
 
-            if (isAllViewsEnable(noteViewList)) { //note使用中
+//            if (isAllViewsEnable(noteViewList)) { //note使用中
+            if (isNowEditTaskItemNote) { //note使用中
 
                 Note noteSave = new Note();
                 noteSave.setTaskId(taskId);
                 noteSave.setNoteContent(noteContent.getText().toString());
                 noteSave.setNoteExplain(noteExplain.getText().toString());
 
-                long rowId = itineraryBo.createNote(noteSave);
+                long rowIdCreateNote = itineraryBo.createNote(noteSave);
+                Log.d("rowIdCreateNote", String.valueOf(rowIdCreateNote));
 
-            } else if (isAllViewsEnable(shoppingViewList)) { //shopping使用中
+//            } else if (isAllViewsEnable(shoppingViewList)) { //shopping使用中
+            } else { //shopping使用中
 
                 Shopping shoppingSave = new Shopping();
                 shoppingSave.setTaskId(taskId);
@@ -215,23 +248,27 @@ public class CreateOrEditTaskItemActivity extends AppCompatActivity {
                 shoppingSave.setQuantity(Integer.parseInt(quantity.getText().toString()));
                 shoppingSave.setUnitPrice(Float.parseFloat(unitPrice.getText().toString()));
 
-                long rowId = itineraryBo.createShopping(shoppingSave);
+                long rowIdCreateShopping = itineraryBo.createShopping(shoppingSave);
+                Log.d("rowIdCreateShopping", String.valueOf(rowIdCreateShopping));
             }
 
         } else if (taskId == 0 && (note != null || shopping != null)) { //修改
 
-            if(note!=null){
+            if (note != null) {
                 note.setNoteContent(noteContent.getText().toString());
                 note.setNoteExplain(noteExplain.getText().toString());
 
-                int modRowCount = itineraryBo.modifyNote(note);
-            }else if(shopping!=null){
+                int modifyNoteCount = itineraryBo.modifyNote(note);
+                Log.d("modifyNoteCount", String.valueOf(modifyNoteCount));
+
+            } else if (shopping != null) {
 
                 shopping.setName(name.getText().toString());
                 shopping.setQuantity(Integer.parseInt(quantity.getText().toString()));
                 shopping.setUnitPrice(Float.parseFloat(unitPrice.getText().toString()));
 
-                int modRowCount = itineraryBo.modifyShopping(shopping);
+                int modifyShoppingCount = itineraryBo.modifyShopping(shopping);
+                Log.d("modifyShoppingCount", String.valueOf(modifyShoppingCount));
             }
         }
 
@@ -265,14 +302,14 @@ public class CreateOrEditTaskItemActivity extends AppCompatActivity {
                 ((EditText) view).setText(GlobalNaming.SPACE);
             }
             view.setVisibility(View.GONE);
-            view.setFocusable(false);
-            view.setEnabled(false);
+//            view.setFocusable(false);
+//            view.setEnabled(false);
         }
 
         for (View view : viewListToEnable) {
             view.setVisibility(View.VISIBLE);
-            view.setFocusable(true);
-            view.setEnabled(true);
+//            view.setFocusable(true);
+//            view.setEnabled(true);
         }
     }
 
@@ -284,15 +321,17 @@ public class CreateOrEditTaskItemActivity extends AppCompatActivity {
      */
     private boolean isAllViewsEnable(List<View> viewList) {
         boolean isAllVisible = false;
-        boolean isAllFocusable = false;
-        boolean isAllEnable = false;
+//        boolean isAllFocusable = false;
+//        boolean isAllEnable = false;
 
         for (View view : viewList) {
             isAllVisible &= view.getVisibility() == View.VISIBLE;
-            isAllFocusable &= view.isFocusable();
-            isAllEnable &= view.isEnabled();
+
+//            isAllFocusable &= view.isFocusable();
+//            isAllEnable &= view.isEnabled();
         }
 
-        return isAllVisible & isAllFocusable & isAllEnable;
+//        return isAllVisible & isAllFocusable & isAllEnable;
+        return isAllVisible;
     }
 }

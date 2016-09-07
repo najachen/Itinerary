@@ -25,24 +25,56 @@
 
         <Button
             android:id="@+id/cancelEditTaskItem"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/useWeight"
             android:layout_height="wrap_content"
             android:layout_marginRight="5dp"
             android:layout_weight="1"
             android:background="@drawable/btn_shape_index_1"
-            android:text="取消"
+            android:text="取消編輯"
+            android:textSize="@dimen/textSizeExplain"
             android:textColor="#445566"/>
 
         <Button
-            android:id="@+id/createOrUpdateTaskItem"
-            android:layout_width="wrap_content"
+            android:id="@+id/switchFunctionNote"
+            android:layout_width="@dimen/useWeight"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_shape_index_1"
+            android:text="待辦事項"
+            android:textSize="@dimen/textSizeExplain"
+            android:textColor="#445566"/>
+
+        <Button
+            android:id="@+id/switchFunctionShopping"
+            android:layout_width="@dimen/useWeight"
             android:layout_height="wrap_content"
             android:layout_marginLeft="5dp"
             android:layout_weight="1"
             android:background="@drawable/btn_shape_index_1"
-            android:text="確定"
+            android:text="購物項目"
+            android:textSize="@dimen/textSizeExplain"
+            android:textColor="#445566"/>
+
+        <Button
+            android:id="@+id/createOrUpdateTaskItem"
+            android:layout_width="@dimen/useWeight"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_weight="1"
+            android:background="@drawable/btn_shape_index_1"
+            android:text="確定存檔"
+            android:textSize="@dimen/textSizeExplain"
             android:textColor="#445566"/>
     </LinearLayout>
+
+    <TextView
+        android:id="@+id/noteItemTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="= 待辦事項 ="
+        android:textSize="@dimen/textSizeTitle"
+        android:textColor="#445566"/>
 
     <TextView
         android:id="@+id/noteContentLabel"
@@ -50,12 +82,13 @@
         android:layout_height="wrap_content"
         android:text="內容 : "
         android:textColor="#445566"
-        android:textSize="@dimen/textSizeTitle"/>
+        android:textSize="@dimen/textSizeDetail"/>
 
     <EditText
         android:id="@+id/noteContent"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeDetail"
         android:ems="10"
         android:inputType="textMultiLine"/>
 
@@ -65,12 +98,13 @@
         android:layout_height="wrap_content"
         android:text="詳細說明 : "
         android:textColor="#445566"
-        android:textSize="@dimen/textSizeTitle"/>
+        android:textSize="@dimen/textSizeDetail"/>
 
     <EditText
         android:id="@+id/noteExplain"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeDetail"
         android:ems="10"
         android:inputType="textMultiLine"/>
 
@@ -79,8 +113,8 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="= 購物項目 ="
-        android:textColor="#445566"
-        android:textSize="30sp"/>
+        android:textSize="@dimen/textSizeTitle"
+        android:textColor="#445566"/>
 
     <TextView
         android:id="@+id/shoppingNameLabel"
@@ -92,6 +126,7 @@
 
     <EditText
         android:id="@+id/name"
+        android:textSize="@dimen/textSizeDetail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"/>
 
@@ -107,6 +142,7 @@
         android:id="@+id/quantity"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeDetail"
         android:inputType="number"/>
 
     <TextView
@@ -121,32 +157,33 @@
         android:id="@+id/unitPrice"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:textSize="@dimen/textSizeDetail"
         android:inputType="number"/>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
+    <!--<LinearLayout-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:orientation="horizontal">-->
 
-        <Button
-            android:id="@+id/switchFunctionNote"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginRight="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/btn_shape_index_1"
-            android:text="這是待辦事項"
-            android:textColor="#445566"/>
+        <!--<Button-->
+            <!--android:id="@+id/switchFunctionNote"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginRight="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/btn_shape_index_1"-->
+            <!--android:text="這是待辦事項"-->
+            <!--android:textColor="#445566"/>-->
 
-        <Button
-            android:id="@+id/switchFunctionShopping"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="5dp"
-            android:layout_weight="1"
-            android:background="@drawable/btn_shape_index_1"
-            android:text="這是購物清單"
-            android:textColor="#445566"/>
-    </LinearLayout>
+        <!--<Button-->
+            <!--android:id="@+id/switchFunctionShopping"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginLeft="5dp"-->
+            <!--android:layout_weight="1"-->
+            <!--android:background="@drawable/btn_shape_index_1"-->
+            <!--android:text="這是購物清單"-->
+            <!--android:textColor="#445566"/>-->
+    <!--</LinearLayout>-->
 
 </LinearLayout>

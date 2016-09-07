@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import silver.reminder.itinerary.dao.ItineraryDatabaseHelper;
@@ -71,113 +72,76 @@ public class GlobalNaming {
     /**
      * 將時間欄位14碼 轉為日期格式
      *
-     * @param tm 14碼時間字串
+     * @param dateTimeString 14碼時間字串
      * @return 1980/10/25 07:40:55
      */
-    public static String getDateFormat(String tm) {
+    public static Calendar getCalendar(String dateTimeString) {
 
-        String year = tm.substring(0, 4);
-        String month = tm.substring(4, 6);
-        String date = tm.substring(6, 8);
-        String hour = tm.substring(8, 10);
-        String minute = tm.substring(10, 12);
-        String second = tm.substring(12, 14);
+        int year = Integer.parseInt(dateTimeString.substring(0, 4));
+        int month = Integer.parseInt(dateTimeString.substring(4, 6)) - 1;
+        int date = Integer.parseInt(dateTimeString.substring(6, 8));
+        int hour = Integer.parseInt(dateTimeString.substring(8, 10));
+        int minute = Integer.parseInt(dateTimeString.substring(10, 12));
+        int second = Integer.parseInt(dateTimeString.substring(12, 14));
 
-        StringBuffer tmBuffer = new StringBuffer();
-        tmBuffer.append(year).append("/").append(month).append("/").append(date)
-                .append(" ")
-                .append(hour).append(":").append(minute).append(":").append(second);
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(year, month, date, hour, minute, second);
 
-        return tmBuffer.toString();
+        //保險
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+
+        return calendar;
     }
 
     /**
-     * 取得日期的8碼整數
+     *
+     * @param tmStr
+     * @return
+     */
+    public static String cleanTimeString(String tmStr){
+        String[] tmStrArray = tmStr.split("\\W");
+
+        StringBuffer clearTmStr = new StringBuffer();
+        for(String piece:tmStrArray){
+            clearTmStr.append(piece);
+        }
+
+        //not enough length add zero
+        String result = clearTmStr.toString();
+        if(result.length() == 12){
+            clearTmStr.append("00");
+        }
+        return clearTmStr.toString();
+    }
+
+    /**
+     * 取得日期
      *
      * @param calendar
      * @return
      */
-    public static int getDateInt(Calendar calendar) {
-        int year = calendar.get(Calendar.YEAR);
-        String month = addZeroIfLessThanTen(calendar.get(Calendar.MONTH) + 1);
-        String date = addZeroIfLessThanTen(calendar.get(Calendar.DATE));
-
-        StringBuffer dateBuffer = new StringBuffer();
-        dateBuffer.append(year).append(month).append(date);
-
-        return Integer.parseInt(dateBuffer.toString());
+    public static String getDateString(Calendar calendar) {
+        return new SimpleDateFormat("yyyy/MM/dd").format(calendar.getTime());
     }
 
     /**
-     * 取得時間的6碼整數
+     * 取得時間
      *
-     * @param calendar 要轉的日曆物件
-     * @return 124055
+     * @param calendar
+     * @return 20124055
      */
-    public static int getTimeInt(Calendar calendar) {
-
-        String hour = addZeroIfLessThanTen(calendar.get(Calendar.HOUR_OF_DAY));
-        String minute = addZeroIfLessThanTen(calendar.get(Calendar.MINUTE));
-        String second = addZeroIfLessThanTen(calendar.get(Calendar.SECOND));
-
-        StringBuffer timeBuffer = new StringBuffer();
-        timeBuffer.append(hour).append(minute).append(second);
-
-        return Integer.parseInt(timeBuffer.toString());
+    public static String getTimeString(Calendar calendar) {
+        return new SimpleDateFormat("HH:mm:ss").format(calendar.getTime());
     }
 
     /**
-     * 如果小於10 開頭補0
+     * 取得日期與時間字串14碼
      *
-     * @param value 要驗證的數字
+     * @param calendar
      * @return
      */
-    private static String addZeroIfLessThanTen(int value) {
-        return String.valueOf(value < 10 ? "0" + value : value);
-    }
-
-    /**
-     * 清空字串中的特殊字 變成乾淨的14碼時間資料
-     * 很糟的作法 我知道 但沒時間作更好
-     *
-     * @param timeString
-     * @return
-     */
-    public static String cleanSpecCharTo14DigiCode(String timeString) {
-        String[] timeStringArray = timeString.split("\\W"); //非文字一律視為界線 delimiter
-
-        StringBuffer digiCode = new StringBuffer();
-        for (String stringPiece : timeStringArray) {
-            digiCode.append(stringPiece);
-        }
-        return digiCode.toString();
-    }
-
-    /**
-     * 將14碼時間字串 轉成 Calendar
-     *
-     * @param tm
-     * @return
-     */
-    public static Calendar getTmCalendar(String tm) {
-
-        int year = Integer.parseInt(tm.substring(0, 2));
-
-        //月份 0-base 特別處理
-        String strMonth = tm.substring(2, 4);
-        int month = Integer.parseInt(strMonth);
-        month--;
-
-        int date = Integer.parseInt(tm.substring(4, 6));
-        int hour = Integer.parseInt(tm.substring(6, 8));
-        int minute = Integer.parseInt(tm.substring(8, 10));
-        int second = Integer.parseInt(tm.substring(10, 12));
-
-        //設定時間
-        Calendar calendar = Calendar.getInstance();
-        calendar.set(year, month, date, hour, minute, second);
-
-        return calendar;
+    public static String getDateTimeString(Calendar calendar) {
+        return new SimpleDateFormat("yyyyMMddHHmmss").format(calendar.getTime());
     }
 
     /**
@@ -186,7 +150,7 @@ public class GlobalNaming {
      * @param scheduleId
      * @return 設定鬧鐘用的pendingIntent
      */
-    public static PendingIntent getAlarmPendingIntent(Context context, long scheduleId) {
+    public static PendingIntent getAlarmPendingIntent(Context context, int scheduleId) {
 
         Intent intent = new Intent();
         intent.setAction(GlobalNaming.INTENT_ACTION_NAME_ALARM_RECEIVER);
@@ -194,8 +158,8 @@ public class GlobalNaming {
         //撈取要顯示在snackbar上的資訊
         SQLiteDatabase db = ItineraryDatabaseHelper.getInstance(context).getReadableDatabase();
 
-        String strScheduleId = Long.toString(scheduleId);
-        Cursor cursor = db.rawQuery("select name, site, soundFileId from task inner join schedule on task.id = schedule.taskId where schedule.id = ?", new String[]{strScheduleId});
+        String strScheduleId = String.valueOf(scheduleId);
+        Cursor cursor = db.rawQuery("select name, site, soundFileId from task inner join schedule on task._id = schedule.taskId where schedule._id = ?", new String[]{strScheduleId});
 
         if (cursor.getCount() == 1 && cursor.moveToFirst()) {
             String taskName = cursor.getString(cursor.getColumnIndexOrThrow("name"));
@@ -209,7 +173,7 @@ public class GlobalNaming {
             intent.putExtra(ALARM_INTENT_EXTRA_KEY_SCHEDULE_ID, scheduleId);
         }
 
-        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, (int) scheduleId, intent, PendingIntent.FLAG_ONE_SHOT);
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(context, scheduleId, intent, PendingIntent.FLAG_ONE_SHOT);
         return pendingIntent;
     }
 }

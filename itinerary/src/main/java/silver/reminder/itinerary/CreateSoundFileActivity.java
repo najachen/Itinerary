@@ -133,11 +133,9 @@ public class CreateSoundFileActivity extends AppCompatActivity {
 
             //檔名處理
             Calendar now = Calendar.getInstance();
-            int dateInt = GlobalNaming.getDateInt(now);
-            int timeInt = GlobalNaming.getTimeInt(now);
-            String strDate = String.valueOf(dateInt);
-            String strTime = timeInt < 100000 ? "0" + timeInt : "" + timeInt;
-            String outputFilePath = new File(dirTemp, strDate + strTime + MEDIA_FILE_NAME_EXT).getAbsolutePath();
+            String dateTimeString = GlobalNaming.getDateTimeString(now);
+            String outputFilePath = new File(dirTemp, dateTimeString + MEDIA_FILE_NAME_EXT).getAbsolutePath();
+            soundFilePath.setText(dateTimeString);
 
             //MediaRecorder 前置準備
             mediaRecorder = new MediaRecorder();
@@ -154,6 +152,9 @@ public class CreateSoundFileActivity extends AppCompatActivity {
             }
             mediaRecorder.start();
 
+            //switch state
+            isRecordingNow = !isRecordingNow;
+
             //顯示"錄音中..."字樣
             isRecording.setVisibility(View.VISIBLE);
 
@@ -162,6 +163,9 @@ public class CreateSoundFileActivity extends AppCompatActivity {
             mediaRecorder.stop();
             mediaRecorder.release();
             mediaRecorder = null;
+
+            //switch state
+            isRecordingNow = !isRecordingNow;
 
             //隱藏"錄音中..."字樣
             isRecording.setVisibility(View.INVISIBLE);
@@ -176,7 +180,11 @@ public class CreateSoundFileActivity extends AppCompatActivity {
             long durationLong = Long.parseLong(duration);
             Date dateDuration = new Date(durationLong);
 
-            SimpleDateFormat formatter = new SimpleDateFormat("mm 分 ss 秒");
+            SimpleDateFormat formatter = new SimpleDateFormat(getString(R.string.recordSuccess)
+                    + " mm "
+                    + getString(R.string.minuteRecorder)
+                    + " ss "
+                    + getString(R.string.secondRecorder));
             recordDuration.setText(formatter.format(dateDuration));
         }
     }

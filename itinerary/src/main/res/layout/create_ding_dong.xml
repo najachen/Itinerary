@@ -76,7 +76,7 @@
         android:layout_height="wrap_content"
         android:layout_alignTop="@id/dateLabelDingDong"
         android:layout_toRightOf="@id/dateLabelDingDong"
-        android:text="2016-08-18"
+        android:inputType="date"
         android:textSize="@dimen/textSizeTitle"/>
 
     <TextView
@@ -96,7 +96,7 @@
         android:layout_alignTop="@id/timeLabelDingDong"
         android:layout_toRightOf="@id/timeLabelDingDong"
         android:layout_span="2"
-        android:text="12:00"
+        android:inputType="time"
         android:textSize="@dimen/textSizeTitle"/>
 
     <TextView
@@ -118,7 +118,6 @@
         android:layout_span="2"
         android:paddingTop="@dimen/labelPaddingTop"
         android:lines="3"
-        android:text="台北市大安區北歐寵物旅館"
         android:textSize="@dimen/textSizeTitle"/>
 
     <LinearLayout
@@ -140,7 +139,6 @@
             android:id="@+id/soundFilePathSchedule"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="freeMind.mp3"
             android:textSize="@dimen/textSizeDetail"/>
     </LinearLayout>
 

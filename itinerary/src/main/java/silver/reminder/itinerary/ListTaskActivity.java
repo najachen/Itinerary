@@ -1,7 +1,9 @@
 package silver.reminder.itinerary;
 
+import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -11,7 +13,13 @@ import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
+import android.widget.TextView;
 
+import com.google.android.gms.appindexing.Action;
+import com.google.android.gms.appindexing.AppIndex;
+import com.google.android.gms.common.api.GoogleApiClient;
+
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 import silver.reminder.itinerary.util.GlobalNaming;
@@ -34,7 +42,7 @@ public class ListTaskActivity extends AppCompatActivity {
        搜尋條件
      */
     private static final int PAGE_SIZE = 5;
-    private int currentPage = 1;
+    public int currentPage = 1;
     private int searchMode;
 
     /*
@@ -45,7 +53,11 @@ public class ListTaskActivity extends AppCompatActivity {
     private static final String TASK_FIELD_NAME = "name";
     private static final String TASK_FIELD_SITE = "site";
     private static final String TASK_FIELD_TIME = "time";
-    private static final String TASK_FIELD_DATE = "date";
+    /**
+     * ATTENTION: This was auto-generated to implement the App Indexing API.
+     * See https://g.co/AppIndexing/AndroidStudio for more information.
+     */
+    private GoogleApiClient client;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,6 +67,9 @@ public class ListTaskActivity extends AppCompatActivity {
         findViews();
 
         this.searchMode = getIntent().getIntExtra(GlobalNaming.TASK_SEARCH_MODE, GlobalNaming.ERROR_CODE);
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client = new GoogleApiClient.Builder(this).addApi(AppIndex.API).build();
     }
 
     @Override
@@ -63,6 +78,13 @@ public class ListTaskActivity extends AppCompatActivity {
 
         //顯示第一頁清單
         showListView(null);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+
+        this.currentPage = 1;
     }
 
     private void findViews() {
@@ -83,6 +105,8 @@ public class ListTaskActivity extends AppCompatActivity {
      *
      * @param view
      */
+
+
     private void prePage(View view) {
         showListView(Pager.GO_BACKWARD);
     }
@@ -151,26 +175,20 @@ public class ListTaskActivity extends AppCompatActivity {
      */
     private void showListView(Boolean isGoForward) {
 
-        Calendar calendarToday = Calendar.getInstance();
-        int startDate = GlobalNaming.getDateInt(calendarToday);
-        int startTime = GlobalNaming.getTimeInt(calendarToday);
+        Calendar startCal = Calendar.getInstance();
+        startCal.set(Calendar.HOUR_OF_DAY, 0);
+        startCal.set(Calendar.MINUTE, 0);
+        startCal.set(Calendar.SECOND, 0);
 
-        Calendar endCalendar = getSearchEndDateString((Calendar) calendarToday.clone());
-        int endDate = GlobalNaming.getDateInt(endCalendar);
-        int endTime = GlobalNaming.getTimeInt(endCalendar);
-
+        Calendar endCal = getSearchEndDateString((Calendar) startCal.clone());
         Pager pager = new Pager(this, PAGE_SIZE);
-        Cursor cursor = pager.getPagedCursorForTask(startDate, startTime
-                , endDate
-                , endTime
-                , this.currentPage
-                , isGoForward);
+        Cursor cursor = pager.getPagedCursorForTask(startCal, endCal, isGoForward);
 
-        SimpleCursorAdapter myCursorAdapter = new SimpleCursorAdapter(this
+        MyCursorAdapter myCursorAdapter = new MyCursorAdapter(this
                 , R.layout.embedding_task_list
                 , cursor
-                , new String[]{TASK_FIELD_NAME, TASK_FIELD_SITE, TASK_FIELD_DATE, TASK_FIELD_TIME}
-                , new int[]{R.id.taskName, R.id.taskSite, R.id.taskDate, R.id.taskTime}
+                , new String[]{TASK_FIELD_NAME, TASK_FIELD_SITE, TASK_FIELD_TIME}
+                , new int[]{R.id.taskName, R.id.taskSite, R.id.taskTime}
                 , 0);
         this.tasklist.setAdapter(myCursorAdapter);
     }
@@ -208,18 +226,58 @@ public class ListTaskActivity extends AppCompatActivity {
         return searchEndCalendar;
     }
 
+    @Override
+    public void onStart() {
+        super.onStart();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        client.connect();
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "ListTask Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://silver.reminder.itinerary/http/host/path")
+        );
+        AppIndex.AppIndexApi.start(client, viewAction);
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        // ATTENTION: This was auto-generated to implement the App Indexing API.
+        // See https://g.co/AppIndexing/AndroidStudio for more information.
+        Action viewAction = Action.newAction(
+                Action.TYPE_VIEW, // TODO: choose an action type.
+                "ListTask Page", // TODO: Define a title for the content shown.
+                // TODO: If you have web page content that matches this app activity's content,
+                // make sure this auto-generated web page URL is correct.
+                // Otherwise, set the URL to null.
+                Uri.parse("http://host/path"),
+                // TODO: Make sure this auto-generated app URL is correct.
+                Uri.parse("android-app://silver.reminder.itinerary/http/host/path")
+        );
+        AppIndex.AppIndexApi.end(client, viewAction);
+        client.disconnect();
+    }
+
     /**
      *
      */
-//    class MyCursorAdapter extends SimpleCursorAdapter {
-//
-//        public MyCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
-//            super(context, layout, c, from, to, flags);
-//        }
-//
-//        @Override
-//        public void bindView(View view, Context context, Cursor cursor) {
-//
+    class MyCursorAdapter extends SimpleCursorAdapter {
+
+        public MyCursorAdapter(Context context, int layout, Cursor c, String[] from, int[] to, int flags) {
+            super(context, layout, c, from, to, flags);
+        }
+
+        @Override
+        public void bindView(View view, Context context, Cursor cursor) {
+
 //            if (view == null) {
 //                view = LayoutInflater.from(context).inflate(R.layout.embedding_task_list, null, false);
 //
@@ -235,16 +293,16 @@ public class ListTaskActivity extends AppCompatActivity {
 //                String tm = cursor.getString(cursor.getColumnIndex(TASK_FIELD_TIME));
 //                taskTime.setText(GlobalNaming.getDateFormat(tm));
 //            }
-//
-//            super.bindView(view, context, cursor);
-//
-//            TextView taskDate = (TextView) view.findViewById(R.id.taskDate);
-//            int date = cursor.getInt(cursor.getColumnIndex(TASK_FIELD_DATE));
-//            taskDate.setText(GlobalNaming.getDateFormat(tm));
-//
-//            TextView taskTime = (TextView) view.findViewById(R.id.taskTime);
-//            String tm = cursor.getString(cursor.getColumnIndex(TASK_FIELD_TIME));
-//            taskTime.setText(GlobalNaming.getDateFormat(tm));
-//        }
-//    }
+
+            super.bindView(view, context, cursor);
+
+            TextView taskTime = (TextView) view.findViewById(R.id.taskTime);
+            long tm = cursor.getLong(cursor.getColumnIndex(TASK_FIELD_TIME));
+
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(tm);
+            SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+            taskTime.setText(simpleDateFormat.format(calendar.getTime()));
+        }
+    }
 }

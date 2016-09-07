@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
+import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -50,6 +51,11 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
     private Task task;
     private Schedule schedule;
 
+    /**
+     *
+     */
+    Schedule scheduleOnActivityResult;
+
     /*
         Bo
      */
@@ -65,6 +71,8 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
         itineraryBo = ItineraryBoImpl.getInstance(this);
         soundDingDongBo = SoundDingDongBoImpl.getInstance(this);
+
+        scheduleOnActivityResult = new Schedule();
     }
 
     @Override
@@ -88,12 +96,10 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
         Cursor cursorSchedule = soundDingDongBo.findScheduleList(keySchedule);
 
         if (cursorSchedule.getCount() == 1 && cursorSchedule.moveToFirst()) {
-            schedule.set_id(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id")));
+            schedule.set_id(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("_id")));
             schedule.setTaskId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("taskId")));
             schedule.setSoundFileId(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("soundFileId")));
-
-            schedule.setDate(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("date")));
-            schedule.setTime(cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("time")));
+            schedule.setTime(cursorSchedule.getLong(cursorSchedule.getColumnIndexOrThrow("time")));
         }
 
         /*
@@ -106,12 +112,12 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             taskSite.setText(GlobalNaming.SPACE);
         } else { //若為編輯狀態 帶出所有的值並放進欄位
 
-            String dateAndTimeString = GlobalNaming.getDateFormat(String.valueOf(task.getDate()+task.getTime()));
-            String[] dateAndTimeArray = dateAndTimeString.split(GlobalNaming.SPACE);
+            Calendar taskCal = Calendar.getInstance();
+            taskCal.setTimeInMillis(task.getTime());
 
             taskName.setText(task.getName());
-            taskDate.setText(dateAndTimeArray[0]);
-            taskTime.setText(dateAndTimeArray[1]);
+            taskDate.setText(GlobalNaming.getDateString(taskCal));
+            taskTime.setText(GlobalNaming.getTimeString(taskCal));
             taskSite.setText(task.getSite());
         }
 
@@ -121,9 +127,9 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             若有設定 為"編輯提醒"
          */
         if (schedule.get_id() != null && schedule.get_id() > 0) {
-            createSchedule.setText("編輯或刪除提醒");
+            createSchedule.setText(R.string.editOrDeleteReminder);
         } else if (schedule.get_id() == null || schedule.get_id() == 0) {
-            createSchedule.setText("新增提醒");
+            createSchedule.setText(R.string.createReminder);
         }
     }
 
@@ -153,17 +159,22 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
         //時間資料格式處理
         String tm = taskDate.getText().toString() + taskTime.getText().toString();
-        tm = GlobalNaming.cleanSpecCharTo14DigiCode(tm);
+        tm = GlobalNaming.cleanTimeString(tm);
+
+        if (tm.length() != 14) {
+            Snackbar.make(view, getString(R.string.timeFormatError) + GlobalNaming.SPACE + tm, Snackbar.LENGTH_SHORT).show();
+            return;
+        }
 
         Task taskSave = new Task();
         taskSave.setName(taskName.getText().toString());
-        taskSave.setDate(Integer.valueOf(tm.substring(0, 8)));
-        taskSave.setTime(Integer.valueOf(tm.substring(8, 14)));
+        taskSave.setTime(GlobalNaming.getCalendar(tm).getTimeInMillis());
         taskSave.setSite(taskSite.getText().toString());
 
         long taskRowId = 0;
         if (task.get_id() == null || task.get_id() == 0) {
             taskRowId = itineraryBo.createTask(taskSave);
+            taskSave.set_id((int) taskRowId);
         } else {
             taskSave.set_id(task.get_id());
             itineraryBo.modifyTask(taskSave);
@@ -174,13 +185,24 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
         //如果有設定提醒 要存檔
         boolean isHaveNoTaskId = task.get_id() == null || task.get_id() == 0;
-        boolean isHaveScheduleTm = schedule.getDate() != null && task.getDate() > 0 && schedule.getTime() != null && task.getTime() > 0;
-        boolean isHaveScheduleSoundFileId = schedule.getSoundFileId() != null && schedule.getSoundFileId() > 0;
+        boolean isHaveScheduleTm =
+                scheduleOnActivityResult.getTime() != null &&
+                scheduleOnActivityResult.getTime() > 0 &&
+                taskSave.getTime() != null &&
+                taskSave.getTime() > 0;
+        boolean isHaveScheduleSoundFileId =
+                scheduleOnActivityResult.getSoundFileId() != null &&
+                scheduleOnActivityResult.getSoundFileId() > 0;
+
         if (isHaveNoTaskId && isHaveScheduleTm && isHaveScheduleSoundFileId) {
 
-            //內容已經有音效檔的id跟發射時間的設定
-            schedule.setTaskId((int) taskRowId);
-            long scheduleRowId = soundDingDongBo.createSchedule(schedule);
+            Schedule scheduleSave = new Schedule();
+            scheduleSave.setTime(scheduleOnActivityResult.getTime());
+            scheduleSave.setTaskId(taskSave.get_id());
+            scheduleSave.setSoundFileId(scheduleOnActivityResult.getSoundFileId());
+
+            long scheduleRowId = soundDingDongBo.createSchedule(scheduleSave);
+            scheduleSave.set_id((int) scheduleRowId);
 
             /*
                 新增鬧鐘
@@ -197,8 +219,9 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             intent.setAction(GlobalNaming.INTENT_ACTION_NAME_ALARM_RECEIVER);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(this, (int) scheduleRowId, intent, PendingIntent.FLAG_ONE_SHOT);
 
-            Calendar tmCalendar = GlobalNaming.getTmCalendar(String.valueOf(schedule.getDate()+schedule.getTime()));
-            alarmManager.set(AlarmManager.RTC_WAKEUP, tmCalendar.getTimeInMillis(), pendingIntent);
+            Calendar tmCal = Calendar.getInstance();
+            tmCal.setTimeInMillis(scheduleSave.getTime());
+            alarmManager.set(AlarmManager.RTC_WAKEUP, tmCal.getTimeInMillis(), pendingIntent);
 
             //test-
             Log.d("新增提醒設定id", String.valueOf(scheduleRowId));
@@ -228,16 +251,16 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
      */
     private void createSchedule(View view) {
 
-        if (this.schedule.get_id() == 0) {
+        if (schedule.get_id() == null || schedule.get_id() == 0) {
             Intent intent = new Intent(this, CreateDingDongActivity.class);
             intent.putExtra(GlobalNaming.TASK_ID, task.get_id());
             startActivityForResult(intent, REQUEST_CODE_CREATE_DING_DONG);
         } else {
             new AlertDialog.Builder(this)
-                    .setMessage("編輯或刪除提醒??")
-                    .setPositiveButton("編輯", CreateOrEditTaskActivity.this::editSchedule)
-                    .setNegativeButton("刪除", CreateOrEditTaskActivity.this::deleteSchedule)
-                    .setNegativeButton("取消", null)
+                    .setMessage(getString(R.string.queEditOrDelete))
+                    .setPositiveButton(getString(R.string.edit), CreateOrEditTaskActivity.this::editSchedule)
+                    .setNegativeButton(getString(R.string.delete), CreateOrEditTaskActivity.this::deleteSchedule)
+                    .setNeutralButton(getString(R.string.cancel), null)
                     .show();
         }
     }
@@ -284,13 +307,12 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
 
             case REQUEST_CODE_CREATE_DING_DONG:
                 if (resultCode == RESULT_OK) {
-                    String tm = data.getStringExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_TM);
+                    Long time = data.getLongExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_TM, GlobalNaming.ERROR_CODE);
                     Integer soundFileId = data.getIntExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_SOUND_FILE_ID, GlobalNaming.ERROR_CODE);
 
-                    if (tm != null && tm.length() > 0 && soundFileId != null && soundFileId > 0) {
-                        schedule.setDate(Integer.valueOf(tm.substring(0, 8)));
-                        schedule.setTime(Integer.valueOf(tm.substring(8, 14)));
-                        schedule.setSoundFileId(soundFileId);
+                    if (time != null && time > 0 && soundFileId != null && soundFileId > 0) {
+                        scheduleOnActivityResult.setTime(time);
+                        scheduleOnActivityResult.setSoundFileId(soundFileId);
                     }
                 }
                 break;

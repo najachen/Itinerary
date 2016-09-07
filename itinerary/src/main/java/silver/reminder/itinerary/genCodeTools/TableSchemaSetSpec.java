@@ -17,6 +17,7 @@ public interface TableSchemaSetSpec {
 	Integer INTEGER = (int) Math.pow(RADIX, 5);
 	Integer REAL = (int) Math.pow(RADIX, 6);
 	Integer TEXT = (int) Math.pow(RADIX, 7);
+	Integer LONG = (int) Math.pow(RADIX, 8);
 
 	/*
 	 * 欄位資料

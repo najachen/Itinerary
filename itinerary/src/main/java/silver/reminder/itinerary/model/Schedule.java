@@ -1,25 +1,16 @@
 package silver.reminder.itinerary.model;
 /**
- * Tue Sep 06 14:18:17 CST 2016 by freemarker template
+ * Tue Sep 06 20:53:48 CST 2016 by freemarker template
  */
 public class Schedule {
 
-    private Integer date;
-
     private Integer _id;
 
-    private Integer time;
+    private Long time;
 
     private Integer taskId;
 
     private Integer soundFileId;
-
-    public void setDate(Integer date){
-        this.date = date;
-    }
-    public Integer getDate(){
-        return this.date;
-    }
 
     public void set_id(Integer _id){
         this._id = _id;
@@ -28,10 +19,10 @@ public class Schedule {
         return this._id;
     }
 
-    public void setTime(Integer time){
+    public void setTime(Long time){
         this.time = time;
     }
-    public Integer getTime(){
+    public Long getTime(){
         return this.time;
     }
 

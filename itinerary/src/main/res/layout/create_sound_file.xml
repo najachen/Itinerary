@@ -81,14 +81,12 @@
         android:id="@+id/soundFilePath"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="myMp3.mp3"
         android:textSize="@dimen/textSizeDetail"/>
 
     <TextView
         android:id="@+id/recordDuration"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="已完成錄音(00分45秒)"
         android:textSize="@dimen/textSizeDetail"/>
 
 

@@ -29,13 +29,6 @@
             android:textAlignment="viewEnd" />
 
         <TextView
-            android:id="@+id/taskDate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/textSizeExplain"
-            android:textAlignment="viewEnd" />
-
-        <TextView
             android:id="@+id/taskTime"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

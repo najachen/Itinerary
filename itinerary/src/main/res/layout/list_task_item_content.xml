@@ -34,6 +34,18 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:text="返回"
+            android:textSize="@dimen/textSizeExplain"
+            android:background="@drawable/btn_shape_index_1"
+            android:textColor="#445566"/>
+
+        <Button
+            android:id="@+id/switchListType"
+            android:layout_width="@dimen/useWeight"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_below="@id/taskSite"
+            android:text="購物清單"
+            android:textSize="@dimen/textSizeExplain"
             android:background="@drawable/btn_shape_index_1"
             android:textColor="#445566"/>
 
@@ -42,20 +54,12 @@
             android:layout_width="@dimen/useWeight"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="編輯或刪除"
+            android:text="編輯"
+            android:textSize="@dimen/textSizeExplain"
             android:background="@drawable/btn_shape_index_1"
             android:textColor="#445566"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp" />
-
-        <!--<Button-->
-            <!--android:id="@+id/setReminder"-->
-            <!--android:layout_width="@dimen/useWeight"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_weight="1"-->
-            <!--android:text="修改提醒"-->
-            <!--android:background="@drawable/btn_shape_index_1"-->
-            <!--android:textColor="#445566"/>-->
 
     </LinearLayout>
 
@@ -75,7 +79,6 @@
             android:id="@+id/taskName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="辦理申請老人年金手續"
             android:textSize="@dimen/textSizeDetail"
             android:layout_toRightOf="@id/nameLabelTaskItem"
             android:lines="2"
@@ -93,7 +96,6 @@
             android:id="@+id/taskTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="2016/08/12 13:30"
             android:textSize="@dimen/textSizeDetail"
             android:layout_toRightOf="@id/dateAndTimeLabelTaskItem"
             android:layout_alignTop="@id/dateAndTimeLabelTaskItem"/>
@@ -110,11 +112,12 @@
             android:id="@+id/taskSite"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="國父紀念館"
             android:textSize="@dimen/textSizeDetail"
             android:lines="2"
             android:layout_toRightOf="@id/siteLabelTaskItem"
             android:layout_alignTop="@id/siteLabelTaskItem"/>
+
+
     </RelativeLayout>
 
     <ListView

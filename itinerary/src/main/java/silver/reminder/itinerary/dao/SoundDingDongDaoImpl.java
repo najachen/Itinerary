@@ -13,7 +13,7 @@ import java.util.List;
 import silver.reminder.itinerary.model.Schedule;
 import silver.reminder.itinerary.model.SoundFile;
 /**
- * Tue Sep 06 14:18:17 CST 2016 by freemarker template
+ * Wed Sep 07 07:39:58 CST 2016 by freemarker template
  */
 public class SoundDingDongDaoImpl implements SoundDingDongDao {
 
@@ -45,7 +45,6 @@ public class SoundDingDongDaoImpl implements SoundDingDongDao {
     public long insertSchedule(Schedule schedule) {
 
         ContentValues contentValues = new ContentValues();
-        contentValues.put("date", schedule.getDate());
         contentValues.put("time", schedule.getTime());
         contentValues.put("taskId", schedule.getTaskId());
         contentValues.put("soundFileId", schedule.getSoundFileId());
@@ -70,7 +69,6 @@ public class SoundDingDongDaoImpl implements SoundDingDongDao {
 
         //這裡是要修改的資料
         ContentValues contentValues = new ContentValues();
-        contentValues.put("date", schedule.getDate());
         contentValues.put("time", schedule.getTime());
         contentValues.put("taskId", schedule.getTaskId());
         contentValues.put("soundFileId", schedule.getSoundFileId());
@@ -116,7 +114,7 @@ public class SoundDingDongDaoImpl implements SoundDingDongDao {
 
         Cursor scheduleCursor = this.readableDB.rawQuery("select * from schedule where _id = ?", new String[]{_id.toString()});
 
-        if(scheduleCursor.getCount() == 0){
+        if(scheduleCursor.getCount() == 0 || !scheduleCursor.moveToFirst()){
             return null;
         }
 
@@ -127,14 +125,11 @@ public class SoundDingDongDaoImpl implements SoundDingDongDao {
             int columnIndex = scheduleCursor.getColumnIndexOrThrow(columnName);
 
             switch (columnName) {
-                case "date":
-                    result.setDate(scheduleCursor.getInt(columnIndex));
-                    break;
                 case "_id":
                     result.set_id(scheduleCursor.getInt(columnIndex));
                     break;
                 case "time":
-                    result.setTime(scheduleCursor.getInt(columnIndex));
+                    result.setTime(scheduleCursor.getLong(columnIndex));
                     break;
                 case "taskId":
                     result.setTaskId(scheduleCursor.getInt(columnIndex));
@@ -157,17 +152,12 @@ public class SoundDingDongDaoImpl implements SoundDingDongDao {
 
         List<String> whereArgs = new ArrayList<String>();
 
-        Integer date = schedule.getDate();
-        if (date != null && date.toString().length() > 0) {
-            sqlWhere.append(" and date = ? ");
-            whereArgs.add(date.toString());
-        }
         Integer _id = schedule.get_id();
         if (_id != null && _id.toString().length() > 0) {
             sqlWhere.append(" and _id = ? ");
             whereArgs.add(_id.toString());
         }
-        Integer time = schedule.getTime();
+        Long time = schedule.getTime();
         if (time != null && time.toString().length() > 0) {
             sqlWhere.append(" and time = ? ");
             whereArgs.add(time.toString());
@@ -258,7 +248,7 @@ public class SoundDingDongDaoImpl implements SoundDingDongDao {
 
         Cursor soundFileCursor = this.readableDB.rawQuery("select * from soundFile where _id = ?", new String[]{_id.toString()});
 
-        if(soundFileCursor.getCount() == 0){
+        if(soundFileCursor.getCount() == 0 || !soundFileCursor.moveToFirst()){
             return null;
         }
 

@@ -7,8 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
 
-import java.util.Calendar;
-
 import silver.reminder.itinerary.bo.SoundDingDongBo;
 import silver.reminder.itinerary.bo.SoundDingDongBoImpl;
 import silver.reminder.itinerary.model.Schedule;
@@ -29,13 +27,11 @@ public class ReConfigReceiver extends BroadcastReceiver {
         Cursor cursorSchedule = soundDingDongBo.findScheduleList(new Schedule());
 
         while(cursorSchedule.moveToNext()){
-            int id = cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("id"));
-            String tm = cursorSchedule.getString(cursorSchedule.getColumnIndexOrThrow("tm"));
+            int _id = cursorSchedule.getInt(cursorSchedule.getColumnIndexOrThrow("_id"));
+            long time = cursorSchedule.getLong(cursorSchedule.getColumnIndexOrThrow("time"));
 
-            PendingIntent pendingIntent = GlobalNaming.getAlarmPendingIntent(context, id);
-            Calendar calendar= GlobalNaming.getTmCalendar(tm);
-
-            alarmManager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            PendingIntent pendingIntent = GlobalNaming.getAlarmPendingIntent(context, _id);
+            alarmManager.set(AlarmManager.RTC_WAKEUP, time, pendingIntent);
         }
     }
 }

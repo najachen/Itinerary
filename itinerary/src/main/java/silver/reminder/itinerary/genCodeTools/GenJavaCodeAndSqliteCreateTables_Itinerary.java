@@ -51,8 +51,7 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 						put("_id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
 						put("name", TableSchemaSetSpec.TEXT);
 						put("site", TableSchemaSetSpec.TEXT);
-						put("date", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
-						put("time", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
+						put("time", TableSchemaSetSpec.LONG | TableSchemaSetSpec.NOT_NULL);
 					}
 				};
 			}
@@ -71,8 +70,7 @@ public class GenJavaCodeAndSqliteCreateTables_Itinerary {
 						put("_id", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.PRIMARY_KEY_AUTOINCREMENT);
 						put("taskId", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
 						put("soundFileId", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
-						put("date", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
-						put("time", TableSchemaSetSpec.INTEGER | TableSchemaSetSpec.NOT_NULL);
+						put("time", TableSchemaSetSpec.LONG | TableSchemaSetSpec.NOT_NULL);
 					}
 				};
 			}

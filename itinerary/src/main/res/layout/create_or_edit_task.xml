@@ -141,7 +141,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@drawable/btn_shape_index_1"
-        android:text="設定提醒"
         android:textColor="#445566"/>
 
 </RelativeLayout>

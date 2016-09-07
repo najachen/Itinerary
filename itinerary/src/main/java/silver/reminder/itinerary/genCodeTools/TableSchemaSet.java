@@ -13,7 +13,7 @@ public abstract class TableSchemaSet implements TableSchemaSetSpec {
 	 * 建立資料表的欄位描述
 	 */
 	private Map<String, String> fieldDescMap = new HashMap<String, String>();
-	
+
 	/*
 	 * 欄位與資料型態對映
 	 */
@@ -43,10 +43,12 @@ public abstract class TableSchemaSet implements TableSchemaSetSpec {
 			return "Float";
 		} else if ((descMaskCode & TEXT) == TEXT) {
 			return "String";
+		} else if ((descMaskCode & LONG) == LONG) {
+			return "Long";
 		}
 		return "Object";
 	}
-	
+
 	/*
 	 * 解析描述遮罩碼 轉成欄位描述sql
 	 */
@@ -60,7 +62,10 @@ public abstract class TableSchemaSet implements TableSchemaSetSpec {
 			fieldDesc.append("real");
 		} else if ((descMaskCode & TEXT) == TEXT) {
 			fieldDesc.append("text");
+		} else if ((descMaskCode & LONG) == LONG) {
+			fieldDesc.append("real");
 		}
+
 		fieldDesc.append(SPACE);
 
 		if ((descMaskCode & PRIMARY_KEY_AUTOINCREMENT) == PRIMARY_KEY_AUTOINCREMENT) {
@@ -94,7 +99,7 @@ public abstract class TableSchemaSet implements TableSchemaSetSpec {
 
 		return createSql.toString();
 	}
-	
+
 	/*
 	 * getter
 	 */
