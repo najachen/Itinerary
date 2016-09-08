@@ -40,6 +40,12 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
     private Button resetFields;
     private Button saveTask;
 
+    //
+    private String taskNameTemp;
+    private String taskSiteTemp;
+    private String taskDateTemp;
+    private String taskTimeTemp;
+
     /*
         請求碼
      */
@@ -110,6 +116,27 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             taskDate.setText(GlobalNaming.SPACE);
             taskTime.setText(GlobalNaming.SPACE);
             taskSite.setText(GlobalNaming.SPACE);
+
+            //回復畫面
+            if (taskNameTemp != null && taskSiteTemp != null && taskDateTemp != null && taskTimeTemp != null) {
+                taskName.setText(taskNameTemp);
+                taskSite.setText(taskSiteTemp);
+                taskDate.setText(taskDateTemp);
+                taskTime.setText(taskTimeTemp);
+
+                //test-
+                Log.d("taskNameTemp", taskNameTemp);
+                Log.d("taskSiteTemp", taskSiteTemp);
+                Log.d("taskDateTemp", taskDateTemp);
+                Log.d("taskTimeTemp", taskTimeTemp);
+
+                //清空暫存值
+                taskNameTemp = null;
+                taskSiteTemp = null;
+                taskDateTemp = null;
+                taskTimeTemp = null;
+            }
+
         } else { //若為編輯狀態 帶出所有的值並放進欄位
 
             Calendar taskCal = Calendar.getInstance();
@@ -120,6 +147,8 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
             taskTime.setText(GlobalNaming.getTimeString(taskCal));
             taskSite.setText(task.getSite());
         }
+
+
 
         /*
             設定音效按鍵的字樣
@@ -187,12 +216,12 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
         boolean isHaveNoTaskId = task.get_id() == null || task.get_id() == 0;
         boolean isHaveScheduleTm =
                 scheduleOnActivityResult.getTime() != null &&
-                scheduleOnActivityResult.getTime() > 0 &&
-                taskSave.getTime() != null &&
-                taskSave.getTime() > 0;
+                        scheduleOnActivityResult.getTime() > 0 &&
+                        taskSave.getTime() != null &&
+                        taskSave.getTime() > 0;
         boolean isHaveScheduleSoundFileId =
                 scheduleOnActivityResult.getSoundFileId() != null &&
-                scheduleOnActivityResult.getSoundFileId() > 0;
+                        scheduleOnActivityResult.getSoundFileId() > 0;
 
         if (isHaveNoTaskId && isHaveScheduleTm && isHaveScheduleSoundFileId) {
 
@@ -252,6 +281,17 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
     private void createSchedule(View view) {
 
         if (schedule.get_id() == null || schedule.get_id() == 0) {
+
+            //如果連task都是新增的 要保留頁面上的資料 否則會被刷不見
+            if (task.get_id() == null || task.get_id() == 0) {
+
+                taskNameTemp = taskName.getText().toString();
+                taskSiteTemp = taskSite.getText().toString();
+                taskDateTemp = taskDate.getText().toString();
+                taskTimeTemp = taskTime.getText().toString();
+            }
+
+            //前往新增提醒
             Intent intent = new Intent(this, CreateDingDongActivity.class);
             intent.putExtra(GlobalNaming.TASK_ID, task.get_id());
             startActivityForResult(intent, REQUEST_CODE_CREATE_DING_DONG);
@@ -306,6 +346,7 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
         switch (requestCode) {
 
             case REQUEST_CODE_CREATE_DING_DONG:
+
                 if (resultCode == RESULT_OK) {
                     Long time = data.getLongExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_TM, GlobalNaming.ERROR_CODE);
                     Integer soundFileId = data.getIntExtra(GlobalNaming.SCHEDULE_FIELD_TO_SAVE_SOUND_FILE_ID, GlobalNaming.ERROR_CODE);
@@ -315,6 +356,8 @@ public class CreateOrEditTaskActivity extends AppCompatActivity {
                         scheduleOnActivityResult.setSoundFileId(soundFileId);
                     }
                 }
+
+
                 break;
         }
     }

@@ -211,6 +211,8 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
         //清空
         taskItemId = 0;
+
+        showListView(null);
     }
 
     /**
@@ -280,6 +282,8 @@ public class ListTaskItemActivity extends AppCompatActivity {
 
         db.setTransactionSuccessful();
         db.endTransaction();
+
+        finish();
     }
 
     /**
